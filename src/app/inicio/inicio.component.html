@@ -1,83 +1,158 @@
-<div class="h-full bg-blanco overflow-scroll">
+<div class="flex w-full bg-blanco flex-col h-screen overflow-scroll">
 
-  <!-- Íconos -->
-  <section class="flex justify-end px-4 mt-4 text-black text-xl">
-    <svg class="w-5 h-5 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"viewBox="0 0 21 19">
-      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"d="M11 4C5.5-1.5-1.5 5.5 4 11l7 7 7-7c5.458-5.458-1.542-12.458-7-7Z" />
-    </svg>
+  <div class="p-4">
+    <!-- Íconos -->
+    <section class="flex justify-end text-black text-xl">
+      <svg class="w-5 h-5 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"viewBox="0 0 21 19">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"d="M11 4C5.5-1.5-1.5 5.5 4 11l7 7 7-7c5.458-5.458-1.542-12.458-7-7Z" />
+      </svg>
 
-    <svg class="w-5 h-5 text-black ml-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 20">
-      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="m13 19-6-5-6 5V2a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17Z"/>
-    </svg>
-  </section>
+      <svg class="w-5 h-5 text-black ml-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 20">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="m13 19-6-5-6 5V2a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17Z"/>
+      </svg>
+    </section>
 
-  <!-- Saludo -->
-  <section>
-    <p class="text-black px-4 text-lg font-medium font-lato">Buenos días Sofía</p>
-  </section>
+    <!-- Saludo -->
+    <div class="font-normal text-black text-lg font-lato">Buenos días Sofía</div>
 
-  <!-- Buscador -->
-  <section class="mt-2 px-4">
-    <div class="flex justify-center items-center text-center w-full h-10 bg-grisF rounded-xl overflow-hidden ">
-      <i class="fa-solid fa-magnifying-glass text-black px-4"></i>
-      <input class="w-full h-full rounded-r-xl bg-transparent text-black placeholder-negro focus:outline-0" placeholder="Busca prendas por tipo, estilo, color, marca o material">
-    </div>
-  </section>
+    <!-- Buscador -->
+<div class="w-full h-10 rounded-xl bg-grisF justify-center items-center flex mt-2 p-4">
+  <i class="fa-solid fa-magnifying-glass text-black px-4"></i>
+  <input type="text" class="w-full h-full rounded-r-xl bg-transparent text-black placeholder-negro focus:outline-0" placeholder="Busca prendas por tipo, estilo, color, marca o material"/>
+</div>
 
-  <!-- Outfit del día -->
-  <section class="mt-3">
+<!-- Outfit del día -->
+  <div class="px-0">
+    <div class="font-semibold text-black text-lg text-center font-lato mt-3">Outfit del día</div>
+  </div>
+  <div class="flex w-full gap-x-6 overflow-x-scroll">
+    <div class="h-64 w-44 shrink-0 rounded-xl bg-slate-200">nk</div>
+    <div class="h-64 w-44 shrink-0 rounded-xl bg-slate-200">nk</div>
+    <div class="h-64 w-44 shrink-0 rounded-xl bg-slate-200">nk</div>
+    <div class="h-64 w-44 shrink-0 rounded-xl bg-slate-200">nk</div>
+  </div>
+  </div>
+  <div class="p-4">
+    <div class="text-center">Tu armario</div>
+  <div class="flex w-full gap-x-3 overflow-x-scroll rounded-2xl bg-slate-600 p-3">
+    <div class="h-28 w-20 shrink-0 rounded-xl bg-white"></div>
+    <div class="h-28 w-20 shrink-0 rounded-xl bg-white"></div>
+    <div class="h-28 w-20 shrink-0 rounded-xl bg-white"></div>
+    <div class="h-28 w-20 shrink-0 rounded-xl bg-white"></div>
+    <div class="h-28 w-20 shrink-0 rounded-xl bg-white"></div>
+    <div class="h-28 w-20 shrink-0 rounded-xl bg-white"></div>
+  </div>
+  <div class="text-center">Elegante</div>
+  <div class="flex w-full gap-x-3 overflow-x-scroll rounded-2xl bg-slate-600 p-3">
+    <div class="h-28 w-20 shrink-0 rounded-xl bg-white"></div>
+    <div class="h-28 w-20 shrink-0 rounded-xl bg-white"></div>
+    <div class="h-28 w-20 shrink-0 rounded-xl bg-white"></div>
+    <div class="h-28 w-20 shrink-0 rounded-xl bg-white"></div>
+    <div class="h-28 w-20 shrink-0 rounded-xl bg-white"></div>
+    <div class="h-28 w-20 shrink-0 rounded-xl bg-white"></div>
+  </div>
 
-    <article class="flex justify-center items-center">
-      <p class="font-semibold text-black text-lg font-lato">Outfit del día</p>
-    </article>
 
-    <article class="flex justify-center items-center overflow-x-scroll">
-      <aside class="w-fit flex justify-center items-center gap-5 mt-2 pb-5">
-        <div class="w-44 h-56 rounded-2xl bg-[#BDC4D4] drop-shadow-lg ml-2"></div>
-        <div class="w-44 h-56 rounded-2xl bg-[#E1DCD6] drop-shadow-lg">
-          <!-- <img src="src\assets\outfitCasual1.png" alt="Outfit casual"> -->
-        </div>
-        <div class="w-44 h-56 rounded-2xl bg-[#B9ADA0] drop-shadow-lg"></div>
-      </aside>
-    </article>
 
-  </section>
+  <div class="h-full bg-blanco overflow-scroll">
 
-  <!-- Tu armario -->
-  <section class="px-4">
-    <article class="flex justify-center items-center">
-      <p class="text-black text-lg font-lato font-medium">Tu armario</p>
-    </article>
+    <!-- Íconos -->
+    <section class="flex justify-end px-4 mt-4 text-black text-xl">
+      <svg class="w-5 h-5 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"viewBox="0 0 21 19">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"d="M11 4C5.5-1.5-1.5 5.5 4 11l7 7 7-7c5.458-5.458-1.542-12.458-7-7Z" />
+      </svg>
 
-    <article class="mb-5">
-      <aside>
-        <p class="text-black font-lato">Blusas</p>
-      </aside>
+      <svg class="w-5 h-5 text-black ml-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 20">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="m13 19-6-5-6 5V2a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17Z"/>
+      </svg>
+    </section>
 
-      <aside class="w-full h-40 flex justify-center items-center rounded-2xl bg-grisC px-4 overflow-x-scroll">
-        <div class="w-fit flex justify-center items-center gap-2">
-          <div class="w-[5.5rem] h-28 rounded-2xl bg-[#BCBCBC] drop-shadow-lg"></div>
-          <div class="w-[5.5rem] h-28 rounded-2xl bg-[#CDCAC3] drop-shadow-lg"></div>
-          <div class="w-[5.5rem] h-28 rounded-2xl bg-[#BCBFD0] drop-shadow-lg"></div>
-          <div class="w-[5.5rem] h-28 rounded-2xl bg-[#AEAD99] drop-shadow-lg"></div>
-        </div>
-      </aside>
-    </article>
+    <!-- Saludo -->
+    <section>
+      <p class="text-black px-4 text-lg font-medium font-lato">Buenos días Sofía</p>
+    </section>
 
-    <article class="mb-5">
-      <aside>
-        <p class="text-black font-lato">Elegante</p>
-      </aside>
+    <!-- Buscador -->
+    <section class="mt-2 px-4">
+      <div class="flex justify-center items-center text-center w-full h-10 bg-grisF rounded-xl overflow-hidden ">
+        <i class="fa-solid fa-magnifying-glass text-black px-4"></i>
+        <input class="w-full h-full rounded-r-xl bg-transparent text-black placeholder-negro focus:outline-0" placeholder="Busca prendas por tipo, estilo, color, marca o material">
+      </div>
+    </section>
 
-      <aside class="w-full h-40 flex justify-center items-center rounded-2xl bg-grisC px-4 overflow-x-scroll">
-        <div class="w-fit flex justify-center items-center gap-2">
-          <div class="w-[5.5rem] h-28 rounded-2xl bg-[#B9B8B7] drop-shadow-lg"></div>
-          <div class="w-[5.5rem] h-28 rounded-2xl bg-[#C6B7B2] drop-shadow-lg"></div>
-          <div class="w-[5.5rem] h-28 rounded-2xl bg-[#ECE2D8] drop-shadow-lg"></div>
-          <div class="w-[5.5rem] h-28 rounded-2xl bg-[#CBC5C2] drop-shadow-lg"></div>
-        </div>
-      </aside>
-    </article>
-  </section>
+    <!-- Outfit del día -->
+    <section class="mt-3">
+
+      <article class="flex justify-center items-center">
+        <p class="font-semibold text-black text-lg font-lato">Outfit del día</p>
+      </article>
+
+      <article class="flex justify-center items-center overflow-x-scroll">
+        <aside class="w-fit flex justify-center items-center gap-5 mt-2 pb-5">
+          <div class="w-44 h-56 rounded-2xl bg-[#BDC4D4] drop-shadow-lg ml-2"></div>
+          <div class="w-44 h-56 rounded-2xl bg-[#E1DCD6] drop-shadow-lg">
+            <!-- <img src="src\assets\outfitCasual1.png" alt="Outfit casual"> -->
+          </div>
+          <div class="w-44 h-56 rounded-2xl bg-[#B9ADA0] drop-shadow-lg"></div>
+        </aside>
+      </article>
+
+    </section>
+
+    <!-- Tu armario -->
+    <section class="px-4">
+      <article class="flex justify-center items-center">
+        <p class="text-black text-lg font-lato font-medium">Tu armario</p>
+      </article>
+
+      <article class="mb-5">
+        <aside>
+          <p class="text-black font-lato">Blusas</p>
+        </aside>
+
+        <aside class="w-full h-40 flex justify-center items-center rounded-2xl bg-grisC px-4 overflow-x-scroll">
+          <div class="w-fit flex justify-center items-center gap-2">
+            <div class="w-[5.5rem] h-28 rounded-2xl bg-[#BCBCBC] drop-shadow-lg"></div>
+            <div class="w-[5.5rem] h-28 rounded-2xl bg-[#CDCAC3] drop-shadow-lg"></div>
+            <div class="w-[5.5rem] h-28 rounded-2xl bg-[#BCBFD0] drop-shadow-lg"></div>
+            <div class="w-[5.5rem] h-28 rounded-2xl bg-[#AEAD99] drop-shadow-lg"></div>
+          </div>
+        </aside>
+
+      </article>
+
+      <article class="mb-5">
+        <aside>
+          <p class="text-black font-lato">Elegante</p>
+        </aside>
+
+        <aside class="w-full h-40 flex justify-center items-center rounded-2xl bg-grisC px-4 overflow-x-scroll">
+          <div class="w-fit flex justify-center items-center gap-2">
+            <div class="w-[5.5rem] h-28 rounded-2xl bg-[#B9B8B7] drop-shadow-lg"></div>
+            <div class="w-[5.5rem] h-28 rounded-2xl bg-[#C6B7B2] drop-shadow-lg"></div>
+            <div class="w-[5.5rem] h-28 rounded-2xl bg-[#ECE2D8] drop-shadow-lg"></div>
+            <div class="w-[5.5rem] h-28 rounded-2xl bg-[#CBC5C2] drop-shadow-lg"></div>
+          </div>
+        </aside>
+      </article>
+    </section>
+
+  </div>
+
+
+
+
 
 </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
