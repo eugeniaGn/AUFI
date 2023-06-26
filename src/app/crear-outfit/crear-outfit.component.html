@@ -1,0 +1,160 @@
+<div class="h-full bg-blanco p-4 overflow-scroll">
+
+  <!-- Íconos -->
+  <section class="flex justify-between text-black text-xl">
+    <svg class="w-5 h-5 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+      viewBox="0 0 8 14">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+        d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13" />
+    </svg>
+
+    <article class="flex">
+      <!-- -botón de "Me gusta" -->
+      <div *ngIf="gusta; else elseBlock">
+        <svg (click)="meGusta()" class="w-5 h-5 text-red-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+          fill="currentColor" viewBox="0 0 20 18">
+          <path d="M17.947 2.053a5.209 5.209 0 0 0-3.793-1.53A6.414 6.414 0 0 0 10 2.311 6.482 6.482 0 0 0 5.824.5a5.2 5.2 0 0 0-3.8 1.521c-1.915 1.916-2.315 5.392.625 8.333l7 7a.5.5 0 0 0 .708 0l7-7a6.6 6.6 0 0 0 2.123-4.508 5.179 5.179 0 0 0-1.533-3.793Z" />
+        </svg>
+      </div>
+      <ng-template #elseBlock>
+        <svg (click)="meGusta()" class="w-5 h-5 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 21 19">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M11 4C5.5-1.5-1.5 5.5 4 11l7 7 7-7c5.458-5.458-1.542-12.458-7-7Z" />
+        </svg>
+      </ng-template>
+
+      <!-- -botón de "Guardar en colección" -->
+      <div *ngIf="guardado; else elseBlock">
+        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 20">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="m13 19-6-5-6 5V2a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17Z"/>
+        </svg>
+      </div>
+      <ng-template #elseBlock>
+        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 20">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="m13 19-6-5-6 5V2a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17Z"/>
+        </svg>
+      </ng-template>
+
+    </article>
+  </section>
+
+  <!-- Título -->
+  <section class="flex justify-center items-center flex-col">
+    <p class="text-black px-4 text-lg font-semibold font-lato">Estilo rápido</p>
+
+    <select
+      class="w-fit flex  text-center justify-center items-center bg-transparent text-lg text-black font-lato font-medium focus:outline-0">
+      <option value="1" class="bg-grisC text-black font-lato font-normal focus:outline-0">Casual</option>
+      <option value="2" class="bg-grisC text-black font-lato font-normal focus:outline-0">Formal</option>
+      <option value="3" class="bg-grisC text-black font-lato font-normal focus:outline-0">Elegante</option>
+      <option value="4" class="bg-grisC text-black font-lato font-normal focus:outline-0">Business casual</option>
+      <option value="5" class="bg-grisC text-black font-lato font-normal focus:outline-0">Deportivo</option>
+      <option value="6" class="bg-grisC text-black font-lato font-normal focus:outline-0">Traje de baño</option>
+    </select>
+
+  </section>
+
+  <!-- Outfit -->
+  <Section [ngClass]="{'outline outline-2 outline-verdeF': usado === true}"
+    class="w-full h-fit rounded-2xl bg-grisC p-6 mt-6 drop-shadow-lg">
+    <article class="grid grid-cols-3 gap-3 mb-6">
+      <div class="h-[7.5rem] rounded-2xl flex justify-center items-center bg-grisF">
+        <svg class="w-5 h-5 text-negro" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+          viewBox="0 0 18 18">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 1v16M1 9h16" />
+        </svg>
+      </div>
+      <div class="h-[7.5rem] rounded-2xl flex justify-center items-center bg-grisF">
+        <svg class="w-5 h-5 text-negro" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+          viewBox="0 0 18 18">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 1v16M1 9h16" />
+        </svg>
+      </div>
+      <div class="h-[7.5rem] rounded-2xl flex justify-center items-center bg-grisF">
+        <svg class="w-5 h-5 text-negro" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+          viewBox="0 0 18 18">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 1v16M1 9h16" />
+        </svg>
+      </div>
+      <div class="h-[7.5rem] rounded-2xl flex justify-center items-center bg-grisF">
+        <svg class="w-5 h-5 text-negro" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+          viewBox="0 0 18 18">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 1v16M1 9h16" />
+        </svg>
+      </div>
+      <div class="h-[7.5rem] rounded-2xl flex justify-center items-center bg-grisF">
+        <svg class="w-5 h-5 text-negro" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+          viewBox="0 0 18 18">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 1v16M1 9h16" />
+        </svg>
+      </div>
+      <div class="h-[7.5rem] rounded-2xl flex justify-center items-center bg-grisF">
+        <svg class="w-5 h-5 text-negro" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+          viewBox="0 0 18 18">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 1v16M1 9h16" />
+        </svg>
+      </div>
+      <div class="h-[7.5rem] rounded-2xl flex justify-center items-center bg-grisF">
+        <svg class="w-5 h-5 text-negro" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+          viewBox="0 0 18 18">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 1v16M1 9h16" />
+        </svg>
+      </div>
+      <div class="h-[7.5rem] rounded-2xl flex justify-center items-center bg-grisF">
+        <svg class="w-5 h-5 text-negro" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+          viewBox="0 0 18 18">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 1v16M1 9h16" />
+        </svg>
+      </div>
+      <div class="h-[7.5rem] rounded-2xl flex justify-center items-center bg-grisF">
+        <svg class="w-5 h-5 text-negro" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+          viewBox="0 0 18 18">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 1v16M1 9h16" />
+        </svg>
+      </div>
+      <div class="h-[7.5rem] rounded-2xl flex justify-center items-center bg-grisF">
+        <svg class="w-5 h-5 text-negro" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+          viewBox="0 0 18 18">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 1v16M1 9h16" />
+        </svg>
+      </div>
+      <div class="h-[7.5rem] rounded-2xl flex justify-center items-center bg-grisF">
+        <svg class="w-5 h-5 text-negro" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+          viewBox="0 0 18 18">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 1v16M1 9h16" />
+        </svg>
+      </div>
+      <div class="h-[7.5rem] rounded-2xl flex justify-center items-center bg-grisF">
+        <svg class="w-5 h-5 text-negro" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+          viewBox="0 0 18 18">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 1v16M1 9h16" />
+        </svg>
+      </div>
+    </article>
+
+    <article class="w-full h-16">
+      <textarea class="w-full h-full bg-transparent text-black placeholder-negro focus:outline-0"
+        placeholder="Descripción del outfit (opcional)"></textarea>
+    </article>
+
+    <article class="flex justify-center items-center mt-3">
+      <button (click)="loUse()" [ngClass]="{'bg-verdeF text-verdeC drop-shadow-lg': usado === true}"
+        class="w-28 h-9 rounded-full bg-verdeC text-verdeF drop-shadow-sm">
+        Lo usé
+      </button>
+    </article>
+
+  </Section>
+
+</div>

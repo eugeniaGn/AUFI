@@ -1,0 +1,25 @@
+{
+  "prendas": [
+    {
+      "id": "",
+      "tipo": "",
+      "subtipo": "",
+      "caracteristicas": "",
+      "color": "",
+      "material": "",
+      "estilo": "",
+      "clima": ""
+    }
+  ],
+  "accesorios": [
+    {
+      "id": "",
+      "tipo": "",
+      "subtipo": "",
+      "caracteristicas": "",
+      "color": "",
+      "material": "",
+      "estilo": ""
+    }
+  ]
+}
