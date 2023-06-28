@@ -1,5 +1,5 @@
 {
-  "Outfits": [
+  "outfits": [
     {
       "estilo": "",
       "clima": "",
@@ -21,7 +21,6 @@
           "tipo": "",
           "subtipo": "",
           "caracteristicas": "",
-          "color": "",
           "material": "",
           "estilo": ""
         }
