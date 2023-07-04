@@ -2,13 +2,15 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { InicioComponent } from './inicio/inicio.component';
 import { CrearOutfitComponent } from './crear-outfit/crear-outfit.component';
+import { EstiloRapidoComponent } from './estilo-rapido/estilo-rapido.component';
 
 const routes: Routes = [
   {path: 'inicio', component: InicioComponent, },
   {path: 'crearOutfit', component: CrearOutfitComponent, },
+  {path: 'estiloRapido', component: EstiloRapidoComponent, },
 
   {
-    path: '',
+    path: '**',
     redirectTo: 'inicio',
     pathMatch: 'full'
   },
@@ -20,7 +22,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes)
   ],
   exports: [RouterModule]
 })

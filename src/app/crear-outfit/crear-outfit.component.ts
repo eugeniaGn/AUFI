@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-crear-outfit',
@@ -10,7 +11,9 @@ export class CrearOutfitComponent  implements OnInit {
   gusta:boolean = false;
   guardado:boolean = false;
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit() {}
 
