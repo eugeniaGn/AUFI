@@ -18,11 +18,11 @@ export class ConexionService {
     private http: HttpClient
   ) { }
 
-  Get(Modelo: string, Accion: string){
-    return this.http.get(`${this.baseUrl}${Modelo}.php?opcion=${Accion}`);
+  get(modelo: string, accion: string){
+    return this.http.get(`${this.baseUrl}${modelo}.php?opcion=${accion}`);
   }
 
-  Post(Modelo: string, Accion: string, Datos: any){
-    return this.http.post(`${this.baseUrl}${Modelo}.php?opcion=${Accion}`, Datos);
+  post(modelo: string, accion: string, datos: any){
+    return this.http.post(`${this.baseUrl}${modelo}.php?opcion=${accion}`, datos);
   }
 }
