@@ -41,7 +41,7 @@ export class InicioComponent  implements OnInit {
   }
 
   obtenerAccesorios() {
-    this.conexion.Get('accesorio', 'getAccesorios').subscribe((dato: any) => {
+    this.conexion.get('accesorio', 'getAccesorios').subscribe((dato: any) => {
       this.accesorios;
     });
   }
