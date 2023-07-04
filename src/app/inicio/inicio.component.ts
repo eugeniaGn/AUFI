@@ -23,19 +23,19 @@ export class InicioComponent  implements OnInit {
   ngOnInit() {}
 
   obtenerTipos() {
-    this.conexion.Get('armario', 'getTipos').subscribe((dato: any) => {
+    this.conexion.get('armario', 'getTipos').subscribe((dato: any) => {
       this.tipos;
     });
   }
 
   obtenerSubtipos() {
-    this.conexion.Get('armario', 'getSubtipos').subscribe((dato: any) => {
+    this.conexion.get('armario', 'getSubtipos').subscribe((dato: any) => {
       this.tipos;
     });
   }
 
   obtenerPrendas() {
-    this.conexion.Get('prenda', 'getPrendas').subscribe((dato: any) => {
+    this.conexion.get('prenda', 'getPrendas').subscribe((dato: any) => {
       this.prendas;
     });
   }
