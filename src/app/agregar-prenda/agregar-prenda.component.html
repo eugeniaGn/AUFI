@@ -1,0 +1,21 @@
+<section class="flex w-full items-center p-5 justify-center flex-col">
+    <button class="w-28 h-10 bg-teaGreen rounded-lg flex justify-evenly items-center text-indiaGreen text-lg" (click)="takePhoto()">
+        <ion-icon icon="camera"></ion-icon>Foto
+    </button>
+    <ion-grid>
+        <ion-row>
+            <ion-col *ngIf="photoService.photoURL">
+                <ion-img [src]="photoService.photoURL"></ion-img>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+</section>
+<p>Tipo search auto fill</p>
+<p>Subtipo search auto fill</p>
+<p>Características search auto fill</p>
+<p>Estilo search auto fill</p>
+<p>Material search auto fill</p>
+<p>Color search auto fill</p>
+<p>Marca dropdown</p>
+<p>Clima h drag con iconíto</p>
