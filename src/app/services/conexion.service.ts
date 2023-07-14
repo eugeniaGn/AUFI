@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ConexionService {
-  baseUrl = '';
+  baseUrl = 'http://localhost/aufiservices/controller/';
 
   public httpOptions = {
     headers: new HttpHeaders({
@@ -19,10 +19,10 @@ export class ConexionService {
   ) { }
 
   get(modelo: string, accion: string){
-    return this.http.get(`${this.baseUrl}${modelo}.php?opcion=${accion}`);
+    return this.http.get(`${this.baseUrl}${modelo}.php?option=${accion}`);
   }
 
   post(modelo: string, accion: string, datos: any){
-    return this.http.post(`${this.baseUrl}${modelo}.php?opcion=${accion}`, datos);
+    return this.http.post(`${this.baseUrl}${modelo}.php?option=${accion}`, datos);
   }
 }

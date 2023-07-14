@@ -10,12 +10,17 @@ import { CommonModule } from '@angular/common';
 import { InicioComponent } from './inicio/inicio.component';
 import { CrearOutfitComponent } from './crear-outfit/crear-outfit.component';
 import { HttpClientModule } from '@angular/common/http';
+import { RegistroComponent } from './registro/registro.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     InicioComponent,
-    CrearOutfitComponent
+    CrearOutfitComponent,
+    RegistroComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +28,8 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     CommonModule,
     HttpClientModule,
-    RouterModule
+    RouterModule, 
+    ReactiveFormsModule
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
