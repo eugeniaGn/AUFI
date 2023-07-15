@@ -1,0 +1,48 @@
+<div class="w-full h-full bg-teaGreen p-4 overflow-scroll"> <br><br>
+  <Section [ngClass] class="w-full h-fit rounded-2xl bg-teaRed p-6 mt-6 drop-shadow-lg overflow-scroll">
+    <div class="w-full max-w-xs">
+      <br><br>
+      <form
+        class="bg-timberWolf text-blanco text-center  shadow-md rounded px-8 pt-6 pb-8 mb-4 ng-dirty ng-touched ng-valid"
+        [formGroup]="Formulario">
+        <div class="grid place-content-center gap-1 md:grid-cols-2">
+          <img src="assets/Logo AUFI (2).png" class="w-20" alt="Phone image" />
+        </div>
+        <br>
+        <div class="text-2xl text-davysGray">Loggin</div>
+        <br>
+        <div class="mb-4 mt-4">
+          <label class="block text-blanco text-sm font-bold mb-2">
+          </label>
+          <input
+            class="shadow bg-davysGray text-blanco appearance-none border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline"
+            name="correo" formControlName="correo" type="text" placeholder="Correo">
+          <span *ngIf="campoEsValido('correo')"></span>
+        </div>
+
+        <div class="mb-6">
+          <label class="block text-blanco text-sm font-bold mb-2" for="contrasena"></label>
+          <input
+            class="shadow bg-davysGray appearance-none rounded w-full py-2 px-3 text-blanco mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            name="contrasena" formControlName="contrasena" type="password" placeholder="Contraseña">
+          <span *ngIf="campoEsValido('contrasena')"></span>
+        </div>
+        <div class="flex items-center justify-between">
+          <button class="bg-davysGray hover:bg-blue-700 text-white font-bold py-2 px-4" type="button" (click)="Login()">
+            Sign In
+          </button>
+          <button class="bg-davysGray hover:bg-blue-700 text-white font-bold py-2 px-4" type="button"
+            (click)="registro()">
+            Register
+          </button>
+        </div>
+        <br><br>
+        <p class="text-center text-gray-500 text-xs">
+          &copy;2023 AUFI Corp. All rights reserved.
+        </p><br>
+      </form>
+      <br><br>
+    </div>
+  </Section>
+  <br><br>
+</div>

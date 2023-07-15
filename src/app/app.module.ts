@@ -13,6 +13,9 @@ import { AgregarPrendaComponent } from './agregar-prenda/agregar-prenda.componen
 import { PhotoService } from './services/photo.service';
 import { CloudinaryModule } from '@cloudinary/ng';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
+import { RegistroComponent } from './registro/registro.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +23,8 @@ import {AutocompleteLibModule} from 'angular-ng-autocomplete';
     InicioComponent,
     CrearOutfitComponent,
     AgregarPrendaComponent
+    RegistroComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +40,8 @@ import {AutocompleteLibModule} from 'angular-ng-autocomplete';
     PhotoService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     // Multi:true agrega funcionalidad al provider existente, en vez de sobreescribirlo
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    ReactiveFormsModule
   ],
   bootstrap: [AppComponent],
 })
