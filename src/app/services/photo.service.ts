@@ -1,8 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
-// import { Filesystem, Directory } from '@capacitor/filesystem';
-// import { Preferences } from '@capacitor/preferences';
 
 @Injectable({
   providedIn: 'root'
@@ -23,10 +21,11 @@ export class PhotoService {
       quality: 100
     }).then(async (capturedPhoto) => {
       if (capturedPhoto.webPath) {
-        // this.base64Data = await this.readAsBase64(capturedPhoto);
         this.photoURL = capturedPhoto.webPath;
+        this.base64Data = await this.readAsBase64(capturedPhoto);
       }
-      return '';
+    }).then(() => {
+      this.uploadPhoto();
     })
   }
 
