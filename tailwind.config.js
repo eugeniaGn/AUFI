@@ -7,7 +7,7 @@ module.exports = {
     extend: {
       colors: {
         'blanco': '#FFFFFF',
-        'witheSmoke': '#F2F2F2',
+        'whiteSmoke': '#F2F2F2',
         'timberWolf': '#E1DCD6',
         'grisC': '#E3E3E3',
         'grisF': '#D9D9D9',
