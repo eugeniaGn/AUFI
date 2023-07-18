@@ -1,21 +1,110 @@
-<section class="flex w-full items-center p-5 justify-center flex-col">
-    <button class="w-28 h-10 bg-teaGreen rounded-lg flex justify-evenly items-center text-indiaGreen text-lg" (click)="takePhoto()">
-        <ion-icon icon="camera"></ion-icon>Foto
-    </button>
-    <ion-grid>
-        <ion-row>
-            <ion-col *ngIf="photoService.photoURL">
-                <ion-img [src]="photoService.photoURL"></ion-img>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
+<ion-header>
+  <ion-toolbar>
+    <ion-segment (ionChange)="contextToggle()" [swipeGesture]="true" class="w-full" value="prenda">
+      <ion-segment-button value="prenda">
+        <ion-label>Prenda</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="accesorio">
+        <ion-label>Accesorio</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
 
+<section class="flex w-full items-start p-5 justify-center flex-col gap-6">
+  <button class="w-full h-10 bg-teaGreen rounded-lg flex justify-center items-center text-indiaGreen text-xl gap-3"
+    (click)="takePhoto()">
+    <ion-icon icon="camera"></ion-icon>Tomar foto
+  </button>
+  <div *ngIf="photoService.photoURL">
+    <ion-img [src]="photoService.photoURL"></ion-img>
+  </div>
+  <ng-template #itemTemplate let-item>
+    <a [innerHTML]="item.name"></a>
+  </ng-template>
+  <ng-template #notFoundTemplate let-notFound>
+    <div [innerHTML]="notFound"></div>
+  </ng-template>
+
+  <p class="text-davysGray text-lg text-center font-lato font-medium">Tipo</p>
+  <div class="w-full text-black">
+    <ng-autocomplete [data]="tipos" [searchKeyword]="keyword"
+      placeholder="Selecciona el tipo" (selected)='tipoSelectEvent($event)'
+      [itemTemplate]="itemTemplate"
+      [notFoundTemplate]="notFoundTemplate">
+    </ng-autocomplete>
+  </div>
+
+  <p *ngIf="hasSubtipos" class="text-davysGray text-lg text-left font-lato font-medium">Subtipo</p>
+  <div *ngIf="hasSubtipos" class="w-full">
+    <ng-autocomplete [data]="subtipos" [searchKeyword]="keyword" placeholder="Selecciona el subtipo de prenda"
+      (selected)='subtipoSelectEvent($event)'
+      [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
+    </ng-autocomplete>
+  </div>
+
+  <p *ngIf="hasCaracs" class="text-davysGray text-lg text-center font-lato font-medium">Característica</p>
+  <!-- (selected)='selectEvent($event)' -->
+  <div *ngIf="hasCaracs" class="w-full">
+    <ng-autocomplete [data]="caracs" [searchKeyword]="keyword" placeholder="Selecciona la característica"
+      (selected)="caracSelectEvent($event)" [itemTemplate]="itemTemplate"
+      [notFoundTemplate]="notFoundTemplate">
+    </ng-autocomplete>
+  </div>
+
+  <p class="text-davysGray text-lg text-center font-lato font-medium">Estilo</p>
+  <div class="w-full">
+    <ng-autocomplete [data]="estilos" [searchKeyword]="keyword" placeholder="Selecciona el estilo"
+      (selected)="estiloSelectEvent($event)" [itemTemplate]="itemTemplate"
+      [notFoundTemplate]="notFoundTemplate">
+    </ng-autocomplete>
+  </div>
+
+  <p *ngIf="isPrenda" class="text-davysGray text-lg text-center font-lato font-medium">Clima</p>
+  <article *ngIf="isPrenda" class="w-full px-4 pt-3 pb-6 gap-x-6 flex overflow-x-scroll shrink-0">
+    <button *ngFor="let clima of climas;" 
+    (click)="selectClima(clima)" class="w-[10.5rem] h-10 shrink-0 rounded-2xl bg-timberWolf drop-shadow-lg">{{clima.nombreClima}}</button>
+  </article>
+
+  <p class="text-davysGray text-lg text-center font-lato font-medium">Material</p>
+  <div class="w-full">
+    <ng-autocomplete [data]="materiales" [searchKeyword]="keyword" placeholder="Selecciona el material"
+      (selected)="materialSelectEvent($event)" [itemTemplate]="itemTemplate"
+      [notFoundTemplate]="notFoundTemplate">
+    </ng-autocomplete>
+  </div>
+
+  <p class="text-davysGray text-lg text-center font-lato font-medium">Color predominante</p>
+  <article class="w-full justify-left pt-3 pb-6 gap-x-8 flex overflow-x-scroll shrink-0">
+    <button *ngFor="let color of colores;" 
+      (click)="colorSelectEvent(color)" [style.background-color]="color.hexaColor" class="w-10 h-10 shrink-0 rounded-full drop-shadow-lg">
+    </button>
+  </article>
+
+  <p class="text-davysGray text-lg text-center font-lato font-medium">Marca</p>
+  <div class="w-full">
+    <ng-autocomplete [data]="marcas" [searchKeyword]="keyword" placeholder="Selecciona la marca"
+      (selected)="marcaSelectEvent($event)" [itemTemplate]="itemTemplate"
+      [notFoundTemplate]="notFoundTemplate">
+    </ng-autocomplete>
+  </div>
+
+  <div class="flex justify-evenly w-full mt-5">
+    <button class="h-10 w-[40%] bg-indiaGreen rounded-lg items-center text-whiteSmoke text-xl"
+      (click)="guardar()"><ion-icon icon="checkmark"></ion-icon> Terminar</button>
+    <button *ngIf="isPrenda" class="h-10 w-[50%] bg-davysGray rounded-lg items-center text-white text-xl" (click)="agregarPrenda()"><ion-icon
+        icon="add"></ion-icon> Agregar otra</button>
+    <button *ngIf="!isPrenda" class="h-10 w-[50%] bg-davysGray rounded-lg items-center text-white text-xl" (click)="agregarAccesorio()"><ion-icon
+        icon="add"></ion-icon> Agregar otro</button>
+  </div>
 </section>
-<p>Tipo search auto fill</p>
-<p>Subtipo search auto fill</p>
-<p>Características search auto fill</p>
-<p>Estilo search auto fill</p>
-<p>Material search auto fill</p>
-<p>Color search auto fill</p>
-<p>Marca dropdown</p>
-<p>Clima h drag con iconíto</p>
+
+<!-- <p class="text-davysGray text-lg text-center font-lato font-medium">Clima <ion-icon icon="cloud"></ion-icon> </p>
+<article class="w-full px-4 pt-3 pb-6 gap-x-6 flex overflow-x-scroll shrink-0">
+  <div *ngFor="let clima of climas;" >
+    <ion-label>{{clima.title}}</ion-label>
+    <button
+    (click)="selectClima(clima)" style="background-size: cover; background-position: bottom;" [style.background-image]="clima.image" class="text-whiteSmoke w-[10.5rem] h-10 shrink-0 rounded-2xl drop-shadow-lg">
+  </button>
+  </div>
+</article> -->
