@@ -9,31 +9,33 @@ import { AuthService } from '../services/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent  implements OnInit {
+export class LoginComponent implements OnInit {
   Formulario: FormGroup = this.fb.group({
-    correo: [, [Validators.required,]],
-    contrasena: [, [Validators.required,]],
-    
-  });
-  constructor(  private fb: FormBuilder,public auth:AuthService,
-    private router: Router, private conexion: ConexionService) {
-   }
+    correo: [, [Validators.required, Validators.email]],
+    contrasena: [, [Validators.required]],
 
-  ngOnInit() {}
+  });
+  constructor(private fb: FormBuilder, public auth: AuthService,
+    private router: Router, private conexion: ConexionService) {
+  }
+
+  ngOnInit() { }
+
   campoEsValido(campo: string) {
     return this.Formulario.controls[campo].errors && this.Formulario.controls[campo].touched;
   }
-  Login(){
+
+  login() {
     console.log(this.Formulario.value);
-    this.conexion.post('usuario', 'login', this.Formulario.value).subscribe((datos: any)=>{  
-      console.log(datos);    
-      if(datos.idUsuario != undefined){
-        this.auth.Login(datos.idUsuario);
-        this.router.navigate(['/login']); 
+    this.conexion.post('usuario', 'login', this.Formulario.value).subscribe((datos: any) => {
+      if (datos) {
+        this.auth.login(datos);
+        this.router.navigateByUrl('inicio');
       }
     });
   }
-  registro(){
+
+  registro() {
     this.router.navigate(['/registro']);
   }
 }
