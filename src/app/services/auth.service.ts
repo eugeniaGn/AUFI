@@ -7,15 +7,15 @@ export class AuthService {
 
   constructor() { }
 
-  Verificacion()/*:Observable<boolean>*/{
-    return localStorage.getItem('idUsuario') != null ? true : false;
+  verificacion()/*:Observable<boolean>*/{
+    return localStorage.getItem('aufiToken') != null ? true : false;
   }
 
-  Login(idUsuario:string){
-    localStorage.setItem('idUsuario', idUsuario);
+  login(tokenUsuario: string) {
+    localStorage.setItem('aufiToken', tokenUsuario);
   }
 
-  logout(){
-    localStorage.clear();
+  logout() {
+    localStorage.removeItem('aufiToken');
   }
 }
