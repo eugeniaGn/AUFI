@@ -5,7 +5,7 @@ import { ConexionService } from '../services/conexion.service';
 
 @Component({
   selector: 'app-registro',
-  templateUrl: '/registro.component.html',
+  templateUrl: './registro.component.html',
   styleUrls: ['./registro.component.scss'],
 })
 export class RegistroComponent implements OnInit {
@@ -27,6 +27,7 @@ export class RegistroComponent implements OnInit {
   nuevo = {
     genero: ''
   };
+
   constructor(private fb: FormBuilder, private conexion: ConexionService, private router: Router) {
   }
   ngOnInit(): void {
