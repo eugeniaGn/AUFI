@@ -12,7 +12,7 @@ import { ErrorInterceptor } from './services/error.interceptors';
 import { AgregarPrendaComponent } from './agregar-prenda/agregar-prenda.component';
 import { PhotoService } from './services/photo.service';
 import { CloudinaryModule } from '@cloudinary/ng';
-import {AutocompleteLibModule} from 'angular-ng-autocomplete';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { RegistroComponent } from './registro/registro.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
@@ -22,7 +22,7 @@ import { LoginComponent } from './login/login.component';
     AppComponent,
     InicioComponent,
     CrearOutfitComponent,
-    AgregarPrendaComponent
+    AgregarPrendaComponent,
     RegistroComponent,
     LoginComponent
   ],
@@ -34,13 +34,14 @@ import { LoginComponent } from './login/login.component';
     HttpClientModule,
     RouterModule,
     CloudinaryModule,
-    AutocompleteLibModule
+    AutocompleteLibModule,
+    ReactiveFormsModule
   ],
   providers: [
     PhotoService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     // Multi:true agrega funcionalidad al provider existente, en vez de sobreescribirlo
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     ReactiveFormsModule
   ],
   bootstrap: [AppComponent],
