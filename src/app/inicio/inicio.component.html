@@ -70,10 +70,19 @@
   </section>
 
   <!-- Botón crear outfit -->
-  <button [routerLink]="['/crearOutfit']" class="w-14 h-14 rounded-full bg-grisF drop-shadow-2xl flex justify-center items-center fixed bottom-4 right-4">
-    <svg class="w-6 h-6 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+  <button data-btn-action="add-btn-cart" data-modal="#jsModalCarrito" class="w-14 h-14 rounded-full bg-grisF drop-shadow-2xl flex justify-center items-center fixed bottom-4 right-4">
+    <svg class="w-6 h-6 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 1v16M1 9h16"/>
     </svg>
   </button>
+
+
+  <article class="modal" id="jsModalCarrito">
+    <div class="jsModalClose "></div>
+    <button class="px-4 py-2 rounded-full bg-grisF drop-shadow-lg fixed bottom-20 right-4">Crear outfit</button>
+    <button class="px-4 py-2 rounded-full bg-grisF drop-shadow-lg fixed bottom-[8.5rem] right-4">Agregar prenda/accesorio</button>
+  </article>
+
+  <script src="inicio.js"></script>
 
 </div>
