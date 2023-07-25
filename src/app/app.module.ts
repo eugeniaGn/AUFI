@@ -11,10 +11,10 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ErrorInterceptor } from './services/error.interceptors';
 import { AgregarPrendaComponent } from './agregar-prenda/agregar-prenda.component';
 import { PhotoService } from './services/photo.service';
-import { CloudinaryModule } from '@cloudinary/ng';
+// import { CloudinaryModule } from '@cloudinary/ng';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { RegistroComponent } from './registro/registro.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 
 @NgModule({
@@ -33,9 +33,10 @@ import { LoginComponent } from './login/login.component';
     CommonModule,
     HttpClientModule,
     RouterModule,
-    CloudinaryModule,
+    // CloudinaryModule,
     AutocompleteLibModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [
     PhotoService,
