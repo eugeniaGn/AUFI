@@ -14,6 +14,9 @@ export class InicioComponent  implements OnInit {
   usado:boolean = false;
   gusta:boolean = false;
   guardado:boolean = false;
+  isButtonFocused = false;
+  isDivVisible = false;
+  isArticleFocused = false;
 
   constructor(
     private conexion: ConexionService,
@@ -72,6 +75,19 @@ export class InicioComponent  implements OnInit {
 
   crearOutfit(){
     this.router.navigate(['/crearOutfit']);
+  }
+
+  toggleDivVisibility() {
+    this.isDivVisible = !this.isDivVisible;
+  }
+
+  toggleFocus() {
+    // document.getElementById("mas")?.hidden = !document.getElementById("mas").hidden;
+    this.isButtonFocused = !this.isButtonFocused;
+  }
+
+  stopPropagation(event: Event) {
+    event.stopPropagation();
   }
 
 }
