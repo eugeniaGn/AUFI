@@ -16,6 +16,8 @@ import { RegistroComponent } from './registro/registro.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { ColeccionesComponent } from './colecciones/colecciones.component';
+import { ColeccionComponent } from './coleccion/coleccion.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     CrearOutfitComponent,
     AgregarPrendaComponent,
     RegistroComponent,
-    LoginComponent
+    LoginComponent,
+    ColeccionesComponent,
+    ColeccionComponent
   ],
   imports: [
     BrowserModule,

@@ -6,23 +6,19 @@ import { EstiloRapidoComponent } from './estilo-rapido/estilo-rapido.component';
 import { AgregarPrendaComponent } from './agregar-prenda/agregar-prenda.component';
 import { RegistroComponent } from './registro/registro.component';
 import { LoginComponent } from './login/login.component';
+import { ColeccionesComponent } from './colecciones/colecciones.component';
+import { ColeccionComponent } from './coleccion/coleccion.component';
 
 const routes: Routes = [
   {path: 'inicio', component: InicioComponent, },
   {path: 'crearOutfit', component: CrearOutfitComponent, },
   {path: 'estiloRapido', component: EstiloRapidoComponent, },
   {path: 'agregarPrenda', component: AgregarPrendaComponent},
+  {path: 'colecciones', component: ColeccionesComponent, },
   {path: 'registro', component: RegistroComponent, },
   {path: 'login', component: LoginComponent, },
-  {
-    path: '**',
-    redirectTo: 'login',
-    pathMatch: 'full'
-  },
-  {
-    path: 'folder/:id',
-    loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
-  }
+  {path: 'coleccion/:name/:id', component: ColeccionComponent, },
+  {path: '**', redirectTo: 'login', pathMatch: 'full' }
 ];
 
 @NgModule({
