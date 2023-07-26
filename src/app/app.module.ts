@@ -13,7 +13,7 @@ import { AgregarPrendaComponent } from './agregar-prenda/agregar-prenda.componen
 import { PhotoService } from './services/photo.service';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { RegistroComponent } from './registro/registro.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ColeccionesComponent } from './colecciones/colecciones.component';
@@ -39,7 +39,8 @@ import { ColeccionComponent } from './coleccion/coleccion.component';
     RouterModule,
     AutocompleteLibModule,
     ReactiveFormsModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    FormsModule
   ],
   providers: [
     PhotoService,
