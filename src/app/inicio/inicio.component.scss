@@ -1,16 +1,20 @@
 .modal{
-  position: fixed;
-  top: 0;
-  right: 0;
-  background-color: var(--fondo);
-  width: 100%;
-  max-width: 350px;
-  height: 100vh;
+  // position: fixed;
+  // top: 0;
+  // right: 0;
+  // background-color: var(--fondo);
+  // width: 100%;
+  // max-width: 350px;
+  // height: 100vh;
 
-  visibility: hidden;
-  opacity: 0;
-  transform: translateX(100%);
-  transition: all .35s ease-in;
+  // visibility: hidden;
+  // opacity: 0;
+  // transform: translateX(100%);
+  // transition: all .35s ease-in;
 
-  z-index: 20000;
+  // z-index: 20000;
+
+  .mat-menu-content button.mat-menu-item {
+    background-color: transparent !important;
+  }
 }

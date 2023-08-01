@@ -1,78 +1,130 @@
+import { AppComponent } from './../app.component';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConexionService } from '../services/conexion.service';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDialog } from '@angular/material/dialog';
+import { PrendaComponent } from '../prenda/prenda.component';
+
 @Component({
   selector: 'app-inicio',
   templateUrl: './inicio.component.html',
   styleUrls: ['./inicio.component.scss'],
 })
 export class InicioComponent  implements OnInit {
+  estilos : any[] = [];
+  materiales : any[] = [];
+  colores : any[] = [];
+  marcas : any[] = [];
+  climas : any[] = [];
   tipos : any[] = [];
   subtipos : any[] = [];
-  prendas : any[] = [
-    {"tipo":"Jeans"},
-    {"tipo":"Blusa"},
-    {"tipo":"Cinturon"},
-    {"tipo":"Pashmina"},
-    {"tipo":"Pants"},
-    {"tipo":"Blazer"},
-    {"tipo":"Abrigo"},
-    {"tipo":"Tenis"},
-    {"tipo":"Sudadera"},
-    {"tipo":"Pulsera"},
-    {"tipo":"Anillo"},
-    {"tipo":"Vestido"},
-    {"tipo":"Gorra"},
-    {"tipo":"Sombrero"},
-    {"tipo":"Chamarra"},
-    {"tipo":"Short"},
-  ];
+  caracteristicas : any[] = [];
+  prendas: any[] = [];
   prendasFiltradas : any [] = [];
   accesorios : any[] = [];
 
-  filtros : any[] =
-  [
-    {"nombre":"Tipo", "activo": false, "icono": true},
-    {"nombre":"Estilo", "activo": false, "icono": false},
-    {"nombre":"Material", "activo": false, "icono": false},
-    {"nombre":"Color", "activo": false, "icono": false},
-    {"nombre":"Marca", "activo": false, "icono": false},
-    {"nombre":"Clima", "activo": false, "icono": false},
-  ];
+  prendasEstilo: any[] = [];
+
+  filtros : any[] = [];
+  hasSubtipos = false;
+  caracs?: any;
+  hasCaracs = false;
 
   filtroActivo:boolean = false;
   escribiendo:string = "";
 
   constructor(
     private conexion: ConexionService,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
   ) {
+    this.obtenerPrendas();
+    this.obtenerTipos();
+    this.obtenerEstilos();
+    this.obtenerMateriales();
+    this.obtenerColores();
+    this.obtenerMarcas();
+    this.obtenerClimas();
   }
 
   ngOnInit() {}
 
-  obtenerTipos() {
-    this.conexion.get('armario', 'getTipos').subscribe((dato: any) => {
-      this.tipos;
-      console.log(dato);
+  obtenerPrendaEstilo() {
+    var prendas: any = [];
+    this.estilos.forEach((estilo: any) => {
+      this.prendas.forEach((prenda: any) => {
+        if (prenda.estilo == estilo.name){
+          prendas.push(prenda);
+        }
+      });
+      if(prendas.length > 0){
+        this.prendasEstilo.push({"estilo": estilo.name,  "arreglo": prendas});
+      }
+      prendas = [];
+    });
+    console.log(this.prendasEstilo);
+  }
+
+  obtenerClimas() {
+    this.conexion.get('categoria', 'getClimas').subscribe((dato: any) => {
+      this.climas = dato;
+      this.filtros.push({"nombre":"Clima", "activo": false, "contenido": this.climas })
+      // console.log(dato);
     });
   }
 
-  obtenerSubtipos() {
-    this.conexion.get('armario', 'getSubtipos').subscribe((dato: any) => {
-      this.tipos;
+  obtenerMarcas() {
+    this.conexion.get('categoria', 'getMarcas').subscribe((dato: any) => {
+      this.marcas = dato;
+      this.filtros.push({"nombre":"Marca", "activo": false, "contenido": this.marcas })
+      // console.log(dato);
+    });
+  }
+
+  obtenerColores() {
+    this.conexion.get('categoria', 'getColores').subscribe((dato: any) => {
+      this.colores = dato;
+      this.filtros.push({"nombre":"Color", "activo": false, "contenido": this.colores })
+      // console.log(dato);
+    });
+  }
+
+  obtenerMateriales() {
+    this.conexion.get('categoria', 'getMateriales').subscribe((dato: any) => {
+      this.materiales = dato;
+      this.filtros.push({"nombre":"Material", "activo": false, "contenido": this.materiales })
+      // console.log(dato);
+    });
+  }
+
+  obtenerEstilos() {
+    this.conexion.get('categoria', 'getEstilos').subscribe((dato: any) => {
+      this.estilos = dato;
+      this.filtros.push({"nombre":"Estilo", "activo": false, "contenido": this.estilos });
+      // console.log(dato);
+      this.obtenerPrendaEstilo();
+    });
+  }
+
+  obtenerTipos() {
+    this.conexion.get('categoria', 'getTipos').subscribe((dato: any) => {
+      this.tipos = dato;
+      this.filtros.push({"nombre":"Tipo", "activo": false, "contenido": this.tipos })
+      // console.log(dato);
     });
   }
 
   obtenerPrendas() {
     this.conexion.get('prenda', 'getPrendas').subscribe((dato: any) => {
-      this.prendas;
+      this.prendas = dato;
+      console.log(this.prendas);
     });
   }
 
   obtenerAccesorios() {
     this.conexion.get('accesorio', 'getAccesorios').subscribe((dato: any) => {
-      this.accesorios;
+      this.prendas.push(dato);
     });
   }
 
@@ -80,28 +132,21 @@ export class InicioComponent  implements OnInit {
     switch (nombreF) {
       case "Tipo":
         this.filtros[0].activo = !this.filtros[0].activo;
-        // console.log("Tipo");
-        console.log(this.filtros[0].activo);
         break;
       case "Estilo":
         this.filtros[1].activo = !this.filtros[1].activo;
-        // console.log("Estilo");
         break;
       case "Material":
         this.filtros[2].activo = !this.filtros[2].activo;
-        // console.log("Material");
         break;
       case "Color":
         this.filtros[3].activo = !this.filtros[3].activo;
-        // console.log("Color");
         break;
       case "Marca":
         this.filtros[4].activo = !this.filtros[4].activo;
-        // console.log("Marca");
           break;
       case "Clima":
         this.filtros[5].activo = !this.filtros[5].activo;
-        // console.log("Marca");
         break;
     }
   }
@@ -117,7 +162,7 @@ export class InicioComponent  implements OnInit {
       }
       return true;
     } else {
-      this.buscar(data)
+      this.buscar(data);
       return false;
     }
   }
@@ -134,33 +179,38 @@ export class InicioComponent  implements OnInit {
         for (let i = 0; i < filtroValue.length; i++) {
           textoInput = textoInput + this.filtro(filtroValue[i]);
         }
-
-        let busqueda: any = prenda.tipo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput);
-
+        let busqueda: any = false;
+        if (!prenda.subtipo) {
+          busqueda = prenda.tipo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+          prenda.clima.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+          prenda.color.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+          prenda.material.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+          prenda.marca.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+          prenda.estilo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput);
+        } else {
+          if (!prenda.caracteristicas) {
+            busqueda = prenda.tipo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+            prenda.clima.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+            prenda.subtipo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+            prenda.color.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+            prenda.material.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+            prenda.marca.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+            prenda.estilo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput);
+          } else {
+            busqueda = prenda.tipo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+            prenda.subtipo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+            prenda.caracteristicas.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+            prenda.clima.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+            prenda.color.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+            prenda.material.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+            prenda.marca.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+            prenda.estilo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput);
+          }
+        }
         return busqueda;
       });
 
-      // Buscar platillo en menú completo
-    // }
-    //  else if (buscarEn == 'temporada') {
-
-    //   this.prendasFiltradasT = this.prendasT.filter((plato: any) => {
-    //     let textoInput: any = '';
-
-    //     for (let i = 0; i < filtroValue.length; i++) {
-    //       textoInput = textoInput + this.filtro(filtroValue[i]);
-    //     }
-
-    //     let busqueda: any = plato.nombre.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) || plato.categoria.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleUpperCase().includes(textoInput) ||
-    //       plato.precioBase.toString().includes(textoInput)
-
-    //       console.log(plato.categoria);
-    //     return busqueda;
-    //   });
-
-    // }
   }
-
 
     filtro(textoInput: any) {
 
@@ -212,6 +262,47 @@ export class InicioComponent  implements OnInit {
       return textoInput;
     }
 
+    tipoSelectEvent(item: any) {
+      // Aquí va el filtrado
+      this.subtipos = [{}];
+      this.conexion.post('categoria', 'getSubtipos', {idTipo: item.id}).subscribe((data: any) => {
+        if (data.length > 0) {
+          data.forEach((subtipo: any) => {
+            this.subtipos.push({id: subtipo.idSubtipo, name: subtipo.nombreSubtipo});
+          });
+          this.hasSubtipos = true;
+          this.filtros.push({"nombre":"Subtipo", "activo": false, "contenido": this.subtipos, "funcion": (id: any) => { this.tipoSelectEvent(id) }});
+        } else this.hasSubtipos = false;
+      })
+      this.prendasFiltradas.filter((prenda: any) => {
+        return prenda.tipo == item.nombreTipo;
+      })
+    }
 
+    subtipoSelectEvent(item: any) {
+      // Aquí va el filtrado
+      this.caracs = [{}];
+      this.conexion.post('categoria', 'getCaracteristicas', {idSubtipo: item.id}).subscribe((data: any) => {
+        if (data.length > 0) {
+          data.forEach((carac: any) => {
+            this.caracs.push({id: carac.idCaracteristica, name: carac.nombreCaracteristica});
+          });
+          this.hasCaracs = true;
+          this.filtros.push({"nombre":"Caracteristicas", "activo": false, "contenido": this.caracteristicas });
+        } else this.hasCaracs = false;
+      })
+      this.prendasFiltradas.filter((prenda: any) => {
+        return prenda.subtipo == item.nombreSubtipo;
+      })
+    }
+
+
+  openDialogPrenda(data: any) {
+    let dialogRef = this.dialog.open(PrendaComponent, { width: '95%', height: '80%', data: { idPrenda: data.idPrenda, tipo: data.tipo, subtipo:data.subtipo, caracteristicas:data.caracteristicas, estilo: data.estilo, material: data.material, color: data.color, marca: data.marca, clima: data.clima, imagenPrenda: data.imagenPrenda, fondo: data.fondo } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log(`Dialog result: ${result}`);
+    });
+  }
 
 }
