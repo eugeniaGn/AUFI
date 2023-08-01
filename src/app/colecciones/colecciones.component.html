@@ -1,3 +1,24 @@
-<p>
-  colecciones works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Colecciones</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <section class="flex flex-wrap justify-center items-center">
+    <article>
+      <div class="rounded-lg bg-timberWolf p-5 m-5 w-[150px] h-[150px]">
+        <ion-img>1</ion-img>
+        <ion-img>2</ion-img>
+        <ion-img>3</ion-img>
+        <ion-img>4</ion-img>
+      </div>
+      <ion-label>Todo</ion-label>
+    </article>
+    <article *ngFor="let coleccion of colecciones">
+      <div class="rounded-lg bg-timberWolf p-5 m-5 w-[150px] h-[150px]"
+          (click)="goToColeccion(coleccion)">
+        <ion-img>Imagen</ion-img>
+      </div>
+      <ion-label>{{coleccion.name}}</ion-label></article>
+  </section>
+</ion-content>

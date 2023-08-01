@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{coleccionName}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <section class="flex justify-center items-center gap-1">
+    <article class="outline-black rounded-lg w-[60px] h-[60px]"
+    *ngFor="let outfit of outfits" (click)="openOutfit()">
+      <ion-img [src]="outfit.image"></ion-img>
+    </article>
+  </section>
+</ion-content>

@@ -22,6 +22,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { PrendaComponent } from './prenda/prenda.component';
 
 
+import { ColeccionesComponent } from './colecciones/colecciones.component';
+import { ColeccionComponent } from './coleccion/coleccion.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,8 @@ import { PrendaComponent } from './prenda/prenda.component';
     AgregarPrendaComponent,
     RegistroComponent,
     LoginComponent,
+    ColeccionesComponent,
+    ColeccionComponent,
     PrendaComponent
   ],
   // entryComponents:[
