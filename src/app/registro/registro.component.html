@@ -1,5 +1,5 @@
-<div class="w-full h-full bg-teaGreen p-4 overflow-scroll">
-  <Section [ngClass] class="w-full h-fit rounded-2xl bg-teaRed p-6 mt-6 drop-shadow-lg overflow-scroll">
+<div class="w-full h-full bg-whiteSmoke p-4 overflow-scroll">
+  <Section [ngClass] class="w-full h-fit rounded-2xl bg-silver p-6 mt-6 drop-shadow-lg overflow-scroll">
     <br>
     <div class="w-full max--xs">
       <form class="bg-timberWolf text-center  shadow-md rounded px-8 pt-6 pb-8 mb-4 ng-dirty ng-touched ng-valid"
@@ -12,7 +12,7 @@
           <label class="block text-blanco text-sm font-bold mb-2">
           </label>
           <input
-            class="input shadow bg-davysGray  appearance-none border rounded w-full py-2 px-3 text-blanco leading-tight focus:outline-none focus:shadow-outline"
+            class="input shadow bg-grisC  appearance-none border rounded w-full py-2 px-3 text-blanco leading-tight focus:outline-none focus:shadow-outline"
             name="nombresUsuario" formControlName="nombresUsuario" type="text" placeholder="Nombre de Usuario">
             <span *ngIf="campoEsValido('nombresUsuario')"></span>
         </div>
@@ -20,7 +20,7 @@
           <label class="block text-blanco text-sm font-bold mb-2">
           </label>
           <input
-            class="shadow bg-davysGray appearance-none border rounded w-full py-2 px-3 text-blanco leading-tight focus:outline-none focus:shadow-outline"
+            class="shadow bg-grisC appearance-none border rounded w-full py-2 px-3 text-blanco leading-tight focus:outline-none focus:shadow-outline"
             name="apellidoP" formControlName="apellidoP" type="text" placeholder="Apellido Paterno">
             <span *ngIf="campoEsValido('apellidoP')"></span>
         </div>
@@ -28,12 +28,12 @@
           <label class="block text-blanco text-sm font-bold mb-2">
           </label>
           <input
-            class="shadow bg-davysGray text-blanco appearance-none border rounded w-full py-2 px-3 text-blanco leading-tight focus:outline-none focus:shadow-outline"
+            class="shadow bg-grisC text-blanco appearance-none border rounded w-full py-2 px-3 text-blanco leading-tight focus:outline-none focus:shadow-outline"
             name="apellidoM" formControlName="apellidoM" type="text" placeholder="Apellido Materno">
             <span *ngIf="campoEsValido('apellidoM')"></span>
         </div>
         <div class=" relative">
-          <select class="block appearance-none w-full text-blanco  bg-davysGray px-2 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" name="genero" formControlName="genero" [(ngModel)]="nuevo.genero">
+          <select class="block appearance-none w-full text-blanco  bg-grisC px-2 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" name="genero" formControlName="genero" [(ngModel)]="nuevo.genero">
             <option [value]="genero" *ngFor="let genero of Genero" ng-options="nuevo.Genero">{{genero}}</option>
           </select>
           <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-blanco">
@@ -44,7 +44,7 @@
           <label class="block text-blanco text-sm font-bold mb-2">
           </label>
           <input
-            class="shadow bg-davysGray text-blanco appearance-none border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline"
+            class="shadow bg-grisC text-blanco appearance-none border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline"
             name="telefono" formControlName="telefono" type="text" placeholder="Telefono">
             <span *ngIf="campoEsValido('telefono')"></span>
         </div>
@@ -52,7 +52,7 @@
           <label class="block text-blanco text-sm font-bold mb-2">
           </label>
           <input
-            class="shadow bg-davysGray text-blanco appearance-none border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline"
+            class="shadow bg-grisC text-blanco appearance-none border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline"
             name="correo" formControlName="correo" type="text" placeholder="Correo">
             <span *ngIf="campoEsValido('correo')"></span>
         </div>
@@ -60,15 +60,15 @@
           <label class="block text-blanco text-sm font-bold mb-2">
           </label>
           <input
-            class="shadow bg-davysGray text-blanco appearance-none border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline"
+            class="shadow bg-grisC text-blanco appearance-none border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline"
             name="userName" formControlName="userName" type="text" placeholder="User Name">
             <span *ngIf="campoEsValido('userName')"></span>
         </div>
         <div class="mb-4">
-          <label class="block text-blanco bg-davysGray text-sm font-bold mb-2">
+          <label class="block text-blanco bg-grisC text-sm font-bold mb-2">
           </label>
           <input
-            class="shadow bg-davysGray appearance-none border rounded w-full py-2 px-3 text-blanco leading-tight focus:outline-none focus:shadow-outline"
+            class="shadow bg-grisC appearance-none border rounded w-full py-2 px-3 text-blanco leading-tight focus:outline-none focus:shadow-outline"
             name="fechaNacimiento" formControlName="fechaNacimiento" type="text" placeholder="Fecha de Nacimiento">
             <span *ngIf="campoEsValido('fechaNacimiento')"></span>
         </div>
@@ -87,7 +87,7 @@
         </div> -->
         <div class="mb-6">
           <label class="block text-blanco text-sm font-bold mb-2" for="contrasena"></label>
-          <input class="shadow bg-davysGray appearance-none rounded w-full py-2 px-3 text-blanco mb-3 leading-tight focus:outline-none focus:shadow-outline" 
+          <input class="shadow bg-grisC appearance-none rounded w-full py-2 px-3 text-blanco mb-3 leading-tight focus:outline-none focus:shadow-outline" 
           name="contrasena" formControlName="contrasena" type="password" placeholder="Contraseña">
           <span *ngIf="campoEsValido('contrasena')"></span>
         </div>
@@ -95,7 +95,7 @@
           <button class="bg-davysGray hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
             Sign up
           </button>
-          <a class="inline-block align-baseline font-bold text-sm text-imperialRed hover:text-coralPink" href="/login ">
+          <a class="inline-block align-baseline font-bold text-sm text-davysGray hover:text-davysGray" href="/login ">
             Have an account ?
           </a>
         </div>
