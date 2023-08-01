@@ -16,6 +16,12 @@ import { RegistroComponent } from './registro/registro.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatMenuModule} from '@angular/material/menu';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
+import { PrendaComponent } from './prenda/prenda.component';
+
+
 
 @NgModule({
   declarations: [
@@ -24,8 +30,12 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     CrearOutfitComponent,
     AgregarPrendaComponent,
     RegistroComponent,
-    LoginComponent
+    LoginComponent,
+    PrendaComponent
   ],
+  // entryComponents:[
+  //   DialogComponent,
+  // ],
   imports: [
     BrowserModule,
     IonicModule.forRoot({mode: 'ios'}),
@@ -36,7 +46,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     AutocompleteLibModule,
     ReactiveFormsModule,
     MatSlideToggleModule,
-    FormsModule
+    FormsModule,
+    MatMenuModule,
+    BrowserAnimationsModule,
+    MatDialogModule
   ],
   providers: [
     PhotoService,
