@@ -151,8 +151,8 @@ export class AgregarPrendaComponent {
   }
 
   colorSelectEvent(item: any) {
-    if (this.isPrenda) this.prenda.color = item.idColor;
-    else this.accesorio.color = item.idColor;
+    if (this.isPrenda) this.prenda.color = item.id;
+    else this.accesorio.color = item.id;
   }
 
   estiloSelectEvent(item: any) {
