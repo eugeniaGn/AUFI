@@ -51,6 +51,7 @@ export class AgregarPrendaComponent {
     this.conx.get('categoria', 'getColores').subscribe((data: any) => {
       if (data) {
         this.colores = data;
+        console.log(this.colores);
       }
     })
     this.conx.get('categoria', 'getMarcas').subscribe((data: any) => {

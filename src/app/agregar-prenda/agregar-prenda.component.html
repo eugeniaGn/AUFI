@@ -84,7 +84,7 @@
   <p class="text-davysGray text-lg text-center font-lato font-medium">Color predominante</p>
   <article class="w-full justify-left pt-3 pb-6 gap-x-8 flex overflow-x-scroll shrink-0">
     <button *ngFor="let color of colores;"
-      (click)="colorSelectEvent(color)" [style.background-color]="color.hexaColor" class="w-10 h-10 shrink-0 rounded-full drop-shadow-lg">
+      (click)="colorSelectEvent(color)" [style.background]="color.color" class="w-10 h-10 shrink-0 rounded-full drop-shadow-lg">
     </button>
   </article>
 
