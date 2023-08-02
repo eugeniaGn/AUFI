@@ -11,7 +11,8 @@ export class ConexionService {
   public httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json; charset=utf8',
-      'Allow-Origin': '*'
+      'Allow-Origin': '*',
+      'Authorization': `Bearer ${localStorage.getItem('aufiToken')}`
     })
   };
 
@@ -20,10 +21,10 @@ export class ConexionService {
   ) { }
 
   get(modelo: string, accion: string){
-    return this.http.get(`${this.baseUrl}${modelo}.php?option=${accion}`);
+    return this.http.get(`${this.baseUrl}${modelo}.php?option=${accion}`, this.httpOptions);
   }
 
   post(modelo: string, accion: string, datos: any){
-    return this.http.post(`${this.baseUrl}${modelo}.php?option=${accion}`, datos);
+    return this.http.post(`${this.baseUrl}${modelo}.php?option=${accion}`, datos, this.httpOptions);
   }
 }
