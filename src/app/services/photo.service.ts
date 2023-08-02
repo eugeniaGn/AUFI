@@ -52,7 +52,7 @@ export class PhotoService {
     data.append('cloud_name', 'duz7dfwse');
     this.http.post('https://api.cloudinary.com/v1_1/duz7dfwse/image/upload/', data).subscribe((response: any) =>{ 
       if (response.url) {
-        this.editedPhotoURL = response.eager[0].url;
+        this.editedPhotoURL = response.url
       } else {
         alert("Ocurrio un error al guardar la imagen.");
       }
