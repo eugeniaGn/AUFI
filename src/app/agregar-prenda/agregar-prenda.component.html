@@ -1,3 +1,7 @@
+<div *ngIf="loading" class="w-[100vw] h-[100vh] bg-davysGray bg-opacity-50 z-20 fixed text-center top-0 left-0 pt-[25vh] text-whiteSmoke">
+  <img src="assets/logo white sin fondo.png" class="m-auto" width="70%" height="auto" alt="">
+  Cargando...
+</div>
 <section class="flex justify-between text-black text-xl m-4">
   <button>
     <svg [routerLink]="['/inicio']" class="w-5 h-5 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
@@ -23,8 +27,8 @@
     (click)="takePhoto()">
     <ion-icon icon="camera"></ion-icon>Tomar foto
   </button>
-  <div *ngIf="photoService.photoURL">
-    <ion-img [src]="photoService.photoURL"></ion-img>
+  <div *ngIf="photoService.base64Data">
+    <ion-img [src]="photoService.base64Data"></ion-img>
   </div>
   <ng-template #itemTemplate let-item>
     <a [innerHTML]="item.name"></a>
