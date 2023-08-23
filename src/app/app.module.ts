@@ -24,6 +24,10 @@ import { PrendaComponent } from './prenda/prenda.component';
 
 import { ColeccionesComponent } from './colecciones/colecciones.component';
 import { ColeccionComponent } from './coleccion/coleccion.component';
+import { MeGustaComponent } from './me-gusta/me-gusta.component';
+import { EditarPrendaComponent } from './editar-prenda/editar-prenda.component';
+import {MatSelectModule} from '@angular/material/select';
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -35,7 +39,9 @@ import { ColeccionComponent } from './coleccion/coleccion.component';
     LoginComponent,
     ColeccionesComponent,
     ColeccionComponent,
-    PrendaComponent
+    PrendaComponent,
+    MeGustaComponent,
+    EditarPrendaComponent
   ],
   // entryComponents:[
   //   DialogComponent,
@@ -53,7 +59,11 @@ import { ColeccionComponent } from './coleccion/coleccion.component';
     FormsModule,
     MatMenuModule,
     BrowserAnimationsModule,
-    MatDialogModule
+    MatDialogModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatRadioModule
   ],
   providers: [
     PhotoService,

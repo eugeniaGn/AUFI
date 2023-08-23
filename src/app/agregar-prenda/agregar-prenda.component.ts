@@ -3,6 +3,7 @@ import { PhotoService } from '../services/photo.service';
 import { ConexionService } from '../services/conexion.service';
 import { Prenda } from 'src/interfaces/prenda.interface';
 import { Accesorio } from 'src/interfaces/accesorio.interface';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-agregar-prenda',
@@ -29,7 +30,40 @@ export class AgregarPrendaComponent {
   prenda: Prenda = {};
   accesorio: Accesorio = {}
 
-  constructor(public photoService: PhotoService, private conx: ConexionService) {
+  climaActivo: boolean = false;
+  climaSeleccionado: any = "Clima";
+  colorActivo: boolean = false;
+  colorSeleccionado = [{"color": "Color", "fondo": "#F2F2F2"}];
+
+  formularioPrenda: FormGroup;
+
+  // agregarPrenda() {
+  //   if (Object.keys(this.prenda).length > 0) {
+  //     this.prenda.imagen = this.photoService.editedPhotoURL;
+  //     this.prendas.push(this.prenda);
+  //     this.photoService.photoURL = '';
+  //     this.photoService.editedPhotoURL = '';
+  //     this.photoService.base64Data = '';
+  //     this.prenda = {};
+  //   }
+  // }
+
+  constructor(
+    public photoService: PhotoService,
+    private conx: ConexionService,
+    private fb: FormBuilder
+    ) {
+      this.formularioPrenda = this.fb.group({
+        climaPrenda: [null, [Validators.required]],
+        estiloPrenda: [null, [Validators.required]],
+        tipoPrenda: [null, [Validators.required]],
+        subtipoPrenda: [null],
+        caracteristicaPrenda: [null],
+        materialPrenda: [null, [Validators.required]],
+        imagenPrenda: [null, [Validators.required]],
+        colorPrenda: [null, [Validators.required]],
+        marcaPrenda: [null, [Validators.required]],
+      });
     this.conx.get('categoria', 'getClimas').subscribe((data: any) => {
       if (data) this.climas = data;
     });
@@ -91,6 +125,7 @@ export class AgregarPrendaComponent {
         this.loading = false;
       })
     });
+    console.log(this.prendas);
   }
 
   agregarPrenda() {
@@ -153,6 +188,11 @@ export class AgregarPrendaComponent {
   colorSelectEvent(item: any) {
     if (this.isPrenda) this.prenda.color = item.id;
     else this.accesorio.color = item.id;
+    this.colorSeleccionado[0].color = item.color;
+    this.colorSeleccionado[0].fondo = item.fondo;
+    setTimeout(() => {
+      this.colorEsActivo();
+  }, 200);
   }
 
   estiloSelectEvent(item: any) {
@@ -162,11 +202,37 @@ export class AgregarPrendaComponent {
 
   selectClima(clima: any) {
     this.prenda.clima = clima.idClima;
+    this.climaSeleccionado = clima.name;
+    setTimeout(() => {
+      this.climaEsActivo();
+  }, 200);
   }
 
   marcaSelectEvent(item: any) {
     if (this.isPrenda) this.prenda.marca = item.id;
     else this.accesorio.marca = item.id;
   }
+
+  climaEsActivo(){
+    // if (this.climaActivo){
+    //   this.climaActivo = !this.climaActivo;
+    // } else{
+    //   this.climaActivo = !this.climaActivo;
+    // }
+    // console.log(this.climas?.find((clima:any) => clima.id == this.formularioPrenda.value.climaPrenda).name);
+    if(this.formularioPrenda.value.climaPrenda){
+      return this.climas?.find((clima:any) => clima.id == this.formularioPrenda.value.climaPrenda)?.name
+    }
+    return "Clima"
+  }
+
+  colorEsActivo(){
+    if (this.colorActivo){
+      this.colorActivo = !this.colorActivo;
+    } else{
+      this.colorActivo = !this.colorActivo;
+    }
+  }
+
 
 }

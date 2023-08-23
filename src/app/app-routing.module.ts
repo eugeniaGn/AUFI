@@ -8,6 +8,7 @@ import { RegistroComponent } from './registro/registro.component';
 import { LoginComponent } from './login/login.component';
 import { ColeccionesComponent } from './colecciones/colecciones.component';
 import { ColeccionComponent } from './coleccion/coleccion.component';
+import { MeGustaComponent } from './me-gusta/me-gusta.component';
 
 const routes: Routes = [
   {path: 'inicio', component: InicioComponent, },
@@ -15,6 +16,7 @@ const routes: Routes = [
   {path: 'estiloRapido', component: EstiloRapidoComponent, },
   {path: 'agregarPrenda', component: AgregarPrendaComponent},
   {path: 'colecciones', component: ColeccionesComponent, },
+  {path: 'meGusta', component: MeGustaComponent, },
   {path: 'registro', component: RegistroComponent, },
   {path: 'login', component: LoginComponent, },
   {path: 'coleccion/:name/:id', component: ColeccionComponent, },

@@ -39,32 +39,20 @@ export class InicioComponent  implements OnInit {
     private router: Router,
     public dialog: MatDialog
   ) {
-    this.obtenerPrendas();
-    this.obtenerTipos();
-    this.obtenerEstilos();
-    this.obtenerMateriales();
-    this.obtenerColores();
-    this.obtenerMarcas();
-    this.obtenerClimas();
+    this.funcion_asyncrona();
+  }
+
+  async funcion_asyncrona(){
+    await this.obtenerPrendas();
+    await this.obtenerTipos();
+    await this.obtenerEstilos();
+    await this.obtenerMateriales();
+    await this.obtenerColores();
+    await this.obtenerMarcas();
+    await this.obtenerClimas();
   }
 
   ngOnInit() {}
-
-  obtenerPrendaEstilo() {
-    var prendas: any = [];
-    this.estilos.forEach((estilo: any) => {
-      this.prendas.forEach((prenda: any) => {
-        if (prenda.estilo == estilo.name){
-          prendas.push(prenda);
-        }
-      });
-      if(prendas.length > 0){
-        this.prendasEstilo.push({"estilo": estilo.name,  "arreglo": prendas});
-      }
-      prendas = [];
-    });
-    console.log(this.prendasEstilo);
-  }
 
   obtenerClimas() {
     this.conexion.get('categoria', 'getClimas').subscribe((dato: any) => {
@@ -115,44 +103,45 @@ export class InicioComponent  implements OnInit {
     });
   }
 
-  obtenerPrendas() {
-    this.conexion.get('prenda', 'getPrendas').subscribe((dato: any) => {
+  async obtenerPrendas() {
+    await this.conexion.get('prenda', 'getPrendas').subscribe((dato: any) => {
       this.prendas = dato;
       console.log(this.prendas);
     });
+    await this.obtenerAccesorios();
   }
 
   obtenerAccesorios() {
     this.conexion.get('accesorio', 'getAccesorios').subscribe((dato: any) => {
-      this.prendas.push(dato);
+      dato.forEach((accesorio: any) =>{
+        this.prendas.push(accesorio);
+      });
+      console.log(this.prendas);
     });
   }
 
-  toggleFiltrar(nombreF:string) {
-    switch (nombreF) {
-      case "Tipo":
-        this.filtros[0].activo = !this.filtros[0].activo;
-        break;
-      case "Estilo":
-        this.filtros[1].activo = !this.filtros[1].activo;
-        break;
-      case "Material":
-        this.filtros[2].activo = !this.filtros[2].activo;
-        break;
-      case "Color":
-        this.filtros[3].activo = !this.filtros[3].activo;
-        break;
-      case "Marca":
-        this.filtros[4].activo = !this.filtros[4].activo;
-          break;
-      case "Clima":
-        this.filtros[5].activo = !this.filtros[5].activo;
-        break;
-    }
+  obtenerPrendaEstilo() {
+    var prendas: any = [];
+    this.estilos.forEach((estilo: any) => {
+      this.prendas.forEach((prenda: any) => {
+        if (prenda.estilo == estilo.name){
+          prendas.push(prenda);
+        }
+      });
+      if (prendas.length > 0){
+        this.prendasEstilo.push({"estilo": estilo.name,  "arreglo": prendas});
+      }
+      prendas = [];
+    });
+    // console.log(this.prendasEstilo);
   }
 
-  crearOutfit(){
-    this.router.navigate(['/crearOutfit']);
+  toggleFiltrar(nombreF:string) {
+    for (let filtro of this.filtros) {
+      if(filtro.nombre === nombreF){
+        filtro.activo = !filtro.activo;
+      }
+    }
   }
 
   buscando(escribiendo: string, data: any){
@@ -170,9 +159,6 @@ export class InicioComponent  implements OnInit {
   buscar(data: any) {
     const filtroValue = (data.target as HTMLInputElement).value.trim()?.toLocaleLowerCase();
 
-    // Buscar platillo en menú completo
-    // if (buscarEn == 'menu') {
-
       this.prendasFiltradas = this.prendas.filter((prenda: any) => {
         let textoInput: any = '';
 
@@ -180,33 +166,67 @@ export class InicioComponent  implements OnInit {
           textoInput = textoInput + this.filtro(filtroValue[i]);
         }
         let busqueda: any = false;
-        if (!prenda.subtipo) {
+        if (!prenda.clima) {
           busqueda = prenda.tipo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-          prenda.clima.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
           prenda.color.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
           prenda.material.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
           prenda.marca.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
           prenda.estilo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput);
-        } else {
-          if (!prenda.caracteristicas) {
+          if (!prenda.subtipo) {
             busqueda = prenda.tipo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-            prenda.clima.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-            prenda.subtipo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
             prenda.color.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
             prenda.material.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
             prenda.marca.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
             prenda.estilo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput);
           } else {
+            if (!prenda.caracteristicas) {
+              busqueda = prenda.tipo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+              prenda.subtipo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+              prenda.color.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+              prenda.material.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+              prenda.marca.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+              prenda.estilo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput);
+            } else {
+              busqueda = prenda.tipo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+              prenda.subtipo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+              prenda.caracteristicas.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+              prenda.color.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+              prenda.material.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+              prenda.marca.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+              prenda.estilo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput);
+            }
+          }
+        } else {
+          if (!prenda.subtipo) {
             busqueda = prenda.tipo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-            prenda.subtipo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-            prenda.caracteristicas.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
             prenda.clima.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
             prenda.color.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
             prenda.material.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
             prenda.marca.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
             prenda.estilo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput);
+          } else {
+            if (!prenda.caracteristicas) {
+              busqueda = prenda.tipo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+              prenda.clima.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+              prenda.subtipo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+              prenda.color.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+              prenda.material.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+              prenda.marca.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+              prenda.estilo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput);
+            } else {
+              busqueda = prenda.tipo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+              prenda.subtipo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+              prenda.caracteristicas.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+              prenda.clima.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+              prenda.color.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+              prenda.material.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+              prenda.marca.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+              prenda.estilo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput);
+            }
           }
         }
+
+
         return busqueda;
       });
 
@@ -214,7 +234,7 @@ export class InicioComponent  implements OnInit {
 
     filtro(textoInput: any) {
 
-      let simbolos = new String('#$@%&|^`´*çÇ');
+      let simbolos = new String('#$@%&|^`´*çÇº\º!·/()=');
       var arrA = new String('áàäâÀÁÄÂ');
       let arrE = new String('éèëêÈÉËÊEÊ€');
       let arrI = new String('íìïîÍÌÏÎ');

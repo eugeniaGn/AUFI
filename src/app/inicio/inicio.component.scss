@@ -14,7 +14,11 @@
 
   // z-index: 20000;
 
-  .mat-menu-content button.mat-menu-item {
-    background-color: transparent !important;
+  .mat-menu {
+    background-color: red !important;
+  }
+
+  .whyIsNotRed {
+    background-color: blue !important;
   }
 }

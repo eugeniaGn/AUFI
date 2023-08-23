@@ -34,3 +34,14 @@
 ::-webkit-scrollbar {
   display: none;
 }
+.autocomplete-container .input-container input{
+  background: transparent !important;
+}
+.autocomplete-container{
+  box-shadow: none !important;
+}
+::placeholder, input, mat-label{
+  font-size: 1.125rem !important;
+  line-height: 1.75rem !important;
+  color: #000000 !important;
+}

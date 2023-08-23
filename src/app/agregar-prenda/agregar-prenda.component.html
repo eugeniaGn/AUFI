@@ -1,7 +1,188 @@
-<section class="flex justify-between text-black text-xl m-4">
+<div [style.background]="colorSeleccionado[0].fondo" class="w-full h-full px-4 pb-4 overflow-y-scroll font-lato">
+  <section class="flex justify-between text-black text-xl py-4">
+    <button>
+      <svg [routerLink]="['/inicio']" class="w-5 h-5 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+      fill="none" viewBox="0 0 8 14">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+      d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13" />
+    </svg>
+  </button>
+</section>
+
+<!-- Sección prenda o accesorio -->
+<section class="flex justify-end items-center">
+  <ion-segment (ionChange)="contextToggle()" [swipeGesture]="true" class="w-full" value="prenda">
+    <ion-segment-button value="prenda" class="h-8 py-0 my-0 rounded-t-lg">
+      <ion-label class="text-base font-lato">Prenda</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="accesorio" class="h-8 py-0 my-0 rounded-t-lg">
+      <ion-label class="text-base font-lato">Accesorio</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</section>
+
+<form [formGroup]="formularioPrenda">
+    <!-- Clima y estilo -->
+    <section class="flex justify-evenly items-center mt-5">
+      <!-- <article *ngIf="isPrenda" class="text-black text-lg text-center font-lato font-medium">
+        <button (click)="climaEsActivo()"
+          [ngClass]="{'bg-whiteSmoke bg-opacity-15 rounded-t-lg mb-0': climaActivo === true}"
+          class="w-28 h-8 flex justify-evenly items-center rounded-t-lg mb-0">{{climaSeleccionado}}
+          <svg *ngIf="climaSeleccionado === 'Clima'" class="w-3 h-3 text-black" aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 8">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1" />
+          </svg>
+        </button>
+        <div *ngIf="climaActivo"
+          class="w-5/6 fixed grid grid-cols-3 z-50 gap-4 p-3 bg-whiteSmoke rounded-b-xl rounded-tr-xl overflow-y-scroll">
+          <button *ngFor="let clima of climas;" (click)="selectClima(clima)" formControlName="climaPrenda" name="climaPrenda"
+            [ngClass]="{'bg-grisF bg-opacity-100 drop-shadow-lg': climaSeleccionado === clima.name}"
+            class="w-24 h-8 shrink-0 rounded-full bg-grisF bg-opacity-90 drop-shadow-md">
+            {{clima.name}}
+          </button>
+        </div>
+      </article> -->
+
+      <button mat-button [matMenuTriggerFor]="menu" class="text-lg text-center font-lato font-medium">{{climaEsActivo()}}</button>
+<mat-menu #menu="matMenu">
+  <mat-radio-group formControlName="climaPrenda" class="grid grid-cols-2 gap-4">
+    <mat-radio-button [value]="clima?.id" *ngFor="let clima of climas">{{clima?.name}}</mat-radio-button>
+  </mat-radio-group>
+</mat-menu>
+
+
+      <article class="shadow-none">
+        <ng-autocomplete [data]="estilos" [searchKeyword]="keyword" placeholder="Estilo"
+          class="placeholder:text-black text-lg text-center font-lato font-medium"
+          (selected)="estiloSelectEvent($event)" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"
+          formControlName="estiloPrenda" name="estiloPrenda">
+        </ng-autocomplete>
+      </article>
+    </section>
+
+    <!-- Tipo, subtipo, características y material -->
+    <section class="flex flex-col justify-center items-center mt-5">
+
+      <article class="text-black text-lg text-center font-lato font-medium">
+        <ng-autocomplete [data]="tipos" [searchKeyword]="keyword" placeholder="Tipo"
+          class="text-black text-lg text-center font-lato font-medium shadow-none" (selected)='tipoSelectEvent($event)'
+          [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"
+          formControlName="tipoPrenda" name="tipoPrenda">
+        </ng-autocomplete>
+      </article>
+
+      <article class="flex">
+        <aside *ngIf="hasSubtipos">
+          <ng-autocomplete [data]="subtipos" [searchKeyword]="keyword" placeholder="Subtipo"
+            class="text-black text-lg text-center font-lato font-medium" (selected)='subtipoSelectEvent($event)'
+            [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"
+            formControlName="subtipoPrenda" name="subtipoPrenda">
+          </ng-autocomplete>
+        </aside>
+
+        <aside *ngIf="hasCaracs">
+          <ng-autocomplete [data]="caracs" [searchKeyword]="keyword" placeholder="Característica"
+            class="text-black text-lg text-center font-lato font-medium" (selected)="caracSelectEvent($event)"
+            [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"
+            formControlName="caracteristicaPrenda" name="caracteristicaPrenda">
+          </ng-autocomplete>
+        </aside>
+      </article>
+
+      <article>
+        <ng-autocomplete [data]="materiales" [searchKeyword]="keyword" placeholder="Material"
+          class="text-black text-lg text-center font-lato font-medium" (selected)="materialSelectEvent($event)"
+          [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"
+          formControlName="materialPrenda" name="materialPrenda">
+        </ng-autocomplete>
+      </article>
+    </section>
+
+    <!-- Tomar foto -->
+    <section class="flex justify-center items-center">
+      <article [style.background]="colorSeleccionado[0].fondo" class="my-10 w-fit h-3/4 shrink-0 bg-grisC rounded-xl">
+        <button (click)="takePhoto()" [style.background]="colorSeleccionado[0].fondo"
+          *ngIf="!photoService.photoURL"
+          class="w-72 h-96 flex justify-center items-center flex-col outline outline-1 outline-black rounded-xl"
+          formControlName="imagenPrenda" name="imagenPrenda">
+          <ion-icon icon="camera" class="text-7xl text-davysGray opacity-25"></ion-icon>
+          <p class="text-davysGray text-sm text-center font-lato font-light tracking-wider opacity-60">Tomar foto</p>
+        </button>
+
+        <aside *ngIf="photoService.photoURL" (click)="takePhoto()" class="w-fit h-96 rounded-xl">
+          <ion-img [src]="photoService.photoURL" class="w-fit h-96 rounded-xl"></ion-img>
+        </aside>
+
+        <ng-template #itemTemplate let-item>
+          <a [innerHTML]="item.name"></a>
+        </ng-template>
+
+        <ng-template #notFoundTemplate let-notFound>
+          <div [innerHTML]="notFound"></div>
+        </ng-template>
+      </article>
+    </section>
+
+    <!-- Color y marca -->
+    <section class="flex justify-evenly items-center">
+      <article class="text-black text-lg text-center font-lato font-medium">
+        <button (click)="colorEsActivo()" [style.background-color]="colorSeleccionado[0].color"
+          class="w-10 h-10 flex justify-evenly items-center shrink-0 rounded-full drop-shadow-lg">
+          <div *ngIf="colorSeleccionado[0].color === 'Color'" class="flex justify-evenly items-center gap-3">
+            <p>Color</p>
+            <svg class="w-3 h-3 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+              viewBox="0 0 14 8">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1" />
+            </svg>
+          </div>
+        </button>
+
+        <aside *ngIf="colorActivo"
+          class="w-5/6 fixed grid grid-cols-3 z-50 gap-4 mb-4 bg-whiteSmoke rounded-b-xl rounded-tr-xl overflow-y-scroll">
+          <button *ngFor="let color of colores;"
+            [ngClass]="{'bg-grisF bg-opacity-100': colorSeleccionado === color.name}" (click)="colorSelectEvent(color)"
+            class="w-24 h-10 shrink-0 rounded-full bg-grisF bg-opacity-25 drop-shadow-md"
+            formControlName="colorPrenda" name="colorPrenda">
+            <div [style.background]="color.color" class="w-10 h-10 shrink-0 rounded-full"></div>
+          </button>
+        </aside>
+      </article>
+
+      <article>
+        <ng-autocomplete [data]="marcas" [searchKeyword]="keyword" placeholder="Marca"
+          class="text-black text-lg text-center font-lato font-medium" (selected)="marcaSelectEvent($event)"
+          [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"
+          formControlName="marcaPrenda" name="marcaPrenda">
+        </ng-autocomplete>
+      </article>
+    </section>
+  </form>
+
+  <section class="flex justify-evenly w-full mt-5">
+    <button class="h-10 w-[40%] bg-indiaGreen rounded-lg items-center text-whiteSmoke text-xl"
+      (click)="guardar()"><ion-icon icon="checkmark"></ion-icon> Terminar</button>
+    <button *ngIf="isPrenda" class="h-10 w-[50%] bg-davysGray rounded-lg items-center text-white text-xl"
+      (click)="agregarPrenda()"><ion-icon icon="add"></ion-icon> Agregar otra</button>
+    <button *ngIf="!isPrenda" class="h-10 w-[50%] bg-davysGray rounded-lg items-center text-white text-xl"
+      (click)="agregarAccesorio()"><ion-icon icon="add"></ion-icon> Agregar otro</button>
+  </section>
+
+</div>
+
+
+
+
+
+
+
+<!-- <section class="flex justify-between text-black text-xl m-4">
   <button>
-    <svg [routerLink]="['/inicio']" class="w-5 h-5 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
-      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13" />
+    <svg [routerLink]="['/inicio']" class="w-5 h-5 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+      fill="none" viewBox="0 0 8 14">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+        d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13" />
     </svg>
   </button>
 </section>
@@ -35,76 +216,68 @@
 
   <p class="text-davysGray text-lg text-center font-lato font-medium">Tipo</p>
   <div class="w-full text-black">
-    <ng-autocomplete [data]="tipos" [searchKeyword]="keyword"
-      placeholder="Selecciona el tipo" (selected)='tipoSelectEvent($event)'
-      [itemTemplate]="itemTemplate"
-      [notFoundTemplate]="notFoundTemplate">
+    <ng-autocomplete [data]="tipos" [searchKeyword]="keyword" placeholder="Selecciona el tipo"
+      (selected)='tipoSelectEvent($event)' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
     </ng-autocomplete>
   </div>
 
   <p *ngIf="hasSubtipos" class="text-davysGray text-lg text-left font-lato font-medium">Subtipo</p>
   <div *ngIf="hasSubtipos" class="w-full">
     <ng-autocomplete [data]="subtipos" [searchKeyword]="keyword" placeholder="Selecciona el subtipo de prenda"
-      (selected)='subtipoSelectEvent($event)'
-      [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
+      (selected)='subtipoSelectEvent($event)' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
     </ng-autocomplete>
   </div>
 
   <p *ngIf="hasCaracs" class="text-davysGray text-lg text-center font-lato font-medium">Característica</p>
-  <!-- (selected)='selectEvent($event)' -->
   <div *ngIf="hasCaracs" class="w-full">
     <ng-autocomplete [data]="caracs" [searchKeyword]="keyword" placeholder="Selecciona la característica"
-      (selected)="caracSelectEvent($event)" [itemTemplate]="itemTemplate"
-      [notFoundTemplate]="notFoundTemplate">
+      (selected)="caracSelectEvent($event)" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
     </ng-autocomplete>
   </div>
 
   <p class="text-davysGray text-lg text-center font-lato font-medium">Estilo</p>
   <div class="w-full">
     <ng-autocomplete [data]="estilos" [searchKeyword]="keyword" placeholder="Selecciona el estilo"
-      (selected)="estiloSelectEvent($event)" [itemTemplate]="itemTemplate"
-      [notFoundTemplate]="notFoundTemplate">
+      (selected)="estiloSelectEvent($event)" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
     </ng-autocomplete>
   </div>
 
   <p *ngIf="isPrenda" class="text-davysGray text-lg text-center font-lato font-medium">Clima</p>
   <article *ngIf="isPrenda" class="w-full px-4 pt-3 pb-6 gap-x-6 flex overflow-x-scroll shrink-0">
-    <button *ngFor="let clima of climas;"
-    (click)="selectClima(clima)" class="w-[10.5rem] h-10 shrink-0 rounded-2xl bg-timberWolf drop-shadow-lg">{{clima.name}}</button>
+    <button *ngFor="let clima of climas;" (click)="selectClima(clima)"
+      class="w-[10.5rem] h-10 shrink-0 rounded-2xl bg-timberWolf drop-shadow-lg">{{clima.name}}</button>
   </article>
 
   <p class="text-davysGray text-lg text-center font-lato font-medium">Material</p>
   <div class="w-full">
     <ng-autocomplete [data]="materiales" [searchKeyword]="keyword" placeholder="Selecciona el material"
-      (selected)="materialSelectEvent($event)" [itemTemplate]="itemTemplate"
-      [notFoundTemplate]="notFoundTemplate">
+      (selected)="materialSelectEvent($event)" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
     </ng-autocomplete>
   </div>
 
   <p class="text-davysGray text-lg text-center font-lato font-medium">Color predominante</p>
   <article class="w-full justify-left pt-3 pb-6 gap-x-8 flex overflow-x-scroll shrink-0">
-    <button *ngFor="let color of colores;"
-      (click)="colorSelectEvent(color)" [style.background-color]="color.color" class="w-10 h-10 shrink-0 rounded-full drop-shadow-lg">
+    <button *ngFor="let color of colores;" (click)="colorSelectEvent(color)" [style.background-color]="color.color"
+      class="w-10 h-10 shrink-0 rounded-full drop-shadow-lg">
     </button>
   </article>
 
   <p class="text-davysGray text-lg text-center font-lato font-medium">Marca</p>
   <div class="w-full">
     <ng-autocomplete [data]="marcas" [searchKeyword]="keyword" placeholder="Selecciona la marca"
-      (selected)="marcaSelectEvent($event)" [itemTemplate]="itemTemplate"
-      [notFoundTemplate]="notFoundTemplate">
+      (selected)="marcaSelectEvent($event)" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
     </ng-autocomplete>
   </div>
 
   <div class="flex justify-evenly w-full mt-5">
     <button class="h-10 w-[40%] bg-indiaGreen rounded-lg items-center text-whiteSmoke text-xl"
       (click)="guardar()"><ion-icon icon="checkmark"></ion-icon> Terminar</button>
-    <button *ngIf="isPrenda" class="h-10 w-[50%] bg-davysGray rounded-lg items-center text-white text-xl" (click)="agregarPrenda()"><ion-icon
-        icon="add"></ion-icon> Agregar otra</button>
-    <button *ngIf="!isPrenda" class="h-10 w-[50%] bg-davysGray rounded-lg items-center text-white text-xl" (click)="agregarAccesorio()"><ion-icon
-        icon="add"></ion-icon> Agregar otro</button>
+    <button *ngIf="isPrenda" class="h-10 w-[50%] bg-davysGray rounded-lg items-center text-white text-xl"
+      (click)="agregarPrenda()"><ion-icon icon="add"></ion-icon> Agregar otra</button>
+    <button *ngIf="!isPrenda" class="h-10 w-[50%] bg-davysGray rounded-lg items-center text-white text-xl"
+      (click)="agregarAccesorio()"><ion-icon icon="add"></ion-icon> Agregar otro</button>
   </div>
-</section>
+</section> -->
 
 <!-- <p class="text-davysGray text-lg text-center font-lato font-medium">Clima <ion-icon icon="cloud"></ion-icon> </p>
 <article class="w-full px-4 pt-3 pb-6 gap-x-6 flex overflow-x-scroll shrink-0">
