@@ -20,8 +20,6 @@ import { MatMenuModule} from '@angular/material/menu';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
 import { PrendaComponent } from './prenda/prenda.component';
-
-
 import { ColeccionesComponent } from './colecciones/colecciones.component';
 import { ColeccionComponent } from './coleccion/coleccion.component';
 import { MeGustaComponent } from './me-gusta/me-gusta.component';

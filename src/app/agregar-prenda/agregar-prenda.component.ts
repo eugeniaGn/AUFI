@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { PhotoService } from '../services/photo.service';
 import { ConexionService } from '../services/conexion.service';
 import { Prenda } from 'src/interfaces/prenda.interface';
 import { Accesorio } from 'src/interfaces/accesorio.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { OpenaiService } from '../services/openai.service';
 
 @Component({
   selector: 'app-agregar-prenda',
@@ -50,7 +51,7 @@ export class AgregarPrendaComponent {
 
   constructor(
     public photoService: PhotoService,
-    private conx: ConexionService,
+    private conx: ConexionService, private gpt: OpenaiService,
     private fb: FormBuilder
     ) {
       this.formularioPrenda = this.fb.group({
@@ -64,6 +65,7 @@ export class AgregarPrendaComponent {
         colorPrenda: [null, [Validators.required]],
         marcaPrenda: [null, [Validators.required]],
       });
+    this.loading = true;
     this.conx.get('categoria', 'getClimas').subscribe((data: any) => {
       if (data) this.climas = data;
     });
@@ -91,19 +93,52 @@ export class AgregarPrendaComponent {
     this.conx.get('categoria', 'getMarcas').subscribe((data: any) => {
       if (data) {
         this.marcas = data;
+        this.loading = false;
       }
     })
+    this.createOutfits();
   }
 
   async takePhoto() {
     await this.photoService.takeNewPhoto();
   }
 
+  async createOutfits() {
+    this.loading = true;
+    var prompt = '{';
+    this.conx.get('prenda', 'getPrendasChat').subscribe((data: any) => {
+      if (data) {
+        const peticionPrendas = data;
+        prompt += '"prendas": ' + JSON.stringify(peticionPrendas);
+      }
+      this.conx.get('accesorio', 'getAccesoriosChat').subscribe((data: any) => {
+        if (data) {
+          const peticionAccesorios = data;
+          prompt += ', "accesorios": ' + JSON.stringify(peticionAccesorios) + '} ';
+          prompt += "Crea outfits para mujer con las prendas de modo que cumplan normas de color y moda actual. Escoge un clima para el outfit y define su estilo. Coloca las combinaciones en formato JSON con únicamente los IDs. No puedes combinar estilos diferentes.";
+          console.log(prompt);
+          this.gpt.sendPetition(prompt).then((response: any) => {
+            console.log(response);
+            // this.addOutfits(JSON.parse(response));
+          });
+        }
+      })
+    })
+  }
+
+  addOutfits(response: JSON) {
+    this.conx.post('outfit', 'addOutfits', {response}).subscribe((data: any) => {
+      if (data) alert("¡La inteligencia artifical ha creado nuevos outfits para ti!");
+      else alert("Ocurrio algún error al crear tus nuevos outfits");
+      this.loading = false;
+    })
+  }
+
   contextToggle() {
     this.isPrenda = !this.isPrenda;
   }
 
-  guardar() {
+  async guardar() {
     this.loading = true;
     if (this.prendas.length == 0) {
       this.agregarPrenda();
@@ -114,7 +149,6 @@ export class AgregarPrendaComponent {
         this.prendas = [];
       })
     });
-
     if (this.accesorios.length == 0) {
       this.agregarAccesorio();
     }
@@ -122,31 +156,40 @@ export class AgregarPrendaComponent {
       this.conx.post('accesorio', 'insertAccesorio', accesorio).subscribe((data: any) => {
         if (!data.estatus) alert('No se pudo agregar un accesorio');
         this.accesorios = [];
-        this.loading = false;
-      })
+      }).add(() => {this.loading = false;})
     });
     console.log(this.prendas);
   }
 
   agregarPrenda() {
+    this.loading = true;
     if (Object.keys(this.prenda).length > 0) {
-      this.prenda.imagen = this.photoService.editedPhotoURL;
-      this.prendas.push(this.prenda);
-      this.photoService.photoURL = '';
-      this.photoService.editedPhotoURL = '';
-      this.photoService.base64Data = '';
-      this.prenda = {};
+      this.photoService.uploadPhoto().then(() => {
+        this.prenda.imagen = this.photoService.photoURL;
+        this.prendas.push(this.prenda);
+        this.photoService.photoURL = '';
+        this.photoService.photoURL = '';
+        this.photoService.base64Data = '';
+        console.log(this.prendas);
+        this.prenda = {};
+        this.loading = false;
+      })
     }
   }
 
   agregarAccesorio() {
+    this.loading = true;
     if (Object.keys(this.accesorio).length > 0) {
-      this.accesorio.imagen = this.photoService.editedPhotoURL;
-      this.accesorios.push(this.accesorio);
-      this.photoService.photoURL = '';
-      this.photoService.editedPhotoURL = '';
-      this.photoService.base64Data = '';
-      this.accesorio = {};
+      this.photoService.uploadPhoto().then(() => {
+        this.accesorio.imagen = this.photoService.photoURL;
+        this.accesorios.push(this.accesorio);
+        this.photoService.photoURL = '';
+        this.photoService.photoURL = '';
+        this.photoService.base64Data = '';
+        console.log(this.accesorios);
+        this.accesorio = {};
+        this.loading = false;
+      })
     }
   }
 
@@ -202,10 +245,6 @@ export class AgregarPrendaComponent {
 
   selectClima(clima: any) {
     this.prenda.clima = clima.idClima;
-    this.climaSeleccionado = clima.name;
-    setTimeout(() => {
-      this.climaEsActivo();
-  }, 200);
   }
 
   marcaSelectEvent(item: any) {

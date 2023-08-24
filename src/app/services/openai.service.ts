@@ -15,14 +15,15 @@ export class OpenaiService {
     this.openai = new OpenAIApi(this.configuration);
   }
 
-  async sendPetition(prompt: string):Promise<string | undefined>{
+  async sendPetition(prompt: string): Promise<string | undefined>{
    try {
-      const response = await this.openai.createCompletion({
-        model: "text-davinci-003",
-        prompt: prompt,
-        max_tokens: 256
+      const response = await this.openai.createChatCompletion({
+        model: "gpt-3.5-turbo-16k",
+        messages: [{"role": "user", "content": prompt}],
+        max_tokens: 10000,
+        temperature: 1
       });
-      console.log(response.data.choices[0].text);
+      return response.data.choices[0].message?.content;
     } catch (error) {
       console.log(`An error has occured:${error}`);
     }
