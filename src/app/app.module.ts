@@ -24,6 +24,8 @@ import { PrendaComponent } from './prenda/prenda.component';
 
 import { ColeccionesComponent } from './colecciones/colecciones.component';
 import { ColeccionComponent } from './coleccion/coleccion.component';
+import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
+import { UpdateComponent } from './update/update.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { ColeccionComponent } from './coleccion/coleccion.component';
     LoginComponent,
     ColeccionesComponent,
     ColeccionComponent,
-    PrendaComponent
+    PrendaComponent,
+    PerfilUsuarioComponent,
+    UpdateComponent
   ],
   // entryComponents:[
   //   DialogComponent,

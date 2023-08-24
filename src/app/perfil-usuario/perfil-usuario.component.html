@@ -1,0 +1,65 @@
+<div class="w-full h-full bg-whiteSmoke p-4 overflow-scroll">
+  <Section [ngClass] class="w-full h-fit rounded-2xl bg-silver p-6 mt-6 drop-shadow-lg overflow-scroll">
+    <br>
+    <div  class="w-full max--xs">
+      <div *ngFor="let u of Usuario" class="bg-timberWolf text-center  shadow-md rounded px-8 pt-6 pb-8 mb-4 ng-dirty ng-touched ng-valid">
+        <div class="grid place-content-center gap-1 md:grid-cols-2">
+          <img src="assets/Logo AUFI (2).png" class="w-20" alt="Phone image" />
+        </div> <br>
+        <div class="text-2xl text-davysGray">Create Your Account</div><br>
+        <div  class="mb-4 mt-4">
+          <label class="block text-blanco text-sm font-bold mb-2">
+          </label>
+          <p>Nombre: {{u.nombresUsuario}} {{u.apellidoP}} {{u.apellidoM}}</p>
+        </div>
+        <div class="mb-4">
+          <label class="block text-blanco text-sm font-bold mb-2">
+          </label>
+          <p>Telefono: {{u.telefono}}</p>
+        </div>
+        <div class="mb-4">
+          <label class="block text-blanco text-sm font-bold mb-2">
+          </label>
+          <p>Correo: {{u.correo}}</p>
+        </div>
+        <div class="mb-4">
+          <label class="block text-blanco text-sm font-bold mb-2">
+          </label>
+          <p>Nombre de Usuario: {{u.userName}}</p>
+        </div>
+        <div class="mb-4">
+          <label class="block text-blanco text-sm font-bold mb-2">
+          </label>
+          <p>Fecha de Nacimiento: {{u.fechaNacimiento}}</p>
+        </div>
+        <div class="mb-4">
+          <label class="block text-blanco bg-grisC text-sm font-bold mb-2">
+          </label>
+          <p>Genero: {{u.genero}}</p>
+        </div>
+<!--         <div class="mb-6">
+          <label class="block text-blanco text-sm font-bold mb-2" for="contrasena"></label>
+          <p>{{u.contrasena}}</p>
+        </div> -->
+        <div class=" items-center justify-between">
+          <button class="bg-davysGray hover:bg-teaRed text-whiteSmoke font-bold py-2 px-4" type="button"[routerLink]="['/update', u.id]">
+            Editar Informacion
+          </button>
+        </div>
+        <br>
+        <div class=" items-center justify-between">
+          <button class="bg-davysGray hover:bg-teaRed text-whiteSmoke font-bold py-2 px-4" type="button"[routerLink]="['/update', u.id]">
+            Eliminar Cuenta
+          </button>
+        </div>
+        <br><br>
+        <p class="text-center text-gray-500 text-xs">
+          &copy;2023 AUFI Corp. All rights reserved.
+        </p>
+        <br>
+      </div>
+
+    </div>
+  </Section>
+  <br>
+</div>
