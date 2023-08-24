@@ -34,3 +34,32 @@
 ::-webkit-scrollbar {
   display: none;
 }
+.prenda .autocomplete-container .input-container input{
+  background: transparent !important;
+}
+.autocomplete-container{
+  box-shadow: none !important;
+}
+
+.prendaD>::placeholder, input, mat-label{
+  font-size: 1.125rem !important;
+  line-height: 1.75rem !important;
+  color: #000000 !important;
+  text-align: right !important;
+}
+.prendaI>::placeholder, input, mat-label{
+  font-size: 1.125rem !important;
+  line-height: 1.75rem !important;
+  color: #000000 !important;
+  text-align: center !important;
+}
+
+.mdc-radio__background{
+  display:none !important;
+}
+.mat-mdc-radio-button .mdc-radio{
+  padding: 0 !important;
+}
+.autocomplete-container .input-container .x i {
+  display:none !important;
+}

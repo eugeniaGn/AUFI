@@ -1,13 +1,13 @@
-import { Component, Inject,  OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ConexionService } from '../services/conexion.service';
 
 @Component({
-  selector: 'app-prenda',
-  templateUrl: './prenda.component.html',
-  styleUrls: ['./prenda.component.scss'],
+  selector: 'app-editar-prenda',
+  templateUrl: './editar-prenda.component.html',
+  styleUrls: ['./editar-prenda.component.scss'],
 })
-export class PrendaComponent  implements OnInit {
+export class EditarPrendaComponent  implements OnInit {
   info: any;
   subtipos : any[] = [];
   caracteristicas : any[] = [];
@@ -20,9 +20,7 @@ export class PrendaComponent  implements OnInit {
     @Inject(MAT_DIALOG_DATA,) public data: any,
     public dialog: MatDialog,
     private conexion: ConexionService
-  ) {
-    this.info = data;
-  }
+  ) { }
 
   ngOnInit() {}
 
@@ -58,14 +56,6 @@ export class PrendaComponent  implements OnInit {
     // this.prendasFiltradas.filter((prenda: any) => {
     //   return prenda.subtipo == item.nombreSubtipo;
     // })
-  }
-
-  openDialogPrenda(data: any) {
-    let dialogRef = this.dialog.open(PrendaComponent, { width: '95%', height: '80%', data: { idPrenda: data.idPrenda, tipo: data.tipo, subtipo:data.subtipo, caracteristicas:data.caracteristicas, estilo: data.estilo, material: data.material, color: data.color, marca: data.marca, clima: data.clima, imagenPrenda: data.imagenPrenda, fondo: data.fondo } });
-
-    dialogRef.afterClosed().subscribe(result => {
-      // console.log(`Dialog result: ${result}`);
-    });
   }
 
 }

@@ -3,8 +3,13 @@
   <!-- Íconos -->
   <section class="flex bg-whiteSmoke justify-end px-4 pt-4 sticky top-0 z-50">
     <article>
-      <button>
-        <svg class="w-5 h-5 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 21 19">
+      <button (click)="perfil()">
+        <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 18">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 8a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm-2 3h4a4 4 0 0 1 4 4v2H1v-2a4 4 0 0 1 4-4Z"/>
+        </svg>
+      </button>
+      <button [routerLink]="'/meGusta'">
+        <svg class="w-5 h-5 text-black ml-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 21 19">
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 4C5.5-1.5-1.5 5.5 4 11l7 7 7-7c5.458-5.458-1.542-12.458-7-7Z" />
         </svg>
       </button>
@@ -44,31 +49,14 @@
     <section class="px-4 mt-6">
       <p class="text-black text-lg text-center font-lato font-medium">Tu armario</p>
 
-      <article *ngFor="let estilo of prendasEstilo">
-
+      <article *ngFor="let estilo of prendasEstilo" class="mb-4">
         <p class="text-black text-base font-lato">{{estilo.estilo}}</p>
         <aside class="flex w-full gap-x-2 overflow-x-scroll rounded-2xl bg-grisC px-3 py-6">
-          <div *ngFor="let prenda of estilo.arreglo" class="h-28 w-[5.5rem] shrink-0 rounded-2xl bg-[#BCBCBC] drop-shadow-lg">
+          <div (click)="openDialogPrenda({idPrenda: prenda.idPrenda, tipo: prenda.tipo, subtipo: prenda.subtipo, caracteristicas:prenda.caracteristicas, estilo:prenda.estilo, material:prenda.material, color:prenda.color, marca:prenda.marca, clima:prenda.clima, imagenPrenda:prenda.imagenPrenda, fondo:prenda.fondo})" [style.background]="prenda.fondo" *ngFor="let prenda of estilo.arreglo" class="h-28 w-[5.5rem] flex justify-center items-center shrink-0 rounded-2xl bg-[#BCBCBC] drop-shadow-lg">
             <img [src]="prenda.imagenPrenda">
           </div>
           </aside>
       </article>
-
-      <!-- <p class="text-black text-base font-lato mt-6">Elegante</p>
-      <article class="flex w-full gap-x-2 overflow-x-scroll rounded-2xl bg-grisC px-3 py-6">
-        <div class="h-28 w-[5.5rem] shrink-0 rounded-2xl bg-[#B9B8B7] drop-shadow-lg"></div>
-        <div class="h-28 w-[5.5rem] shrink-0 rounded-2xl bg-[#C6B7B2] drop-shadow-lg"></div>
-        <div class="h-28 w-[5.5rem] shrink-0 rounded-2xl bg-[#ECE2D8] drop-shadow-lg"></div>
-      <div class="h-28 w-[5.5rem] shrink-0 rounded-2xl bg-[#CBC5C2] drop-shadow-lg"></div>
-    </article>
-
-    <p class="text-black text-base font-lato mt-6">Elegante</p>
-    <article class="flex w-full gap-x-2 overflow-x-scroll rounded-2xl bg-grisC px-3 py-6">
-      <div class="h-28 w-[5.5rem] shrink-0 rounded-2xl bg-[#B9B8B7] drop-shadow-lg"></div>
-      <div class="h-28 w-[5.5rem] shrink-0 rounded-2xl bg-[#C6B7B2] drop-shadow-lg"></div>
-      <div class="h-28 w-[5.5rem] shrink-0 rounded-2xl bg-[#ECE2D8] drop-shadow-lg"></div>
-      <div class="h-28 w-[5.5rem] shrink-0 rounded-2xl bg-[#CBC5C2] drop-shadow-lg"></div>
-    </article> -->
 
   </section>
 </aside>
@@ -76,42 +64,33 @@
 <!-- ARMARIO -->
 <aside *ngIf="escribiendo" class="w-screen">
   <section class="flex items-center w-full gap-4 px-3 py-1 pb-4 overflow-x-scroll">
-    <!-- <article>
-      <button mat-button [matMenuTriggerFor]="filtroTipos" (click)="toggleFiltrar('Tipos')" [ngClass]="{'bg-[#C5B6B1]': filtro.activo === true}" class="flex items-center justify-evenly w-20 h-8 shrink-0 bg-whiteSmoke rounded-md outline outline-1 outline-silver text-black drop-shadow-md">
-        Tipos
-        <svg class="w-3 h-3 text-slate-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 8">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"/>
-        </svg>
-      </button>
-        <mat-menu #filtroTipos="matMenu">
-          <button mat-menu-item>Item 1</button>
-          <button mat-menu-item>Item 2</button>
-        </mat-menu>
-
-    </article> -->
-
 
     <article *ngFor="let filtro of filtros">
-      <button mat-button [matMenuTriggerFor]="menu" (click)="toggleFiltrar(filtro.nombre)" [ngClass]="{'bg-silver': filtro.activo === true}" class="flex items-center justify-evenly w-20 h-8 shrink-0 bg-whiteSmoke rounded-md outline outline-1 outline-silver text-black drop-shadow-md">
+
+      <button mat-button [matMenuTriggerFor]="menu" (click)="toggleFiltrar(filtro.nombre)" [ngClass]="{'bg-[#C5B6B1]': filtro.activo === true}" class="flex items-center justify-evenly w-20 h-8 shrink-0 bg-whiteSmoke rounded-md outline outline-1 outline-silver text-black drop-shadow-md">
         {{filtro.nombre}}
         <svg class="w-3 h-3 text-slate-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 8">
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"/>
         </svg>
       </button>
+
         <mat-menu #menu="matMenu">
-          <button (click)="filtro.funcion" *ngFor="let contenido of filtro.contenido" mat-menu-item>{{contenido.name}}</button>
+          <button  mat-menu-item [matMenuTriggerFor]="submenu" *ngFor="let contenido of filtro.contenido">{{contenido.name}}</button>
         </mat-menu>
+
+        <mat-menu #submenu="matMenu">
+          <button  mat-menu-item *ngFor="let contenido of filtro.contenido">{{contenido.name}}</button>
+        </mat-menu>
+
     </article>
   </section>
 
+  <!-- Prenda -->
   <section class="flex justify-center items-center">
-    <article class="grid grid-cols-2 gap-4 mt-4 px-2">
+    <article class="grid grid-cols-3 gap-3 mt-4 px-2">
       <aside *ngFor="let prenda of prendasFiltradas">
-        <div (click)="openDialogPrenda({idPrenda: prenda.idPrenda, tipo: prenda.tipo, subtipo: prenda.subtipo, caracteristicas:prenda.caracteristicas, estilo:prenda.estilo, material:prenda.material, color:prenda.color, marca:prenda.marca, clima:prenda.clima, imagenPrenda:prenda.imagenPrenda, fondo:prenda.fondo})" [style.background]="prenda.fondo" class="h-48 w-40 p-2 shrink-0 rounded-2xl bg-timberWolf drop-shadow-md flex justify-center items-center flex-col">
-          <p class="text-sm">{{prenda.tipo}}</p>
-          <img [src]="prenda.imagenPrenda" class="h-20">
-          <p class="text-sm">{{prenda.subtipo}}, {{prenda.caracteristicas}}</p>
-          <p class="text-sm">{{prenda.material}}, {{prenda.color}},  {{prenda.marca}},  {{prenda.clima}}</p>
+        <div (click)="openDialogPrenda({idPrenda: prenda.idPrenda, tipo: prenda.tipo, subtipo: prenda.subtipo, caracteristicas:prenda.caracteristicas, estilo:prenda.estilo, material:prenda.material, color:prenda.color, marca:prenda.marca, clima:prenda.clima, imagenPrenda:prenda.imagenPrenda, fondo:prenda.fondo})" [style.background]="prenda.fondo" class="h-36 w-28 p-2 shrink-0 rounded-2xl bg-timberWolf drop-shadow-md flex justify-center items-center flex-col">
+          <img [src]="prenda.imagenPrenda" class="h-4/5">
         </div>
       </aside>
     </article>
@@ -124,8 +103,8 @@
     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 1v16M1 9h16"/>
   </svg>
 </button>
-<mat-menu #menu="matMenu" class="bg-red-500">
-  <button mat-menu-item [routerLink]="'/crearOutfit'" class="rounded-full bg-blue-500 drop-shadow-lg">Crear outfit</button>
+<mat-menu #menu="matMenu" class="bg-red-500 whyIsNotRed active:bg-blue-600" style="background: red">
+  <button mat-menu-item [routerLink]="'/crearOutfit'" class="rounded-full bg-grisF drop-shadow-lg">Crear outfit</button>
   <button mat-menu-item [routerLink]="'/agregarPrenda'">Agregar prenda/accesorio</button>
 </mat-menu>
 

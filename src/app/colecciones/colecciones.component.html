@@ -1,3 +1,12 @@
+<div class="flex w-screen h-screen bg-whiteSmoke flex-col overflow-y-scroll">
+<section class="flex justify-between text-black text-xl m-4">
+  <button>
+    <svg [routerLink]="['/inicio']" class="w-5 h-5 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13" />
+    </svg>
+  </button>
+</section>
+
 <ion-header>
   <ion-toolbar>
     <ion-title>Colecciones</ion-title>
@@ -22,3 +31,4 @@
       <ion-label>{{coleccion.name}}</ion-label></article>
   </section>
 </ion-content>
+</div>

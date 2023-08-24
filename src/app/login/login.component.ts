@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
     contrasena: [, [Validators.required]],
 
   });
+  loading = false;
   constructor(private fb: FormBuilder, public auth: AuthService,
     private router: Router, private conexion: ConexionService) {
   }
@@ -26,11 +27,11 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    console.log(this.Formulario.value);
+    this.loading = true;
     this.conexion.post('usuario', 'login', this.Formulario.value).subscribe((datos: any) => {
       if (datos) {
         this.auth.login(datos);
-        this.router.navigateByUrl('inicio');
+        this.loading = false;
       }
     });
   }
