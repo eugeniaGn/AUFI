@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { DialogElegirPrendaComponent } from '../dialog-elegir-prenda/dialog-elegir-prenda.component';
 
 @Component({
   selector: 'app-crear-outfit',
@@ -12,10 +14,21 @@ export class CrearOutfitComponent  implements OnInit {
   guardado:boolean = false;
 
   constructor(
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit() {}
+
+  openDialogElegir(data: any) {
+    console.log(data);
+    let dialogRef = this.dialog.open(DialogElegirPrendaComponent, { width: '85%', height: '85%', data }
+    );
+
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log(`Dialog result: ${result}`);
+    });
+  }
 
   loUse(){
     if(this.usado == false){

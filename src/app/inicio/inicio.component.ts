@@ -184,9 +184,9 @@ export class InicioComponent implements OnInit {
         textoInput = textoInput + this.filtro(filtroValue[i]);
       }
       let busqueda: any = false;
-      if (!prenda.subtipo) {
+      if (!prenda.clima) {
         busqueda = prenda.tipo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-          prenda.clima.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
+          // prenda.clima.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
           prenda.color.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
           prenda.material.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
           prenda.marca.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||

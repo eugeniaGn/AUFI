@@ -1,0 +1,15 @@
+<div class="w-full h-full p-4 overflow-y-scroll">
+  <p >{{idTipos}}</p>
+
+  <section class="flex justify-center items-center">
+    <article class="grid grid-cols-3 gap-3 mt-4 px-2">
+      <aside *ngFor="let tipo of idTipos">
+        <div class="h-36 w-28 p-2 shrink-0 rounded-2xl bg-timberWolf drop-shadow-md flex justify-center items-center flex-col">
+          {{tipo.tipo}}
+          <!-- <img [src]="prenda.imagenPrenda" class="h-4/5"> -->
+        </div>
+      </aside>
+    </article>
+  </section>
+
+</div>

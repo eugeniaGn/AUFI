@@ -96,7 +96,7 @@ export class AgregarPrendaComponent {
         this.loading = false;
       }
     })
-    this.createOutfits();
+    // this.createOutfits();
   }
 
   async takePhoto() {
