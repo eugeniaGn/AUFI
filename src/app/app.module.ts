@@ -22,6 +22,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { PrendaComponent } from './prenda/prenda.component';
 import { ColeccionesComponent } from './colecciones/colecciones.component';
 import { ColeccionComponent } from './coleccion/coleccion.component';
+import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
+import { UpdateComponent } from './update/update.component';
 import { MeGustaComponent } from './me-gusta/me-gusta.component';
 import { EditarPrendaComponent } from './editar-prenda/editar-prenda.component';
 import {MatSelectModule} from '@angular/material/select';
@@ -38,6 +40,8 @@ import {MatRadioModule} from '@angular/material/radio';
     ColeccionesComponent,
     ColeccionComponent,
     PrendaComponent,
+    PerfilUsuarioComponent,
+    UpdateComponent,
     MeGustaComponent,
     EditarPrendaComponent
   ],

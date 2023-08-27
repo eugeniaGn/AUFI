@@ -8,6 +8,8 @@ import { RegistroComponent } from './registro/registro.component';
 import { LoginComponent } from './login/login.component';
 import { ColeccionesComponent } from './colecciones/colecciones.component';
 import { ColeccionComponent } from './coleccion/coleccion.component';
+import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
+import { UpdateComponent } from './update/update.component';
 import { MeGustaComponent } from './me-gusta/me-gusta.component';
 import { AuthGuard } from './guards/auth.guard';
 
@@ -19,6 +21,8 @@ const routes: Routes = [
   {path: 'colecciones', component: ColeccionesComponent, canActivate: [AuthGuard]},
   {path: 'meGusta', component: MeGustaComponent, },
   {path: 'registro', component: RegistroComponent},
+  {path: 'perfil', component: PerfilUsuarioComponent, },
+  {path: 'update/:id', component: UpdateComponent, },
   {path: 'login', component: LoginComponent},
   {path: 'coleccion/:name/:id', component: ColeccionComponent, canActivate: [AuthGuard]},
   {path: '**', redirectTo: 'inicio', pathMatch: 'full' }
