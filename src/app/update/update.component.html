@@ -1,13 +1,21 @@
 <div class="w-full h-full bg-whiteSmoke p-4 overflow-scroll">
   <Section [ngClass] class="w-full h-fit rounded-2xl bg-silver p-6 mt-6 drop-shadow-lg overflow-scroll">
-    <br>
-    <div class="w-full max--xs">
+    <section class="flex justify-between text-black text-xl py-4">
+      <button>
+        <svg [routerLink]="['/perfil']" class="w-5 h-5 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+        fill="none" viewBox="0 0 8 14">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+        d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13" />
+      </svg>
+    </button>
+  </section>
+    <div  class="w-full max--xs">
       <form class="bg-timberWolf text-center  shadow-md rounded px-8 pt-6 pb-8 mb-4 ng-dirty ng-touched ng-valid"
         (ngSubmit)="guardar()" [formGroup]="Registro"> 
         <div class="grid place-content-center gap-1 md:grid-cols-2">
           <img src="assets/Logo AUFI (2).png" class="w-20" alt="Phone image" />
         </div> <br>
-        <div class="text-2xl text-davysGray">Create Your Account</div><br>
+        <div class="text-2xl text-davysGray">Editar Infromacion</div><br>
         <div class="mb-4 mt-4">
           <label class="block text-blanco text-sm font-bold mb-2">
           </label>
@@ -85,19 +93,16 @@
           </div>
           <span class="form-text text-danger" *ngIf="campoEsValido('genero')"></span>
         </div> -->
-        <div class="mb-6">
+<!--         <div class="mb-6">
           <label class="block text-blanco text-sm font-bold mb-2" for="contrasena"></label>
           <input class="shadow bg-grisC appearance-none rounded w-full py-2 px-3 text-blanco mb-3 leading-tight focus:outline-none focus:shadow-outline" 
           name="contrasena" formControlName="contrasena" type="password" placeholder="Contraseña">
           <span *ngIf="campoEsValido('contrasena')"></span>
-        </div>
-        <div class="flex items-center justify-between">
+        </div> -->
+        <div class=" items-center justify-between">
           <button class="bg-davysGray hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-            Sign up
+            Guardar Informacion
           </button>
-          <a class="inline-block align-baseline font-bold text-sm text-davysGray hover:text-davysGray" href="/login ">
-            Have an account ?
-          </a>
         </div>
         <br><br>
         <p class="text-center text-gray-500 text-xs">
