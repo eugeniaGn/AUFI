@@ -345,6 +345,7 @@ export class InicioComponent implements OnInit {
   }
 
   perfil() {
+    this.router.navigate(['perfil']);
     // acción para ir al perfil
   }
 
