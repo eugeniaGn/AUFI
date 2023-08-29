@@ -21,7 +21,7 @@ export class OpenaiService {
         model: "gpt-3.5-turbo-16k",
         messages: [{"role": "user", "content": prompt}],
         max_tokens: 10000,
-        temperature: 1
+        temperature: 0
       });
       return response.data.choices[0].message?.content;
     } catch (error) {
