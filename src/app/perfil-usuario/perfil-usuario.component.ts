@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ConexionService } from '../services/conexion.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-perfil-usuario',
@@ -7,8 +8,9 @@ import { ConexionService } from '../services/conexion.service';
   styleUrls: ['./perfil-usuario.component.scss'],
 })
 export class PerfilUsuarioComponent  implements OnInit {
-  Usuario: any[] = [] ;
-  constructor(private conexion: ConexionService) {
+  Usuario: any = {};
+  constructor(private conexion: ConexionService,
+    private router: Router,) {
    this.obtenerUsuario();
   }
 
@@ -30,4 +32,16 @@ export class PerfilUsuarioComponent  implements OnInit {
       }
     })
   }
+  logout() {
+    this.router.navigate(['login']);
+    localStorage.removeItem('aufiToken');
+  }
+  eliminar() {
+    this.conexion.get('usuario', 'eliminarUsuario').subscribe((dato: any) => {
+      console.log(dato);
+      if (dato) {
+        this.router.navigate(['login']);
+      }
+    });
+  } 
 }
