@@ -28,6 +28,7 @@ import { MeGustaComponent } from './me-gusta/me-gusta.component';
 import { EditarPrendaComponent } from './editar-prenda/editar-prenda.component';
 import {MatSelectModule} from '@angular/material/select';
 import {MatRadioModule} from '@angular/material/radio';
+import { DialogElegirPrendaComponent } from './dialog-elegir-prenda/dialog-elegir-prenda.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import {MatRadioModule} from '@angular/material/radio';
     PerfilUsuarioComponent,
     UpdateComponent,
     MeGustaComponent,
-    EditarPrendaComponent
+    EditarPrendaComponent,
+    DialogElegirPrendaComponent
   ],
   // entryComponents:[
   //   DialogComponent,

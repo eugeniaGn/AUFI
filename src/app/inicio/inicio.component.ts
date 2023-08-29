@@ -2,7 +2,6 @@ import { AppComponent } from './../app.component';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConexionService } from '../services/conexion.service';
-import { MatMenuModule } from '@angular/material/menu';
 import { MatDialog } from '@angular/material/dialog';
 import { PrendaComponent } from '../prenda/prenda.component';
 
@@ -186,7 +185,6 @@ export class InicioComponent implements OnInit {
       let busqueda: any = false;
       if (!prenda.clima) {
         busqueda = prenda.tipo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-          // prenda.clima.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
           prenda.color.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
           prenda.material.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
           prenda.marca.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
