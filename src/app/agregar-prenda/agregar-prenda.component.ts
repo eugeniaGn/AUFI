@@ -189,7 +189,7 @@ export class AgregarPrendaComponent {
   }
 
   async agregarPrenda() {
-    this.loading = true;    
+    this.loading = true;
     this.photoService.uploadPhoto().then(() => {
       this.formularioPrenda.controls['imagen'].setValue(this.photoService.photoURL);
       this.prendas.push(this.formularioPrenda.value);
@@ -240,7 +240,7 @@ export class AgregarPrendaComponent {
     if (this.isPrenda) {
       this.prenda.subtipo = item.id;
       this.formularioPrenda.controls['subtipo'].setValue(item.id);
-    } 
+    }
     else this.accesorio.subtipo = item.id;
   }
 

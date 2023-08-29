@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConexionService } from '../services/conexion.service';
-import { MatMenuModule } from '@angular/material/menu';
 import { MatDialog } from '@angular/material/dialog';
 import { PrendaComponent } from '../prenda/prenda.component';
 import { GestureController } from '@ionic/angular';
@@ -39,7 +38,7 @@ export class InicioComponent implements OnInit {
   escribiendo: string = "";
   outfits: any = [];
   loading = false;
-  search = false; 
+  search = false;
 
   constructor(
     private conexion: ConexionService,
@@ -114,13 +113,13 @@ export class InicioComponent implements OnInit {
         }
       });
     }).add(() => {
-      this.loading = false;      
+      this.loading = false;
     })
   }
 
   async calificarOutfits() {
     this.estilos.forEach((estilo: any) => {
-      
+
     });
   }
 
@@ -148,7 +147,7 @@ export class InicioComponent implements OnInit {
 
   async obtenerTipos() {
     this.conexion.get('categoria', 'getTipos').subscribe((dato: any) => {
-      this.tipos = dato;      
+      this.tipos = dato;
       this.filtros.push({"nombre": "Tipo", "activo": false, "contenido": this.tipos })
       this.filtros.push({ "nombre": "Subtipo", "activo": false, "contenido": this.subtipos })
       this.filtros.push({ "nombre": "Detalle", "activo": false, "contenido": this.caracteristicas })
@@ -288,7 +287,7 @@ export class InicioComponent implements OnInit {
     return textoInput;
   }
 
-  tipoSelectEvent(item: any) {    
+  tipoSelectEvent(item: any) {
     this.conexion.post('categoria', 'getSubtipos', { idTipo: item.id }).subscribe((data: any) => {
       if (data.length > 0) {
         this.subtipos.splice(0);
@@ -299,7 +298,7 @@ export class InicioComponent implements OnInit {
       } else this.hasSubtipos = false;
     })
   }
-  
+
   subtipoSelectEvent(item: any) {
     this.conexion.post('categoria', 'getCaracteristicas', { idSubtipo: item.id }).subscribe((data: any) => {
       if (data.length > 0) {
@@ -307,7 +306,7 @@ export class InicioComponent implements OnInit {
         data.forEach((carac: any) => {
           this.caracteristicas.push({ id: carac.id, name: carac.name });
         });
-        
+
         this.hasCaracs = true;
       } else this.hasCaracs = false;
     })
@@ -332,13 +331,13 @@ export class InicioComponent implements OnInit {
       color: '',
       material: '',
       marca: ''
-    }    
+    }
     if (filtro.nombre == 'Tipo') this.tipoSelectEvent(contenido);
     if (filtro.nombre == 'Subtipo') this.subtipoSelectEvent(contenido);
     if (filtro.nombre == 'Color') contenido = contenido.color;
     else contenido = contenido.name;
     type ObjectKey = keyof typeof obj;
-    filtro = filtro.nombre.toLowerCase() as keyof ObjectKey;    
+    filtro = filtro.nombre.toLowerCase() as keyof ObjectKey;
     this.prendasFiltradas = this.prendasFiltradas.filter((prenda: any) => {
       return prenda[filtro] == contenido;
     })
