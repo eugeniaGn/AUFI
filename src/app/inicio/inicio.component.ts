@@ -1,9 +1,9 @@
-import { AppComponent } from './../app.component';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConexionService } from '../services/conexion.service';
 import { MatDialog } from '@angular/material/dialog';
 import { PrendaComponent } from '../prenda/prenda.component';
+import { GestureController } from '@ionic/angular';
 
 @Component({
   selector: 'app-inicio',
@@ -11,6 +11,9 @@ import { PrendaComponent } from '../prenda/prenda.component';
   styleUrls: ['./inicio.component.scss'],
 })
 export class InicioComponent implements OnInit {
+  private currentOffset: number = 0;
+  private lastOnStart: number = 0;
+  private DOUBLE_CLICK_THRESHOLD: number = 500;
   userName = '';
   estilos: any[] = [];
   materiales: any[] = [];
@@ -45,7 +48,17 @@ export class InicioComponent implements OnInit {
 
   }
 
-  async funcion_asyncrona(){
+  onStart(outfit: any) {    
+    const now = Date.now();
+    if (Math.abs(now - this.lastOnStart) <= this.DOUBLE_CLICK_THRESHOLD) {
+      this.likeOutfit(outfit);
+      this.lastOnStart = 0;
+    } else {
+      this.lastOnStart = now;
+    }
+  }
+
+  async funcion_asyncrona() {
     this.loading = true;
 
     await this.obtenerUsuario();
@@ -346,6 +359,15 @@ export class InicioComponent implements OnInit {
     this.prendasFiltradas = this.prendas;
     this.subtipos.splice(0);
     this.caracteristicas.splice(0);
+  }
+
+  likeOutfit(outfit: any) {    
+    if (localStorage.getItem('likes') == null) {
+      localStorage.setItem('likes', JSON.stringify([]));
+    }    
+    const likes = JSON.parse(localStorage.getItem('likes')!);    
+    likes.push(outfit);
+    localStorage.setItem('likes', JSON.stringify(likes));
   }
 
 }

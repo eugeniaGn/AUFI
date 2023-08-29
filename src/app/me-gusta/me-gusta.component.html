@@ -8,91 +8,24 @@
 
     <p class="text-black text-lg font-semibold font-lato sticky top-5 z-50">Me gusta</p>
   </section>
+  <p *ngIf="outfits.length == 0" class="text-center mt-20">No tienes ningun like.<br>Toca dos veces en un outfit o toca el corazón en la prenda para dar like</p>
 
   <section class="flex justify-center items-center">
     <article class="grid grid-cols-2 gap-4 mt-4 px-2">
-      <aside>
-        <div class="h-48 w-40 p-2 shrink-0 rounded-2xl bg-timberWolf drop-shadow-md flex justify-center items-center flex-col">
-          <img class="h-36">
+      <aside *ngFor="let outfit of outfits">
+        <div class="w-[10rem] h-[13.5rem] p-2 shrink-0 rounded-2xl bg-timberWolf drop-shadow-md flex justify-center items-center flex-col">
+          <div class="row flex justify-center">
+            <img class="col imgOutfit" [src]="outfit[0].imagen">
+            <img class="col imgOutfit" [src]="outfit[1].imagen">
+          </div>
+          <div class="row flex justify-center">
+            <img class="col imgOutfit" [src]="outfit[2].imagen">
+          </div>
+          <div class="row flex justify-center">
+            <img class="col imgOutfit" [src]="outfit[3].imagen">
+          </div>
         </div>
       </aside>
-
-      <aside>
-        <div class="h-48 w-40 p-2 shrink-0 rounded-2xl bg-timberWolf drop-shadow-md flex justify-center items-center flex-col">
-          <img class="h-36">
-        </div>
-      </aside>
-      <aside>
-        <div class="h-48 w-40 p-2 shrink-0 rounded-2xl bg-timberWolf drop-shadow-md flex justify-center items-center flex-col">
-          <img class="h-36">
-        </div>
-      </aside>
-      <aside>
-        <div class="h-48 w-40 p-2 shrink-0 rounded-2xl bg-timberWolf drop-shadow-md flex justify-center items-center flex-col">
-          <img class="h-36">
-        </div>
-      </aside>
-      <aside>
-        <div class="h-48 w-40 p-2 shrink-0 rounded-2xl bg-timberWolf drop-shadow-md flex justify-center items-center flex-col">
-          <img class="h-36">
-        </div>
-      </aside>
-      <aside>
-        <div class="h-48 w-40 p-2 shrink-0 rounded-2xl bg-timberWolf drop-shadow-md flex justify-center items-center flex-col">
-          <img class="h-36">
-        </div>
-      </aside>
-      <aside>
-        <div class="h-48 w-40 p-2 shrink-0 rounded-2xl bg-timberWolf drop-shadow-md flex justify-center items-center flex-col">
-          <img class="h-36">
-        </div>
-      </aside>
-      <aside>
-        <div class="h-48 w-40 p-2 shrink-0 rounded-2xl bg-timberWolf drop-shadow-md flex justify-center items-center flex-col">
-          <img class="h-36">
-        </div>
-      </aside>
-      <aside>
-        <div class="h-48 w-40 p-2 shrink-0 rounded-2xl bg-timberWolf drop-shadow-md flex justify-center items-center flex-col">
-          <img class="h-36">
-        </div>
-      </aside>
-      <aside>
-        <div class="h-48 w-40 p-2 shrink-0 rounded-2xl bg-timberWolf drop-shadow-md flex justify-center items-center flex-col">
-          <img class="h-36">
-        </div>
-      </aside>
-      <aside>
-        <div class="h-48 w-40 p-2 shrink-0 rounded-2xl bg-timberWolf drop-shadow-md flex justify-center items-center flex-col">
-          <img class="h-36">
-        </div>
-      </aside>
-      <aside>
-        <div class="h-48 w-40 p-2 shrink-0 rounded-2xl bg-timberWolf drop-shadow-md flex justify-center items-center flex-col">
-          <img class="h-36">
-        </div>
-      </aside>
-      <aside>
-        <div class="h-48 w-40 p-2 shrink-0 rounded-2xl bg-timberWolf drop-shadow-md flex justify-center items-center flex-col">
-          <img class="h-36">
-        </div>
-      </aside>
-      <aside>
-        <div class="h-48 w-40 p-2 shrink-0 rounded-2xl bg-timberWolf drop-shadow-md flex justify-center items-center flex-col">
-          <img class="h-36">
-        </div>
-      </aside>
-      <aside>
-        <div class="h-48 w-40 p-2 shrink-0 rounded-2xl bg-timberWolf drop-shadow-md flex justify-center items-center flex-col">
-          <img class="h-36">
-        </div>
-      </aside>
-      <aside>
-        <div class="h-48 w-40 p-2 shrink-0 rounded-2xl bg-timberWolf drop-shadow-md flex justify-center items-center flex-col">
-          <img class="h-36">
-        </div>
-      </aside>
-
     </article>
   </section>
 
