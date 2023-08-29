@@ -1,15 +1,67 @@
-<div class="w-full h-full p-4 overflow-y-scroll">
-  <p >{{idTipos}}</p>
+<!-- <div class="w-full h-full p-4 overflow-y-scroll"> -->
 
-  <section class="flex justify-center items-center">
-    <article class="grid grid-cols-3 gap-3 mt-4 px-2">
-      <aside *ngFor="let tipo of idTipos">
-        <div class="h-36 w-28 p-2 shrink-0 rounded-2xl bg-timberWolf drop-shadow-md flex justify-center items-center flex-col">
-          {{tipo.tipo}}
-          <!-- <img [src]="prenda.imagenPrenda" class="h-4/5"> -->
-        </div>
-      </aside>
+   <!-- Buscador -->
+   <section class="bg-whiteSmoke px-4 sticky top-9 z-50">
+
+    <article class="w-full h-10 rounded-xl bg-grisF flex justify-center items-center p-3 my-3">
+      <svg class="w-5 h-5 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+        viewBox="0 0 20 20">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"
+          d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+      </svg>
+
+      <input (focus)="search = true" (keyup)="buscando(escribiendo, $event)" type="text" [(ngModel)]="escribiendo"
+        class="w-full h-full rounded-tr-2xl rounded-br-2xl bg-grisF p-3 text-black placeholder-negro placeholder:text-base focus:outline-0"
+        placeholder="Busca prendas por tipo, estilo, color, marca o material" />
+      <span *ngIf="search">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+        <button (click)="clearFilters()">
+          <span class="material-symbols-outlined">
+            filter_alt_off
+            </span>
+        </button>
+      </span>
     </article>
   </section>
 
-</div>
+    <!-- ARMARIO -->
+    <aside class="w-full">
+      <section class="flex items-center w-full gap-4 px-3 py-1 pb-4 mt-10 overflow-x-scroll">
+
+        <article *ngFor="let filtro of filtros">
+
+          <button mat-button [matMenuTriggerFor]="menu"
+            [ngClass]="{'bg-[#C5B6B1]': filtro.activo === true}"
+            class="flex items-center justify-evenly w-20 h-8 shrink-0 bg-whiteSmoke rounded-md outline outline-1 outline-silver text-black drop-shadow-md">
+            {{filtro.nombre}}
+            <svg class="w-3 h-3 text-slate-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+              viewBox="0 0 14 8">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1" />
+            </svg>
+          </button>
+
+          <mat-menu #menu="matMenu">
+            <button (click)="selectFiltro(filtro, contenido)" mat-menu-item
+              *ngFor="let contenido of filtro.contenido">{{contenido.name}}</button>
+          </mat-menu>
+
+        </article>
+      </section>
+
+      <!-- Prenda -->
+      <section class="flex justify-center items-center">
+        <article class="grid grid-cols-2 gap-3 mt-4 px-2">
+          <aside *ngFor="let prenda of prendasFiltradas">
+            <div
+              [style.background]="prenda.fondo"
+              [mat-dialog-close]="prenda"
+              class="h-36 w-28 p-2 shrink-0 rounded-2xl bg-timberWolf drop-shadow-md flex justify-center items-center flex-col">
+              <img [src]="prenda.imagenPrenda" class="h-4/5">
+            </div>
+          </aside>
+        </article>
+      </section>
+    </aside>
+
+<!-- </div> -->
