@@ -42,23 +42,33 @@ export class InicioComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog
   ) {
-    this.funcion_asyncrona();
+
   }
 
   async funcion_asyncrona(){
     this.loading = true;
+
     await this.obtenerUsuario();
+
     await this.obtenerPrendas();
+
     await this.obtenerTipos();
-    await this.obtenerEstilos();
+
     await this.obtenerMateriales();
+
     await this.obtenerColores();
+
     await this.obtenerMarcas();
+
     await this.obtenerClimas();
+
+    await this.obtenerEstilos();
+
     await this.obtenerOutfits();
   }
 
-  async obtenerUsuario() {
+
+   obtenerUsuario() {
     this.conexion.get('usuario', 'traerUsuarioxid').subscribe((data: any) => {
       if (data) {
         this.userName = data.nombresUsuario.split(' ', 1)[0];
@@ -68,23 +78,25 @@ export class InicioComponent implements OnInit {
     })
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.funcion_asyncrona();
+  }
 
-  async obtenerClimas() {
+   obtenerClimas() {
     this.conexion.get('categoria', 'getClimas').subscribe((dato: any) => {
       this.climas = dato;
       this.filtros.push({ "nombre": "Clima", "activo": false, "contenido": this.climas });
     });
   }
 
-  async obtenerMarcas() {
+   obtenerMarcas() {
     this.conexion.get('categoria', 'getMarcas').subscribe((dato: any) => {
       this.marcas = dato;
       this.filtros.push({ "nombre": "Marca", "activo": false, "contenido": this.marcas })
     });
   }
 
-  async obtenerOutfits() {
+   obtenerOutfits() {
     this.conexion.get('outfit', 'getOutfits').subscribe((data: any) => {
       var currentOutfit = -1;
       var currentIndex = 0;
@@ -104,27 +116,27 @@ export class InicioComponent implements OnInit {
     })
   }
 
-  async calificarOutfits() {
+   calificarOutfits() {
     this.estilos.forEach((estilo: any) => {
 
     });
   }
 
-  async obtenerColores() {
+   obtenerColores() {
     this.conexion.get('categoria', 'getColores').subscribe((dato: any) => {
       this.colores = dato;
       this.filtros.push({ "nombre": "Color", "activo": false, "contenido": this.colores })
     });
   }
 
-  async obtenerMateriales() {
+   obtenerMateriales() {
     this.conexion.get('categoria', 'getMateriales').subscribe((dato: any) => {
       this.materiales = dato;
       this.filtros.push({ "nombre": "Material", "activo": false, "contenido": this.materiales })
     });
   }
 
-  async obtenerEstilos() {
+   obtenerEstilos() {
     this.conexion.get('categoria', 'getEstilos').subscribe((dato: any) => {
       this.estilos = dato;
       this.filtros.push({ "nombre": "Estilo", "activo": false, "contenido": this.estilos });
@@ -132,7 +144,7 @@ export class InicioComponent implements OnInit {
     });
   }
 
-  async obtenerTipos() {
+   obtenerTipos() {
     this.conexion.get('categoria', 'getTipos').subscribe((dato: any) => {
       this.tipos = dato;
       this.filtros.push({"nombre": "Tipo", "activo": false, "contenido": this.tipos })
@@ -141,23 +153,17 @@ export class InicioComponent implements OnInit {
     });
   }
 
-  async obtenerPrendas() {
-    this.conexion.get('prenda', 'getPrendas').subscribe((data: any) => {
+  obtenerPrendas() {
+
+    this.conexion.get('accesorio', 'getAccesorios').subscribe((data: any)  => {
+      console.log(data);
       this.prendas = data;
       this.prendasFiltradas = data;
     });
-    this.obtenerAccesorios();
+
   }
 
-  async obtenerAccesorios() {
-    this.conexion.get('accesorio', 'getAccesorios').subscribe((dato: any) => {
-      dato.forEach((accesorio: any) =>{
-        this.prendas.push(accesorio);
-      });
-    });
-  }
-
-  async obtenerPrendaEstilo() {
+   obtenerPrendaEstilo() {
     var prendas: any = [];
     this.estilos.forEach((estilo: any) => {
       this.prendas.forEach((prenda: any) => {

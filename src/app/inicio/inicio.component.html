@@ -84,14 +84,14 @@
       <div *ngFor="let outfit of outfits" [routerLink]="['/estiloRapido']"
         class="w-[10.5rem] h-[13.5rem] shrink-0 rounded-2xl bg-[#BDC4D4] drop-shadow-lg pt-1">
         <div class="row flex justify-center">
-          <img class="col imgOutfit" [src]="outfit[0].imagen">
-          <img class="col imgOutfit" [src]="outfit[1].imagen">
+          <img class="col imgOutfit" [src]="outfit[0]?.imagen">
+          <img class="col imgOutfit" [src]="outfit[1]?.imagen">
         </div>
         <div class="row flex justify-center">
-          <img class="col imgOutfit" [src]="outfit[2].imagen">
+          <img class="col imgOutfit" [src]="outfit[2]?.imagen">
         </div>
         <div class="row flex justify-center">
-          <img class="col imgOutfit" [src]="outfit[3].imagen">
+          <img class="col imgOutfit" [src]="outfit[3]?.imagen">
         </div>
       </div>
     </section>
