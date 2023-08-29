@@ -4,45 +4,98 @@
   <section class="flex bg-whiteSmoke justify-end px-4 pt-4 sticky top-0 z-50">
     <article>
       <button (click)="perfil()">
-        <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 18">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 8a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm-2 3h4a4 4 0 0 1 4 4v2H1v-2a4 4 0 0 1 4-4Z"/>
+        <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+          fill="none" viewBox="0 0 14 18">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+            d="M7 8a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm-2 3h4a4 4 0 0 1 4 4v2H1v-2a4 4 0 0 1 4-4Z" />
         </svg>
       </button>
       <button [routerLink]="'/meGusta'">
-        <svg class="w-5 h-5 text-black ml-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 21 19">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 4C5.5-1.5-1.5 5.5 4 11l7 7 7-7c5.458-5.458-1.542-12.458-7-7Z" />
+        <svg class="w-5 h-5 text-black ml-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+          viewBox="0 0 21 19">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+            d="M11 4C5.5-1.5-1.5 5.5 4 11l7 7 7-7c5.458-5.458-1.542-12.458-7-7Z" />
         </svg>
       </button>
 
       <button class="ml-3">
-        <svg class="w-5 h-5 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 20">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m13 19-6-5-6 5V2a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17Z" />
+        <svg class="w-5 h-5 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+          viewBox="0 0 14 20">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+            d="m13 19-6-5-6 5V2a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17Z" />
         </svg>
       </button>
     </article>
   </section>
 
-  <div *ngIf="!escribiendo" class="text-black text-lg font-medium font-lato px-4 mb-3">Buenos días Sofía</div>
+  <div *ngIf="!search" class="text-black text-lg font-medium font-lato px-4 mb-3">Hola {{userName}}!</div>
   <!-- Buscador -->
   <section class="bg-whiteSmoke px-4 sticky top-9 z-50">
 
     <article class="w-full h-10 rounded-xl bg-grisF flex justify-center items-center p-3 my-3">
-      <svg class="w-5 h-5 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+      <svg class="w-5 h-5 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+        viewBox="0 0 20 20">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"
+          d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
       </svg>
 
-      <input (keyup)="buscando(escribiendo, $event)" type="text" [(ngModel)]="escribiendo" class="w-full h-full rounded-tr-2xl rounded-br-2xl bg-grisF p-3 text-black placeholder-negro placeholder:text-base focus:outline-0" placeholder="Busca prendas por tipo, estilo, color, marca o material" />
+      <input (focus)="search = true" (keyup)="buscando(escribiendo, $event)" type="text" [(ngModel)]="escribiendo"
+        class="w-full h-full rounded-tr-2xl rounded-br-2xl bg-grisF p-3 text-black placeholder-negro placeholder:text-base focus:outline-0"
+        placeholder="Busca prendas por tipo, estilo, color, marca o material" />
+      <span *ngIf="search">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+        <button (click)="clearFilters()">
+          <span class="material-symbols-outlined">
+            filter_alt_off
+            </span>
+        </button>
+      </span>
+      <span *ngIf="search">
+        <button (click)="closeSearch()" >
+          <svg class="w-3 h-3 ml-2 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+            fill="none" viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+          </svg>
+        </button>
+      </span>
     </article>
   </section>
 
   <!-- INICIO -->
-  <aside *ngIf="!escribiendo">
+  <aside *ngIf="!search">
     <!-- Outfit del día -->
     <p class="mt-3 font-medium text-black text-xl text-center font-lato">Outfit del día</p>
     <section class="w-full px-4 pt-3 pb-6 gap-x-6 flex overflow-x-scroll shrink-0">
-      <div [routerLink]="['/estiloRapido']" class="w-[10.5rem] h-[13.5rem] shrink-0 rounded-2xl bg-[#BDC4D4] drop-shadow-lg"></div>
-      <div [routerLink]="['/estiloRapido']" class="w-[10.5rem] h-[13.5rem] shrink-0 rounded-2xl bg-[#E1DCD6] drop-shadow-lg"></div>
-      <div [routerLink]="['/estiloRapido']" class="w-[10.5rem] h-[13.5rem] shrink-0 rounded-2xl bg-[#B9ADA0] drop-shadow-lg"></div>
+      <div *ngIf="loading"
+        class="flex animate-pulse items-center justify-center w-full h-48 bg-gray-300 rounded sm:w-96 dark:bg-gray-700">
+        <svg class="w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+          fill="currentColor" viewBox="0 0 20 18">
+          <path
+            d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z" />
+        </svg>
+      </div>
+      <div *ngIf="loading"
+        class="flex animate-pulse items-center justify-center w-full h-48 bg-gray-300 rounded sm:w-96 dark:bg-gray-700">
+        <svg class="w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+          fill="currentColor" viewBox="0 0 20 18">
+          <path
+            d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z" />
+        </svg>
+      </div>
+      <div *ngFor="let outfit of outfits" [routerLink]="['/estiloRapido']"
+        class="w-[10.5rem] h-[13.5rem] shrink-0 rounded-2xl bg-[#BDC4D4] drop-shadow-lg pt-1">
+        <div class="row flex justify-center">
+          <img class="col imgOutfit" [src]="outfit[0].imagen">
+          <img class="col imgOutfit" [src]="outfit[1].imagen">
+        </div>
+        <div class="row flex justify-center">
+          <img class="col imgOutfit" [src]="outfit[2].imagen">
+        </div>
+        <div class="row flex justify-center">
+          <img class="col imgOutfit" [src]="outfit[3].imagen">
+        </div>
+      </div>
     </section>
 
     <!-- Tu armario -->
@@ -52,61 +105,71 @@
       <article *ngFor="let estilo of prendasEstilo" class="mb-4">
         <p class="text-black text-base font-lato">{{estilo.estilo}}</p>
         <aside class="flex w-full gap-x-2 overflow-x-scroll rounded-2xl bg-grisC px-3 py-6">
-          <div (click)="openDialogPrenda({idPrenda: prenda.idPrenda, tipo: prenda.tipo, subtipo: prenda.subtipo, caracteristicas:prenda.caracteristicas, estilo:prenda.estilo, material:prenda.material, color:prenda.color, marca:prenda.marca, clima:prenda.clima, imagenPrenda:prenda.imagenPrenda, fondo:prenda.fondo})" [style.background]="prenda.fondo" *ngFor="let prenda of estilo.arreglo" class="h-28 w-[5.5rem] flex justify-center items-center shrink-0 rounded-2xl bg-[#BCBCBC] drop-shadow-lg">
+          <div
+            (click)="openDialogPrenda({idPrenda: prenda.idPrenda, tipo: prenda.tipo, subtipo: prenda.subtipo, caracteristicas:prenda.caracteristicas, estilo:prenda.estilo, material:prenda.material, color:prenda.color, marca:prenda.marca, clima:prenda.clima, imagenPrenda:prenda.imagenPrenda, fondo:prenda.fondo})"
+            [style.background]="prenda.fondo" *ngFor="let prenda of estilo.arreglo"
+            class="h-28 w-[5.5rem] flex justify-center items-center shrink-0 rounded-2xl bg-[#BCBCBC] drop-shadow-lg">
             <img [src]="prenda.imagenPrenda">
           </div>
-          </aside>
+        </aside>
       </article>
 
-  </section>
-</aside>
+    </section>
+  </aside>
 
-<!-- ARMARIO -->
-<aside *ngIf="escribiendo" class="w-screen">
-  <section class="flex items-center w-full gap-4 px-3 py-1 pb-4 overflow-x-scroll">
+  <!-- ARMARIO -->
+  <aside *ngIf="search" class="w-screen">
+    <section class="flex items-center w-full gap-4 px-3 py-1 pb-4 overflow-x-scroll">
 
-    <article *ngFor="let filtro of filtros">
+      <article *ngFor="let filtro of filtros">
 
-      <button mat-button [matMenuTriggerFor]="menu" (click)="toggleFiltrar(filtro.nombre)" [ngClass]="{'bg-[#C5B6B1]': filtro.activo === true}" class="flex items-center justify-evenly w-20 h-8 shrink-0 bg-whiteSmoke rounded-md outline outline-1 outline-silver text-black drop-shadow-md">
-        {{filtro.nombre}}
-        <svg class="w-3 h-3 text-slate-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 8">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"/>
-        </svg>
-      </button>
+        <button mat-button [matMenuTriggerFor]="menu" (click)="toggleFiltrar(filtro.nombre)"
+          [ngClass]="{'bg-[#C5B6B1]': filtro.activo === true}"
+          class="flex items-center justify-evenly w-20 h-8 shrink-0 bg-whiteSmoke rounded-md outline outline-1 outline-silver text-black drop-shadow-md">
+          {{filtro.nombre}}
+          <svg class="w-3 h-3 text-slate-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 14 8">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1" />
+          </svg>
+        </button>
 
         <mat-menu #menu="matMenu">
-          <button  mat-menu-item [matMenuTriggerFor]="submenu" *ngFor="let contenido of filtro.contenido">{{contenido.name}}</button>
+          <button (click)="selectFiltro(filtro, contenido)" mat-menu-item
+            *ngFor="let contenido of filtro.contenido">{{contenido.name}}</button>
         </mat-menu>
 
-        <mat-menu #submenu="matMenu">
-          <button  mat-menu-item *ngFor="let contenido of filtro.contenido">{{contenido.name}}</button>
-        </mat-menu>
+      </article>
+    </section>
 
-    </article>
-  </section>
+    <!-- Prenda -->
+    <section class="flex justify-center items-center">
+      <article class="grid grid-cols-3 gap-3 mt-4 px-2">
+        <aside *ngFor="let prenda of prendasFiltradas">
+          <div
+            (click)="openDialogPrenda({idPrenda: prenda.idPrenda, tipo: prenda.tipo, subtipo: prenda.subtipo, caracteristicas:prenda.caracteristicas, estilo:prenda.estilo, material:prenda.material, color:prenda.color, marca:prenda.marca, clima:prenda.clima, imagenPrenda:prenda.imagenPrenda, fondo:prenda.fondo})"
+            [style.background]="prenda.fondo"
+            class="h-36 w-28 p-2 shrink-0 rounded-2xl bg-timberWolf drop-shadow-md flex justify-center items-center flex-col">
+            <img [src]="prenda.imagenPrenda" class="h-4/5">
+          </div>
+        </aside>
+      </article>
+    </section>
+  </aside>
 
-  <!-- Prenda -->
-  <section class="flex justify-center items-center">
-    <article class="grid grid-cols-3 gap-3 mt-4 px-2">
-      <aside *ngFor="let prenda of prendasFiltradas">
-        <div (click)="openDialogPrenda({idPrenda: prenda.idPrenda, tipo: prenda.tipo, subtipo: prenda.subtipo, caracteristicas:prenda.caracteristicas, estilo:prenda.estilo, material:prenda.material, color:prenda.color, marca:prenda.marca, clima:prenda.clima, imagenPrenda:prenda.imagenPrenda, fondo:prenda.fondo})" [style.background]="prenda.fondo" class="h-36 w-28 p-2 shrink-0 rounded-2xl bg-timberWolf drop-shadow-md flex justify-center items-center flex-col">
-          <img [src]="prenda.imagenPrenda" class="h-4/5">
-        </div>
-      </aside>
-    </article>
-  </section>
-</aside>
 
-
-<button mat-button [matMenuTriggerFor]="menu" class="w-14 h-14 rounded-full bg-grisF drop-shadow-2xl flex justify-center items-center fixed bottom-4 right-4">
-  <svg class="w-6 h-6 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 1v16M1 9h16"/>
-  </svg>
-</button>
-<mat-menu #menu="matMenu" class="bg-red-500 whyIsNotRed active:bg-blue-600" style="background: red">
-  <button mat-menu-item [routerLink]="'/crearOutfit'" class="rounded-full bg-grisF drop-shadow-lg">Crear outfit</button>
-  <button mat-menu-item [routerLink]="'/agregarPrenda'">Agregar prenda/accesorio</button>
-</mat-menu>
+  <button mat-button [matMenuTriggerFor]="menu"
+    class="w-14 h-14 rounded-full bg-grisF drop-shadow-2xl flex justify-center items-center fixed bottom-4 right-4">
+    <svg class="w-6 h-6 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+      viewBox="0 0 18 18">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 1v16M1 9h16" />
+    </svg>
+  </button>
+  <mat-menu #menu="matMenu" class="bg-red-500 whyIsNotRed active:bg-blue-600" style="background: red">
+    <button mat-menu-item [routerLink]="'/crearOutfit'" class="rounded-full bg-grisF drop-shadow-lg">Crear
+      outfit</button>
+    <button mat-menu-item [routerLink]="'/agregarPrenda'">Agregar prenda/accesorio</button>
+  </mat-menu>
 
   <!-- Botón crear outfit -->
   <!-- <button [routerLink]="'/agregarPrenda'" class="w-14 h-14 rounded-full bg-grisF drop-shadow-2xl flex justify-center items-center fixed bottom-4 right-4">

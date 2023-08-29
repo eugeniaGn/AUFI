@@ -12,6 +12,7 @@ import { PrendaComponent } from '../prenda/prenda.component';
   styleUrls: ['./inicio.component.scss'],
 })
 export class InicioComponent implements OnInit {
+  userName = '';
   estilos: any[] = [];
   materiales: any[] = [];
   colores: any[] = [];
@@ -33,6 +34,9 @@ export class InicioComponent implements OnInit {
 
   filtroActivo: boolean = false;
   escribiendo: string = "";
+  outfits: any = [];
+  loading = false;
+  search = false; 
 
   constructor(
     private conexion: ConexionService,
@@ -43,6 +47,8 @@ export class InicioComponent implements OnInit {
   }
 
   async funcion_asyncrona(){
+    this.loading = true;
+    await this.obtenerUsuario();
     await this.obtenerPrendas();
     await this.obtenerTipos();
     await this.obtenerEstilos();
@@ -50,76 +56,109 @@ export class InicioComponent implements OnInit {
     await this.obtenerColores();
     await this.obtenerMarcas();
     await this.obtenerClimas();
+    await this.obtenerOutfits();
+  }
+
+  async obtenerUsuario() {
+    this.conexion.get('usuario', 'traerUsuarioxid').subscribe((data: any) => {
+      if (data) {
+        this.userName = data.nombresUsuario.split(' ', 1)[0];
+      } else {
+        alert('No pudimos obtener tu información de usuario.');
+      }
+    })
   }
 
   ngOnInit() {}
 
-  obtenerClimas() {
+  async obtenerClimas() {
     this.conexion.get('categoria', 'getClimas').subscribe((dato: any) => {
       this.climas = dato;
       this.filtros.push({ "nombre": "Clima", "activo": false, "contenido": this.climas });
     });
   }
 
-  obtenerMarcas() {
+  async obtenerMarcas() {
     this.conexion.get('categoria', 'getMarcas').subscribe((dato: any) => {
       this.marcas = dato;
       this.filtros.push({ "nombre": "Marca", "activo": false, "contenido": this.marcas })
-      // console.log(dato);
     });
   }
 
-  obtenerColores() {
+  async obtenerOutfits() {
+    this.conexion.get('outfit', 'getOutfits').subscribe((data: any) => {
+      var currentOutfit = -1;
+      var currentIndex = 0;
+      var index = -1;
+      data.forEach((outfit: any) => {
+        if (currentOutfit == outfit.id) {
+          this.outfits[currentIndex].push({prenda: outfit.prenda, tipo: outfit.nombreTipo, imagen: outfit.imagen});
+        } else {
+          index++;
+          this.outfits[index] = [{prenda: outfit.prenda, tipo: outfit.nombreTipo, imagen: outfit.imagen}];
+          currentOutfit = outfit.id;
+          currentIndex = index;
+        }
+      });
+    }).add(() => {
+      this.loading = false;      
+    })
+  }
+
+  async calificarOutfits() {
+    this.estilos.forEach((estilo: any) => {
+      
+    });
+  }
+
+  async obtenerColores() {
     this.conexion.get('categoria', 'getColores').subscribe((dato: any) => {
       this.colores = dato;
       this.filtros.push({ "nombre": "Color", "activo": false, "contenido": this.colores })
-      // console.log(dato);
     });
   }
 
-  obtenerMateriales() {
+  async obtenerMateriales() {
     this.conexion.get('categoria', 'getMateriales').subscribe((dato: any) => {
       this.materiales = dato;
       this.filtros.push({ "nombre": "Material", "activo": false, "contenido": this.materiales })
-      // console.log(dato);
     });
   }
 
-  obtenerEstilos() {
+  async obtenerEstilos() {
     this.conexion.get('categoria', 'getEstilos').subscribe((dato: any) => {
       this.estilos = dato;
       this.filtros.push({ "nombre": "Estilo", "activo": false, "contenido": this.estilos });
-      // console.log(dato);
       this.obtenerPrendaEstilo();
     });
   }
 
-  obtenerTipos() {
+  async obtenerTipos() {
     this.conexion.get('categoria', 'getTipos').subscribe((dato: any) => {
-      this.tipos = dato;
-      this.filtros.push({ "nombre": "Tipo", "activo": false, "contenido": this.tipos })
-      // console.log(dato);
+      this.tipos = dato;      
+      this.filtros.push({"nombre": "Tipo", "activo": false, "contenido": this.tipos })
+      this.filtros.push({ "nombre": "Subtipo", "activo": false, "contenido": this.subtipos })
+      this.filtros.push({ "nombre": "Detalle", "activo": false, "contenido": this.caracteristicas })
     });
   }
 
   async obtenerPrendas() {
-    await this.conexion.get('prenda', 'getPrendas').subscribe((dato: any) => {
-      this.prendas = dato;
-      console.log(this.prendas);
+    this.conexion.get('prenda', 'getPrendas').subscribe((data: any) => {
+      this.prendas = data;
+      this.prendasFiltradas = data;
     });
-    await this.obtenerAccesorios();
+    this.obtenerAccesorios();
   }
 
-  obtenerAccesorios() {
+  async obtenerAccesorios() {
     this.conexion.get('accesorio', 'getAccesorios').subscribe((dato: any) => {
       dato.forEach((accesorio: any) =>{
         this.prendas.push(accesorio);
       });
-      console.log(this.prendas);
     });
   }
 
-  obtenerPrendaEstilo() {
+  async obtenerPrendaEstilo() {
     var prendas: any = [];
     this.estilos.forEach((estilo: any) => {
       this.prendas.forEach((prenda: any) => {
@@ -132,7 +171,6 @@ export class InicioComponent implements OnInit {
       }
       prendas = [];
     });
-    // console.log(this.prendasEstilo);
   }
 
   toggleFiltrar(nombreF: string) {
@@ -175,92 +213,29 @@ export class InicioComponent implements OnInit {
   }
 
   buscar(data: any) {
-    const filtroValue = (data.target as HTMLInputElement).value.trim()?.toLocaleLowerCase();
+    const filtroValue = (data.target as HTMLInputElement).value.trim()?.toLowerCase();
 
     this.prendasFiltradas = this.prendas.filter((prenda: any) => {
       let textoInput: any = '';
-
       for (let i = 0; i < filtroValue.length; i++) {
         textoInput = textoInput + this.filtro(filtroValue[i]);
       }
-      let busqueda: any = false;
-      if (!prenda.subtipo) {
-        busqueda = prenda.tipo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-          prenda.clima.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-          prenda.color.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-          prenda.material.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-          prenda.marca.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-          prenda.estilo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput);
-          if (!prenda.subtipo) {
-            busqueda = prenda.tipo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-            prenda.color.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-            prenda.material.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-            prenda.marca.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-            prenda.estilo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput);
-          } else {
-            if (!prenda.caracteristicas) {
-              busqueda = prenda.tipo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-              prenda.subtipo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-              prenda.color.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-              prenda.material.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-              prenda.marca.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-              prenda.estilo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput);
-            } else {
-              busqueda = prenda.tipo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-              prenda.subtipo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-              prenda.caracteristicas.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-              prenda.color.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-              prenda.material.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-              prenda.marca.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-              prenda.estilo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput);
-            }
-          }
-      } else {
-        if (!prenda.subtipo) {
-          busqueda = prenda.tipo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-            prenda.clima.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-            prenda.color.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-            prenda.material.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-            prenda.marca.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-            prenda.estilo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput);
-          } else {
-            if (!prenda.caracteristicas) {
-              busqueda = prenda.tipo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-              prenda.clima.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-              prenda.subtipo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-              prenda.color.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-              prenda.material.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-              prenda.marca.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-              prenda.estilo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput);
-          } else {
-            busqueda = prenda.tipo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-              prenda.subtipo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-              prenda.caracteristicas.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-              prenda.clima.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-              prenda.color.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-              prenda.material.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-              prenda.marca.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput) ||
-              prenda.estilo.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase().includes(textoInput);
-          }
-        }
-        }
-
-
-      return busqueda;
+        return prenda.tipo.toLowerCase().includes(textoInput) ||
+        prenda.color.toLowerCase().includes(textoInput) ||
+        prenda.material.toLowerCase().includes(textoInput) ||
+        prenda.marca.toLowerCase().includes(textoInput) ||
+        prenda.estilo.toLowerCase().includes(textoInput);
     });
 
   }
 
   filtro(textoInput: any) {
-
       let simbolos = new String('#$@%&|^`´*çÇº\º!·/()=');
       var arrA = new String('áàäâÀÁÄÂ');
       let arrE = new String('éèëêÈÉËÊEÊ€');
       let arrI = new String('íìïîÍÌÏÎ');
       let arrO = new String('óòôöÓÒÖÔ');
       let arrU = new String('úùüüÚÙÜÛ');
-
-
 
     for (let i = 0; i < simbolos.length; i++) {
       if (textoInput == simbolos.charAt(i)) {
@@ -297,55 +272,75 @@ export class InicioComponent implements OnInit {
         textoInput = 'u';
       }
     }
-
     return textoInput;
   }
 
-  tipoSelectEvent(item: any) {
-    // Aquí va el filtrado
-    this.subtipos = [{}];
+  tipoSelectEvent(item: any) {    
     this.conexion.post('categoria', 'getSubtipos', { idTipo: item.id }).subscribe((data: any) => {
       if (data.length > 0) {
+        this.subtipos.splice(0);
         data.forEach((subtipo: any) => {
-          this.subtipos.push({ id: subtipo.idSubtipo, name: subtipo.nombreSubtipo });
+          this.subtipos.push({ id: subtipo.id, name: subtipo.name });
         });
         this.hasSubtipos = true;
-        this.filtros.push({ "nombre": "Subtipo", "activo": false, "contenido": this.subtipos, "funcion": (id: any) => { this.tipoSelectEvent(id) } });
       } else this.hasSubtipos = false;
     })
-    this.prendasFiltradas.filter((prenda: any) => {
-      return prenda.tipo == item.nombreTipo;
-    })
   }
-
+  
   subtipoSelectEvent(item: any) {
-    // Aquí va el filtrado
-    this.caracs = [{}];
     this.conexion.post('categoria', 'getCaracteristicas', { idSubtipo: item.id }).subscribe((data: any) => {
       if (data.length > 0) {
+        this.caracteristicas.splice(0);
         data.forEach((carac: any) => {
-          this.caracs.push({ id: carac.idCaracteristica, name: carac.nombreCaracteristica });
+          this.caracteristicas.push({ id: carac.id, name: carac.name });
         });
+        
         this.hasCaracs = true;
-        this.filtros.push({ "nombre": "Caracteristicas", "activo": false, "contenido": this.caracteristicas });
       } else this.hasCaracs = false;
-    })
-    this.prendasFiltradas.filter((prenda: any) => {
-      return prenda.subtipo == item.nombreSubtipo;
     })
   }
 
 
   openDialogPrenda(data: any) {
-    let dialogRef = this.dialog.open(PrendaComponent, { width: '95%', height: '80%', data: { idPrenda: data.idPrenda, tipo: data.tipo, subtipo: data.subtipo, caracteristicas: data.caracteristicas, estilo: data.estilo, material: data.material, color: data.color, marca: data.marca, clima: data.clima, imagenPrenda: data.imagenPrenda, fondo: data.fondo } });
-
-    dialogRef.afterClosed().subscribe(result => {
-      // console.log(`Dialog result: ${result}`);
-    });
+    this.dialog.open(PrendaComponent, { width: '95%', height: '80%', data: { idPrenda: data.idPrenda, tipo: data.tipo, subtipo: data.subtipo, caracteristicas: data.caracteristicas, estilo: data.estilo, material: data.material, color: data.color, marca: data.marca, clima: data.clima, imagenPrenda: data.imagenPrenda, fondo: data.fondo } });
   }
 
   perfil() {
-    // acción para ir al perfil
+    this.router.navigate(['perfil'])
+  }
+
+  selectFiltro(filtro: any, contenido: any) {
+    const obj = {
+      tipo: '',
+      subtipo: '',
+      caracteristicas: '',
+      estilo: '',
+      clima: '',
+      color: '',
+      material: '',
+      marca: ''
+    }    
+    if (filtro.nombre == 'Tipo') this.tipoSelectEvent(contenido);
+    if (filtro.nombre == 'Subtipo') this.subtipoSelectEvent(contenido);
+    if (filtro.nombre == 'Color') contenido = contenido.color;
+    else contenido = contenido.name;
+    type ObjectKey = keyof typeof obj;
+    filtro = filtro.nombre.toLowerCase() as keyof ObjectKey;    
+    this.prendasFiltradas = this.prendasFiltradas.filter((prenda: any) => {
+      return prenda[filtro] == contenido;
+    })
+  }
+
+  closeSearch() {
+    this.search = false;
+    this.escribiendo = '';
+    this.clearFilters();
+  }
+
+  clearFilters() {
+    this.prendasFiltradas = this.prendas;
+    this.subtipos.splice(0);
+    this.caracteristicas.splice(0);
   }
 
 }
