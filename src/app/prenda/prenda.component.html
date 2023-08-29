@@ -14,8 +14,9 @@
     </article>
 
     <article class="flex flex-col justify-center items-center mt-10">
-      <aside class="flex">
-        <p class="font-semibold text-lg">{{data.subtipo}}</p>
+      <aside class="flex gap-1">
+        <p *ngIf="!data.subtipo" class="font-semibold text-lg">{{data.tipo}}</p>
+        <p *ngIf="data.subtipo" class="font-semibold text-lg">{{data.subtipo}}</p>
         <p *ngIf="data.caracteristicas" class="font-semibold text-lg">{{data.caracteristicas}}</p>
       </aside>
       <p class="text-sm">{{data.material}}</p>
