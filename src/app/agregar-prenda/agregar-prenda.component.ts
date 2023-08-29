@@ -113,10 +113,14 @@ export class AgregarPrendaComponent {
     this.marca.close();
     this.material.clear();
     this.material.close();
-    this.subtipo.clear();
-    this.subtipo.close();
-    this.carac.clear();
-    this.carac.close();
+    if (this.hasSubtipos) {
+      this.subtipo.clear();
+      this.subtipo.close();
+      if (this.hasCaracs) {
+        this.carac.clear();
+        this.carac.close();
+      }
+    }
     // To clear the reactive form
     this.formularioPrenda.reset();
   }
