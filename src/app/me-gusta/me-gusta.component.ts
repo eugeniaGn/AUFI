@@ -7,7 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MeGustaComponent  implements OnInit {
 
-  constructor() { }
+  outfits: any[] = [];
+  constructor() {
+    if (localStorage.getItem('likes') != null) {
+      this.outfits = JSON.parse(localStorage.getItem('likes')!);
+    }
+  }
 
   ngOnInit() {}
 
