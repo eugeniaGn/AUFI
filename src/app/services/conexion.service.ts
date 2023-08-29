@@ -12,7 +12,8 @@ export class ConexionService {
     headers: new HttpHeaders({
       'Content-Type': 'application/json; charset=utf8',
       'Allow-Origin': '*',
-      'Authorization': `Bearer ${localStorage.getItem('aufiToken')}`
+      'Authorization': `Bearer ${localStorage.getItem('aufiToken')}`,
+      'ngrok-skip-browser-warning': 'true'
     })
   };
 
