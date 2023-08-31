@@ -170,7 +170,7 @@ export class InicioComponent implements OnInit {
 
   obtenerPrendas() {
 
-    this.conexion.get('accesorio', 'getAccesorios').subscribe((data: any)  => {
+    this.conexion.get('prenda', 'getPrendas').subscribe((data: any)  => {
       console.log(data);
       this.prendas = data;
       this.prendasFiltradas = data;
