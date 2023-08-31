@@ -35,7 +35,7 @@ export class AgregarPrendaComponent {
   climaActivo: boolean = false;
   climaSeleccionado: any = "Clima";
   colorActivo: boolean = false;
-  colorSeleccionado = [{"color": "Color", "fondo": "#F2F2F2"}];
+  colorSeleccionado = [{ "color": "Color", "fondo": "#F2F2F2" }];
 
   formularioPrenda: FormGroup = this.fb.group({
     clima: [, [Validators.required]],
@@ -44,7 +44,7 @@ export class AgregarPrendaComponent {
     subtipo: [],
     carac: [],
     material: [, [Validators.required]],
-    imagen: [, ],
+    imagen: [,],
     color: [, [Validators.required]],
     marca: [, [Validators.required]],
   });
@@ -61,7 +61,7 @@ export class AgregarPrendaComponent {
     private conx: ConexionService, private gpt: OpenaiService,
     private fb: FormBuilder,
     private router: Router
-    ) {
+  ) {
     this.getFormData();
   }
 
@@ -131,28 +131,26 @@ export class AgregarPrendaComponent {
       if (data) {
         const peticionPrendas = data;
         prompt += '"prendas": ' + JSON.stringify(peticionPrendas);
+        prompt += "Crea outfits completos de cada estilo con las prendas de modo que cumplan normas de color y moda actual. Coloca las combinaciones en formato JSON con únicamente los IDs.";
+        console.log(prompt);
+        this.gpt.sendPetition(prompt).then((response: any) => {
+          console.log(JSON.parse(response));
+          this.addOutfits(JSON.parse(response));
+        });
       }
-      this.conx.get('accesorio', 'getAccesoriosChat').subscribe((data: any) => {
-        if (data) {
-          const peticionAccesorios = data;
-          prompt += ', "accesorios": ' + JSON.stringify(peticionAccesorios) + '} ';
-          prompt += "Crea outfits completos de cada estilo con las prendas de modo que cumplan normas de color y moda actual. Coloca las combinaciones en formato JSON con únicamente los IDs.";
-          console.log(prompt);
-          this.gpt.sendPetition(prompt).then((response: any) => {
-            console.log(JSON.parse(response));
-            this.addOutfits(JSON.parse(response));
-          });
-        }
-        this.loading = false;
-      })
+      // this.conx.get('accesorio', 'getAccesoriosChat').subscribe((data: any) => {
+      //   if (data) {
+      //     const peticionAccesorios = data;
+      //     prompt += ', "accesorios": ' + JSON.stringify(peticionAccesorios) + '} ';
+      //   }
+      // })
     })
   }
 
-  addOutfits(response: JSON) {
-    this.conx.post('outfit', 'addOutfits', {response}).subscribe((data: any) => {
+  async addOutfits(response: JSON) {
+    this.conx.post('outfit', 'addOutfits', { response }).subscribe((data: any) => {
       if (data) alert("¡La inteligencia artifical ha creado nuevos outfits para ti!");
       else alert("Ocurrio algún error al crear tus nuevos outfits");
-      this.loading = false;
     })
   }
 
@@ -175,17 +173,17 @@ export class AgregarPrendaComponent {
       this.conx.post('prenda', 'insertPrenda', prenda).subscribe((data: any) => {
         if (!data.estatus) alert('No se pudo agregar una prenda');
         this.prendas = [];
-      })
-    });
-    this.accesorios.forEach(accesorio => {
-      this.conx.post('accesorio', 'insertAccesorio', accesorio).subscribe((data: any) => {
-        if (!data.estatus) alert('No se pudo agregar un accesorio');
-        this.accesorios = [];
       }).add(() => {
         this.loading = false;
-        this.createOutfits();
-      })
+        // this.createOutfits();
+      });
     });
+    // this.accesorios.forEach(accesorio => {
+    //   this.conx.post('accesorio', 'insertAccesorio', accesorio).subscribe((data: any) => {
+    //     if (!data.estatus) alert('No se pudo agregar un accesorio');
+    //     this.accesorios = [];
+    //   })
+    // });
   }
 
   async agregarPrenda() {
@@ -216,7 +214,7 @@ export class AgregarPrendaComponent {
 
   tipoSelectEvent(item: any) {
     this.subtipos = [{}];
-    this.conx.post('categoria', 'getSubtipos', {idTipo: item.id}).subscribe((data: any) => {
+    this.conx.post('categoria', 'getSubtipos', { idTipo: item.id }).subscribe((data: any) => {
       if (data.length > 0) {
         this.subtipos = data;
         this.hasSubtipos = true;
@@ -231,7 +229,7 @@ export class AgregarPrendaComponent {
 
   subtipoSelectEvent(item: any) {
     this.caracs = [{}];
-    this.conx.post('categoria', 'getCaracteristicas', {idSubtipo: item.id}).subscribe((data: any) => {
+    this.conx.post('categoria', 'getCaracteristicas', { idSubtipo: item.id }).subscribe((data: any) => {
       if (data.length > 0) {
         this.caracs = data;
         this.hasCaracs = true;
@@ -266,7 +264,7 @@ export class AgregarPrendaComponent {
     this.colorSeleccionado[0].fondo = item.fondo;
     setTimeout(() => {
       this.colorEsActivo();
-  }, 200);
+    }, 200);
   }
 
   estiloSelectEvent(item: any) {
@@ -287,17 +285,17 @@ export class AgregarPrendaComponent {
     } else this.accesorio.marca = item.id;
   }
 
-  climaEsActivo(){
-    if(this.formularioPrenda.value.clima){
-      return this.climas?.find((clima:any) => clima.id == this.formularioPrenda.value.clima)?.name
+  climaEsActivo() {
+    if (this.formularioPrenda.value.clima) {
+      return this.climas?.find((clima: any) => clima.id == this.formularioPrenda.value.clima)?.name
     }
     return "Clima"
   }
 
-  colorEsActivo(){
-    if (this.colorActivo){
+  colorEsActivo() {
+    if (this.colorActivo) {
       this.colorActivo = !this.colorActivo;
-    } else{
+    } else {
       this.colorActivo = !this.colorActivo;
     }
   }
