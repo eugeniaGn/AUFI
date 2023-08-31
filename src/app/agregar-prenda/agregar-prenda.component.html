@@ -1,116 +1,116 @@
-<div *ngIf="loading" class="w-[100vw] h-[100vh] bg-davysGray bg-opacity-50 z-20 fixed text-center top-0 left-0 pt-[25vh] text-whiteSmoke">
-  <img src="assets/logo white sin fondo.png" class="m-auto" width="70%" height="auto" alt="">
-  Cargando...
-</div>
-<div [style.background]="colorSeleccionado[0].fondo" class="w-full h-full px-4 pb-4 overflow-y-scroll font-lato">
-  <section class="flex justify-between text-black text-xl py-4">
-    <button>
-      <svg (click)="goBack()" class="w-5 h-5 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-      fill="none" viewBox="0 0 8 14">
-      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
-      d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13" />
-    </svg>
-  </button>
-</section>
-
-<!-- Sección prenda o accesorio -->
-<section class="flex justify-end items-center">
-  <ion-segment (ionChange)="contextToggle()" [swipeGesture]="true" class="w-full" value="prenda">
-    <ion-segment-button value="prenda" class="h-8 py-0 my-0 rounded-t-lg">
-      <ion-label class="text-base font-lato">Prenda</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="accesorio" class="h-8 py-0 my-0 rounded-t-lg">
-      <ion-label class="text-base font-lato">Accesorio</ion-label>
-    </ion-segment-button>
-  </ion-segment>
-</section>
-
-<form [formGroup]="formularioPrenda">
-    <!-- Clima y estilo -->
-  <section class="flex justify-evenly items-center mt-5">
-  <button mat-button [matMenuTriggerFor]="clima" *ngIf="isPrenda" class="text-lg text-center font-lato font-medium">{{climaEsActivo()}}</button>
-  <mat-menu #clima="matMenu" class="p-4">
-    <mat-radio-group formControlName="clima" class="grid grid-cols-2 gap-4">
-      <mat-radio-button [value]="clima?.id" *ngFor="let clima of climas">{{clima?.name}}</mat-radio-button>
-    </mat-radio-group>
-  </mat-menu>
-
-
-      <article>
-        <ng-autocomplete #estilo [data]="estilos" [searchKeyword]="keyword" placeholder="Estilo"
-          class="prenda  w-fit placeholder:text-black text-lg text-center font-lato font-medium placeholder:text-right"
-          (selected)="estiloSelectEvent($event)" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"
-          name="estiloPrenda">
-        </ng-autocomplete>
-      </article>
+<ion-content>
+  <div *ngIf="loading"
+    class="w-[100vw] h-[100vh] bg-davysGray bg-opacity-50 z-20 fixed text-center top-0 left-0 pt-[25vh] text-whiteSmoke">
+    <img src="assets/logo white sin fondo.png" class="m-auto" width="70%" height="auto" alt="">
+    Cargando...
+  </div>
+  <div [style.background]="colorSeleccionado[0].fondo" class="w-full h-full px-4 pb-4 overflow-y-scroll font-lato">
+    <section class="flex justify-between text-black text-xl py-4">
+      <button>
+        <svg (click)="goBack()" class="w-5 h-5 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+          fill="none" viewBox="0 0 8 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+            d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13" />
+        </svg>
+      </button>
     </section>
 
-    <!-- Tipo, subtipo, características y material -->
-    <section class="flex flex-col justify-center items-center mt-5">
+    <!-- Sección prenda o accesorio -->
+    <section class="flex justify-end items-center">
+      <ion-segment (ionChange)="contextToggle()" [swipeGesture]="true" class="w-full" value="prenda">
+        <ion-segment-button value="prenda" class="h-8 py-0 my-0 rounded-t-lg">
+          <ion-label class="text-base font-lato">Prenda</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="accesorio" class="h-8 py-0 my-0 rounded-t-lg">
+          <ion-label class="text-base font-lato">Accesorio</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </section>
 
-      <article class="text-black text-lg text-center font-lato font-medium">
-        <ng-autocomplete #tipo [data]="tipos" [searchKeyword]="keyword" placeholder="Tipo"
-          class="prenda text-black text-lg text-center font-lato font-medium shadow-none" (selected)='tipoSelectEvent($event)'
-          [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"
-          name="tipoPrenda">
-        </ng-autocomplete>
-      </article>
+    <form [formGroup]="formularioPrenda">
+      <!-- Clima y estilo -->
+      <section class="flex justify-center items-center mt-5">
+        <button mat-button [matMenuTriggerFor]="clima" *ngIf="isPrenda"
+          class="text-lg text-center font-lato font-medium">{{climaEsActivo()}}</button>
+        <mat-menu #clima="matMenu" class="p-4">
+          <mat-radio-group formControlName="clima" class="grid grid-cols-2 gap-4">
+            <mat-radio-button [value]="clima?.id" *ngFor="let clima of climas">{{clima?.name}}</mat-radio-button>
+          </mat-radio-group>
+        </mat-menu>
 
-      <article class="flex">
-        <aside *ngIf="hasSubtipos">
-          <ng-autocomplete #subtipo [data]="subtipos" [searchKeyword]="keyword" placeholder="Subtipo"
-            class="prenda text-black text-lg text-center font-lato font-medium" (selected)='subtipoSelectEvent($event)'
-            [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"
-            name="subtipoPrenda">
+
+        <article>
+          <ng-autocomplete #estilo [data]="estilos" [searchKeyword]="keyword" placeholder="Estilo"
+            class="prenda placeholder:text-black text-lg text-center font-lato font-medium placeholder:text-right"
+            (selected)="estiloSelectEvent($event)" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"
+            name="estiloPrenda">
           </ng-autocomplete>
-        </aside>
+        </article>
+      </section>
 
-        <aside *ngIf="hasCaracs">
-          <ng-autocomplete #carac [data]="caracs" [searchKeyword]="keyword" placeholder="Característica"
-            class="prenda text-black text-lg text-center font-lato font-medium" (selected)="caracSelectEvent($event)"
-            [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"
-            name="caracteristicaPrenda">
+      <!-- Tipo, subtipo, características y material -->
+      <section class="flex flex-col justify-center items-center mt-5">
+
+        <article class="text-black text-lg text-center font-lato font-medium">
+          <ng-autocomplete #tipo [data]="tipos" [searchKeyword]="keyword" placeholder="Tipo"
+            class="prenda text-black text-lg text-center font-lato font-medium shadow-none"
+            (selected)='tipoSelectEvent($event)' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"
+            name="tipoPrenda">
           </ng-autocomplete>
-        </aside>
-      </article>
+        </article>
 
-      <article>
-        <ng-autocomplete #material [data]="materiales" [searchKeyword]="keyword" placeholder="Material"
-          class="prenda text-black text-lg text-center font-lato font-medium" (selected)="materialSelectEvent($event)"
-          [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"
-          name="materialPrenda">
-        </ng-autocomplete>
-      </article>
-    </section>
+        <article class="flex">
+          <aside *ngIf="hasSubtipos">
+            <ng-autocomplete #subtipo [data]="subtipos" [searchKeyword]="keyword" placeholder="Subtipo"
+              class="prenda text-black text-lg text-center font-lato font-medium"
+              (selected)='subtipoSelectEvent($event)' [itemTemplate]="itemTemplate"
+              [notFoundTemplate]="notFoundTemplate" name="subtipoPrenda">
+            </ng-autocomplete>
+          </aside>
 
-    <!-- Tomar foto -->
-    <section class="flex justify-center items-center">
-      <article [style.background]="colorSeleccionado[0].fondo" class="my-10 w-fit h-3/4 shrink-0 bg-grisC rounded-xl">
-        <button (click)="takePhoto()" [style.background]="colorSeleccionado[0].fondo"
-          *ngIf="!photoService.base64Data"
-          class="w-72 h-96 flex justify-center items-center flex-col outline outline-1 outline-black rounded-xl"
-           name="imagenPrenda">
-          <ion-icon icon="camera" class="text-7xl text-davysGray opacity-25"></ion-icon>
-          <p class="text-davysGray text-sm text-center font-lato font-light tracking-wider opacity-60">Tomar foto</p>
-        </button>
+          <aside *ngIf="hasCaracs">
+            <ng-autocomplete #carac [data]="caracs" [searchKeyword]="keyword" placeholder="Característica"
+              class="prenda text-black text-lg text-center font-lato font-medium" (selected)="caracSelectEvent($event)"
+              [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" name="caracteristicaPrenda">
+            </ng-autocomplete>
+          </aside>
+        </article>
 
-        <aside *ngIf="photoService.base64Data" (click)="takePhoto()" class="w-fit h-96 rounded-xl">
-          <ion-img [src]="photoService.base64Data" class="w-fit h-96 rounded-xl"></ion-img>
-        </aside>
+        <article>
+          <ng-autocomplete #material [data]="materiales" [searchKeyword]="keyword" placeholder="Material"
+            class="prenda text-black text-lg text-center font-lato font-medium" (selected)="materialSelectEvent($event)"
+            [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" name="materialPrenda">
+          </ng-autocomplete>
+        </article>
+      </section>
 
-        <ng-template #itemTemplate let-item>
-          <a [innerHTML]="item.name"></a>
-        </ng-template>
+      <!-- Tomar foto -->
+      <section class="flex justify-center items-center">
+        <article [style.background]="colorSeleccionado[0].fondo" class="my-10 w-fit h-3/4 shrink-0 bg-grisC rounded-xl">
+          <button (click)="takePhoto()" [style.background]="colorSeleccionado[0].fondo" *ngIf="!photoService.base64Data"
+            class="w-72 h-96 flex justify-center items-center flex-col outline outline-1 outline-black rounded-xl"
+            name="imagenPrenda">
+            <ion-icon icon="camera" class="text-7xl text-davysGray opacity-25"></ion-icon>
+            <p class="text-davysGray text-sm text-center font-lato font-light tracking-wider opacity-60">Tomar foto</p>
+          </button>
 
-        <ng-template #notFoundTemplate let-notFound>
-          <div [innerHTML]="notFound"></div>
-        </ng-template>
-      </article>
-    </section>
+          <aside *ngIf="photoService.base64Data" (click)="takePhoto()" class="w-fit h-96 rounded-xl">
+            <ion-img [src]="photoService.base64Data" class="w-fit h-96 rounded-xl"></ion-img>
+          </aside>
 
-    <!-- Color y marca -->
-    <section class="flex justify-evenly items-center">
-      <!-- <article class="text-black text-lg text-center font-lato font-medium">
+          <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item.name"></a>
+          </ng-template>
+
+          <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+        </article>
+      </section>
+
+      <!-- Color y marca -->
+      <section class="flex justify-evenly items-center">
+        <!-- <article class="text-black text-lg text-center font-lato font-medium">
         <button (click)="colorEsActivo()" [style.background-color]="colorSeleccionado[0].color"
           class="w-10 h-10 flex justify-evenly items-center shrink-0 rounded-full drop-shadow-lg">
           <div *ngIf="colorSeleccionado[0].color === 'Color'" class="flex justify-evenly items-center gap-3">
@@ -134,32 +134,34 @@
         </aside>
       </article> -->
 
-      <button mat-button [matMenuTriggerFor]="color" class="text-lg text-center font-lato font-medium">Color</button>
-<mat-menu #color="matMenu" class="p-4">
-  <mat-radio-group formControlName="color" class="grid grid-cols-2 gap-4">
-    <mat-radio-button [value]="color?.id" *ngFor="let color of colores" (click)="colorSelectEvent(color)">
-      <div [style.background]="color.color" class="w-10 h-10 shrink-0 rounded-full"></div>
-    </mat-radio-button>
-  </mat-radio-group>
-</mat-menu>
+        <button mat-button [matMenuTriggerFor]="color" class="text-lg text-center font-lato font-medium">Color</button>
+        <mat-menu #color="matMenu" class="p-4">
+          <mat-radio-group formControlName="color" class="grid grid-cols-2 gap-4">
+            <mat-radio-button [value]="color?.id" *ngFor="let color of colores" (click)="colorSelectEvent(color)">
+              <div [style.background]="color.color" class="w-10 h-10 shrink-0 rounded-full"></div>
+            </mat-radio-button>
+          </mat-radio-group>
+        </mat-menu>
 
-      <article>
-        <ng-autocomplete #marca [data]="marcas" [searchKeyword]="keyword" placeholder="Marca"
-          class="prenda text-black text-lg text-center font-lato font-medium" (selected)="marcaSelectEvent($event)"
-          [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"
-          name="marcaPrenda">
-        </ng-autocomplete>
-      </article>
+        <article>
+          <ng-autocomplete #marca [data]="marcas" [searchKeyword]="keyword" placeholder="Marca"
+            class="prenda text-black text-lg text-center font-lato font-medium" (selected)="marcaSelectEvent($event)"
+            [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" name="marcaPrenda">
+          </ng-autocomplete>
+        </article>
+      </section>
+    </form>
+
+    <section class="flex justify-evenly w-full mt-5 pb-5 pt-5 bg-grisF rounded-lg">
+      <button class="h-10 w-[40%] bg-indiaGreen rounded-lg items-center text-whiteSmoke text-xl" (click)="guardar()"
+        *ngIf="prendas.length > 0 && formularioPrenda.pristine"><ion-icon icon="checkmark"></ion-icon> Terminar</button>
+      <button *ngIf="isPrenda" class="h-10 w-[50%] bg-davysGray rounded-lg items-center text-white text-xl"
+        (click)="agregarPrenda()" [disabled]="formularioPrenda.invalid"><ion-icon icon="add"></ion-icon> Agregar
+        prenda</button>
+      <button *ngIf="!isPrenda" class="h-10 w-[50%] bg-davysGray rounded-lg items-center text-white text-xl"
+        (click)="agregarAccesorio()" [disabled]="formularioPrenda.invalid"><ion-icon icon="add"></ion-icon> Agregar
+        otro</button>
     </section>
-  </form>
 
-  <section class="flex justify-evenly w-full mt-5 pb-5 pt-5 bg-grisF rounded-lg">
-    <button class="h-10 w-[40%] bg-indiaGreen rounded-lg items-center text-whiteSmoke text-xl"
-      (click)="guardar()" *ngIf="prendas.length > 0 && formularioPrenda.pristine"><ion-icon icon="checkmark"></ion-icon> Terminar</button>
-    <button *ngIf="isPrenda" class="h-10 w-[50%] bg-davysGray rounded-lg items-center text-white text-xl"
-      (click)="agregarPrenda()" [disabled]="formularioPrenda.invalid"><ion-icon icon="add"></ion-icon> Agregar prenda</button>
-    <button *ngIf="!isPrenda" class="h-10 w-[50%] bg-davysGray rounded-lg items-center text-white text-xl"
-      (click)="agregarAccesorio()" [disabled]="formularioPrenda.invalid"><ion-icon icon="add"></ion-icon> Agregar otro</button>
-  </section>
-
-</div>
+  </div>
+</ion-content>

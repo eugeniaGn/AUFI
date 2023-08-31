@@ -23,7 +23,7 @@ export class PhotoService {
       if (capturedPhoto.webPath) {
         this.base64Data = await this.readAsBase64(capturedPhoto);
       }
-    }).then(() => this.removeBg())
+    }).then(() => {this.removeBg()})
   }
 
   private async readAsBase64(photo: Photo) {
@@ -42,6 +42,22 @@ export class PhotoService {
     reader.readAsDataURL(blob);
   });
 
+  private async removeBg() {
+    const httpOptions: Object = {
+      headers: new HttpHeaders({
+        'X-Api-Key': env.bgRemoveKey,
+        'Accept': 'application/json'
+      }),
+    }
+    const formData = new FormData();
+    formData.append('image_file_b64', this.base64Data);
+    formData.append('size', 'auto');
+    formData.append('type', 'product');
+    this.http.post('https://api.remove.bg/v1.0/removebg', formData, httpOptions).subscribe((response: any) => {
+        this.base64Data = 'data:image/png;base64,' + response.data.result_b64;
+    })
+  }
+  
   uploadPhoto() {
     let data = new FormData();
     data.append('file', this.base64Data);
@@ -57,22 +73,6 @@ export class PhotoService {
           reject(false);
         }
       })
-    })
-  }
-
-  private async removeBg() {
-    const httpOptions: Object = {
-      headers: new HttpHeaders({
-        'X-Api-Key': env.bgRemoveKey,
-        'Accept': 'application/json'
-      }),
-    }
-    const formData = new FormData();
-    formData.append('image_file_b64', this.base64Data);
-    formData.append('size', 'auto');
-    formData.append('type', 'product');
-    this.http.post('https://api.remove.bg/v1.0/removebg', formData, httpOptions).subscribe((response: any) => {
-        this.base64Data = 'data:image/png;base64,' + response.data.result_b64;
     })
   }
 
