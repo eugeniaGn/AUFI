@@ -65,7 +65,12 @@
 }
 
 .imgOutfit {
-  width: 70px;
-  height: 70px;
+  width: 65px;
+  height: 65px;
+  object-fit: cover;
+}
+.imgOutfitG {
+  width: 180px;
+  height: 180px;
   object-fit: cover;
 }

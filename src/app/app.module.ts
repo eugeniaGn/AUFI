@@ -1,3 +1,4 @@
+import { EstiloRapidoComponent } from './estilo-rapido/estilo-rapido.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy, RouterModule } from '@angular/router';
@@ -29,6 +30,8 @@ import { EditarPrendaComponent } from './editar-prenda/editar-prenda.component';
 import {MatSelectModule} from '@angular/material/select';
 import {MatRadioModule} from '@angular/material/radio';
 import { DialogElegirPrendaComponent } from './dialog-elegir-prenda/dialog-elegir-prenda.component';
+import { DialogElegirColeccionComponent } from './dialog-elegir-coleccion/dialog-elegir-coleccion.component';
+import { DialogCrearColeccionComponent } from './dialog-crear-coleccion/dialog-crear-coleccion.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +48,10 @@ import { DialogElegirPrendaComponent } from './dialog-elegir-prenda/dialog-elegi
     UpdateComponent,
     MeGustaComponent,
     EditarPrendaComponent,
-    DialogElegirPrendaComponent
+    DialogElegirPrendaComponent,
+    DialogElegirColeccionComponent,
+    DialogCrearColeccionComponent,
+    EstiloRapidoComponent
   ],
   // entryComponents:[
   //   DialogComponent,

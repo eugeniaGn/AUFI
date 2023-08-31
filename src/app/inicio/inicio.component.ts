@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ConexionService } from '../services/conexion.service';
 import { MatDialog } from '@angular/material/dialog';
 import { PrendaComponent } from '../prenda/prenda.component';
@@ -48,7 +48,7 @@ export class InicioComponent implements OnInit {
 
   }
 
-  onStart(outfit: any) {    
+  onStart(outfit: any) {
     const now = Date.now();
     if (Math.abs(now - this.lastOnStart) <= this.DOUBLE_CLICK_THRESHOLD) {
       this.likeOutfit(outfit);
@@ -56,6 +56,8 @@ export class InicioComponent implements OnInit {
     } else {
       this.lastOnStart = now;
     }
+
+    this.router.navigate(['/estiloRapido']);
   }
 
   async funcion_asyncrona() {
@@ -361,11 +363,11 @@ export class InicioComponent implements OnInit {
     this.caracteristicas.splice(0);
   }
 
-  likeOutfit(outfit: any) {    
+  likeOutfit(outfit: any) {
     if (localStorage.getItem('likes') == null) {
       localStorage.setItem('likes', JSON.stringify([]));
-    }    
-    const likes = JSON.parse(localStorage.getItem('likes')!);    
+    }
+    const likes = JSON.parse(localStorage.getItem('likes')!);
     likes.push(outfit);
     localStorage.setItem('likes', JSON.stringify(likes));
   }

@@ -1,0 +1,24 @@
+<div class="overflow-y-scroll p-4">
+  <section class="flex justify-end items-center">
+    <button mat-dialog-close class="items-end outline-0 focus:outline-0 active:outline-0">
+      <svg [routerLink]="['/crearOutfit']" class="w-4 h-4 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+      </svg>
+    </button>
+  </section>
+
+  <section class="flex justify-between font-lato mt-4">
+    <p class="text-black font-semibold">Colecciones</p>
+    <button (click)="openDialogElegirColeccion()" class="text-coralPink text-sm font-semibild">Nueva colección</button>
+  </section>
+
+  <section class="mt-6">
+    <article (click)="escogerColeccion()" mat-dialog-close class="flex items-center">
+      <aside class="w-14 h-14 rounded-xl bg-grisF"></aside>
+      <aside class="ml-4">
+        <p>Coding</p>
+      </aside>
+    </article>
+  </section>
+
+</div>

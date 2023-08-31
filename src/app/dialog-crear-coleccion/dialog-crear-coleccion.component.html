@@ -1,0 +1,23 @@
+<div class="overflow-y-scroll p-4">
+  <section class="flex justify-end items-center">
+    <button mat-dialog-close class="items-end outline-0 focus:outline-0 active:outline-0">
+      <svg class="w-4 h-4 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+      </svg>
+    </button>
+  </section>
+
+  <form [formGroup]="formularioColeccion">
+    <section class="mt-4">
+      <p class="text-davysGray text-sm">Nombre de la colección</p>
+      <input placeholder="Nueva colección" formControlName="nombreColeccion" class="focus:outline-0">
+    </section>
+  </form>
+
+    <section (click)="crearColeccion()" class="flex justify-end">
+    <button [disabled]="formularioColeccion.invalid" mat-dialog-close class="w-fit h-12 rounded-xl mt-6 px-3 text-indiaGreen drop-shadow-lg text-lg font-semibold font-lato tracking-wide active:outline-0">
+      Crear
+    </button>
+  </section>
+
+</div>

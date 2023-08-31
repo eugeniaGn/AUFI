@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { DialogElegirPrendaComponent } from '../dialog-elegir-prenda/dialog-elegir-prenda.component';
 import { ConexionService } from '../services/conexion.service';
+import { DialogElegirColeccionComponent } from '../dialog-elegir-coleccion/dialog-elegir-coleccion.component';
 
 @Component({
   selector: 'app-crear-outfit',
@@ -22,7 +22,6 @@ export class CrearOutfitComponent  implements OnInit {
 
 
   constructor(
-    private router: Router,
     public dialog: MatDialog,
     private conx: ConexionService
   ) {
@@ -49,23 +48,26 @@ export class CrearOutfitComponent  implements OnInit {
     });
   }
 
-  openDialogElegir(index: any) {
+  openDialogElegirPrenda(index: any) {
+    let dialogRef = this.dialog.open(DialogElegirPrendaComponent, { width: '100%', height: '100%'});
 
-      let dialogRef = this.dialog.open(DialogElegirPrendaComponent, { width: '100%', height: '100%'}
-      );
+    dialogRef.afterClosed().subscribe(result => {
+      this.contenedores[index] = result;
+      this.outfit.prendas.push(result?.idPrenda);
+    });
+  }
 
-      dialogRef.afterClosed().subscribe(result => {
-        this.contenedores[index] = result;
-        this.outfit.prendas.push(result?.idPrenda);
-      });
-
+  openDialogElegirColeccion() {
+    let dialogRef = this.dialog.open(DialogElegirColeccionComponent, { width: '100%', height: '50%'});
   }
 
   loUse(){
     if(this.usado == false){
       this.usado = true;
+      console.log(this.usado);
     }else{
       this.usado = false;
+      console.log(this.usado);
     }
   }
 
@@ -90,15 +92,15 @@ export class CrearOutfitComponent  implements OnInit {
   }
 
   guardarOutfit() {
-    this.conx.post('outfit', 'addOutfits', {response: {outfits: [this.outfit]}}).subscribe((data: any) => {
-      if (data) {
-        alert('Outfit agregado!');
-        this.contenedores.forEach(contenedor => {
-          contenedor.splice(0);
-        });
-        this.outfit.splice(0);
-      }
-    })
+    // this.conx.post('outfit', 'addOutfits', {response: {outfits: [this.outfit]}}).subscribe((data: any) => {
+    //   if (data) {
+    //     alert('Outfit agregado!');
+    //     this.contenedores.forEach(contenedor => {
+    //       contenedor.splice(0);
+    //     });
+    //     this.outfit.splice(0);
+    //   }
+    // })
   }
 
 }

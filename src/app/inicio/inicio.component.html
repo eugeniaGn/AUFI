@@ -2,27 +2,28 @@
 
   <!-- Íconos -->
   <section class="flex bg-whiteSmoke justify-end px-4 pt-4 sticky top-0 z-50">
-    <article>
-      <button [routerLink]="'/perfil'">
-        <svg class="w-5 h-5 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 18">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 8a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm-2 3h4a4 4 0 0 1 4 4v2H1v-2a4 4 0 0 1 4-4Z"/>
-        </svg>
-      </button>
-      <button [routerLink]="'/meGusta'">
-        <svg class="w-5 h-5 text-black ml-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-          viewBox="0 0 21 19">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-            d="M11 4C5.5-1.5-1.5 5.5 4 11l7 7 7-7c5.458-5.458-1.542-12.458-7-7Z" />
-        </svg>
-      </button>
+    <article class="flex justify-between items-center">
+      <aside>
+        <button [routerLink]="'/perfil'">
+          <svg class="w-5 h-5 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 18">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 8a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm-2 3h4a4 4 0 0 1 4 4v2H1v-2a4 4 0 0 1 4-4Z" />
+          </svg>
+        </button>
+      </aside>
 
-      <button class="ml-3" [routerLink]="'/colecciones'">
-        <svg class="w-5 h-5 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-          viewBox="0 0 14 20">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-            d="m13 19-6-5-6 5V2a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17Z" />
-        </svg>
-      </button>
+      <aside>
+        <button [routerLink]="'/meGusta'">
+          <svg class="w-5 h-5 text-black ml-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 21 19">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 4C5.5-1.5-1.5 5.5 4 11l7 7 7-7c5.458-5.458-1.542-12.458-7-7Z" />
+          </svg>
+        </button>
+
+        <button class="ml-3" [routerLink]="'/colecciones'">
+          <svg class="w-5 h-5 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 20">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m13 19-6-5-6 5V2a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17Z" />
+          </svg>
+        </button>
+      </aside>
     </article>
   </section>
 
@@ -90,7 +91,7 @@
         </svg>
       </div>
       <div *ngFor="let outfit of outfits" (click)="onStart(outfit)"
-        class="w-[10.5rem] h-[13.5rem] shrink-0 rounded-2xl bg-[#BDC4D4] drop-shadow-lg pt-1">
+        class="w-[10.5rem] h-[13.5rem] shrink-0 rounded-2xl bg-grisC flex justify-center items-center flex-col drop-shadow-lg p-1">
         <!-- <button>
           <svg class="sr-only w-5 h-5 text-black ml-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
             viewBox="0 0 21 19">
@@ -115,7 +116,7 @@
     <section class="px-4 mt-6">
       <p class="text-black text-lg text-center font-lato font-medium">Tu armario</p>
 
-      <article *ngFor="let estilo of prendasEstilo" class="mb-4">
+      <article *ngFor="let estilo of prendasEstilo" class="mb-4 mt-6">
         <p class="text-black text-base font-lato">{{estilo.estilo}}</p>
         <aside class="flex w-full gap-x-2 overflow-x-scroll rounded-2xl bg-grisC px-3 py-6">
           <div
@@ -178,7 +179,7 @@
       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 1v16M1 9h16" />
     </svg>
   </button>
-  <mat-menu #menu="matMenu" class="bg-red-500 whyIsNotRed active:bg-blue-600" style="background: red">
+  <mat-menu #menu="matMenu" class="bg-red-500 active:bg-blue-600" style="background: red">
     <button mat-menu-item [routerLink]="'/crearOutfit'" class="rounded-full bg-grisF drop-shadow-lg">Crear
       outfit</button>
     <button mat-menu-item [routerLink]="'/agregarPrenda'">Agregar prenda/accesorio</button>

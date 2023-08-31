@@ -14,7 +14,7 @@
 </ion-header>
 <ion-content>
   <section class="flex flex-wrap justify-center items-center">
-    <article>
+    <article class="flex justify-center items-center flex-col">
       <div class="rounded-lg bg-timberWolf p-5 m-5 w-[150px] h-[150px]">
         <ion-img>1</ion-img>
         <ion-img>2</ion-img>
@@ -23,12 +23,13 @@
       </div>
       <ion-label>Todo</ion-label>
     </article>
-    <article *ngFor="let coleccion of colecciones">
+    <article *ngFor="let coleccion of colecciones" class="flex flex-col justify-center items-center">
       <div class="rounded-lg bg-timberWolf p-5 m-5 w-[150px] h-[150px]"
           (click)="goToColeccion(coleccion)">
         <ion-img>Imagen</ion-img>
       </div>
-      <ion-label>{{coleccion.name}}</ion-label></article>
+        <ion-label>{{coleccion.name}}</ion-label>
+    </article>
   </section>
 </ion-content>
 </div>

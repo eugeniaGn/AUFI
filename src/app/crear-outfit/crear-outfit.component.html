@@ -24,12 +24,12 @@
 
       <!-- -botón de "Guardar en colección" -->
       <div *ngIf="guardado; else elseBlock2">
-        <svg (click)="guardarOutfit()" class="w-5 h-5 text-amber-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 14 20">
+        <svg class="w-5 h-5 text-amber-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 14 20">
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="m13 19-6-5-6 5V2a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17Z"/>
         </svg>
       </div>
       <ng-template #elseBlock2>
-        <svg (click)="guardarOutfit()" class="w-5 h-5 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 20">
+        <svg (click)="openDialogElegirColeccion()" class="w-5 h-5 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 20">
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="m13 19-6-5-6 5V2a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17Z"/>
         </svg>
       </ng-template>
@@ -39,7 +39,7 @@
 
   <!-- Título -->
   <section class="flex justify-center items-center flex-col">
-    <p class="text-black px-4 text-lg font-semibold font-lato">Crear outfit</p>
+    <p class="text-black px-4 text-lg font-bold font-lato">Crear outfit</p>
 
     <select
       class="w-fit flex  text-center justify-center items-center bg-transparent text-lg text-black font-lato font-medium focus:outline-0">
@@ -55,7 +55,7 @@
   </section>
 
   <!-- Outfit -->
-  <Section [ngClass]="{'outline outline-2 outline-verdeF': usado === true}"
+  <Section [ngClass]="{'outline outline-2 outline-indiaGreen': usado === true}"
     class="w-full h-fit rounded-2xl bg-grisC p-6 mt-6 drop-shadow-lg">
     <article class="grid grid-cols-3 gap-3 mb-6">
 
@@ -68,7 +68,7 @@
           </svg>
         </button>
 
-        <button (click)="openDialogElegir(i)" class="w-full h-full flex text-center justify-center items-center">
+        <button (click)="openDialogElegirPrenda(i)" class="w-full h-full flex text-center justify-center items-center">
           <svg *ngIf="!contenedor?.imagenPrenda" class="w-5 h-5 text-davysGray" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
           viewBox="0 0 18 18">
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -81,14 +81,14 @@
 
     </article>
 
-    <article class="w-full h-16">
+    <!-- <article class="w-full h-16">
       <textarea class="w-full h-full bg-transparent text-black placeholder-davysGray focus:outline-0"
         placeholder="Descripción del outfit (opcional)"></textarea>
-    </article>
+    </article> -->
 
     <article class="flex justify-center items-center mt-3">
-      <button [disabled]="outfit.length === 0" (click)="guardarOutfit()" [ngClass]="{'bg-verdeF text-verdeC drop-shadow-lg': usado === true}"
-        class="w-28 h-9 rounded-full bg-verdeC text-verdeF drop-shadow-sm text-lg font-semibold font-lato">
+      <button [disabled]="outfit.length === 0" (click)="guardarOutfit()"
+        class="w-full h-12 rounded-xl bg-teaGreen text-indiaGreen drop-shadow-lg text-lg font-semibold font-lato tracking-wide">
         Guardar
       </button>
     </article>
